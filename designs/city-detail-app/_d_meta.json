@@ -1,0 +1,45 @@
+{
+  "type": "design",
+  "designSystems": [],
+  "primaryDesignSystem": null,
+  "assets": {
+    "家乡介绍草图": {
+      "versions": [
+        {
+          "path": "hometown-intro-wireframe.html",
+          "createdAt": "2026-06-09T12:17:09.226Z",
+          "status": "needs-review"
+        }
+      ]
+    },
+    "家乡介绍高保真": {
+      "versions": [
+        {
+          "path": "hometown-intro-hifi.html",
+          "createdAt": "2026-06-09T12:24:53.000Z",
+          "status": "needs-review"
+        }
+      ]
+    },
+    "美食高保真": {
+      "versions": [
+        {
+          "path": "food-hifi.html",
+          "createdAt": "2026-06-09T12:28:38.353Z",
+          "status": "needs-review"
+        }
+      ]
+    },
+    "旅行路线高保真": {
+      "versions": [
+        {
+          "path": "travel-route-hifi.html",
+          "createdAt": "2026-06-09T12:28:38.701Z",
+          "status": "needs-review"
+        }
+      ]
+    }
+  },
+  "createdAt": "2026-06-09T12:17:09.226Z",
+  "updatedAt": "2026-06-09T12:28:38.701Z"
+}

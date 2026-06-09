@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>城市详情页草图 - 家乡介绍</title>
+  <style>
+    :root {
+      --paper: #fbfaf6;
+      --ink: #1f2528;
+      --muted: #677078;
+      --line: #20272b;
+      --soft-line: #d8d2c4;
+      --accent: #a83f5b;
+      --accent-soft: #f4dfe6;
+      --blue: #3e7188;
+      --blue-soft: #dfeef2;
+      --yellow-soft: #fff1c8;
+      --card: #fffdf8;
+      --shadow: 0 18px 50px rgba(31, 37, 40, .14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(90deg, rgba(31, 37, 40, .045) 1px, transparent 1px),
+        linear-gradient(rgba(31, 37, 40, .045) 1px, transparent 1px),
+        #efece4;
+      background-size: 28px 28px;
+      color: var(--ink);
+      font-family: -apple-system, "SF Pro Text", "PingFang SC", "Noto Sans SC", sans-serif;
+      padding: 28px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: minmax(280px, 390px) minmax(280px, 360px);
+      gap: 28px;
+      align-items: start;
+      max-width: 920px;
+      width: 100%;
+    }
+
+    .phone {
+      width: 390px;
+      max-width: 100%;
+      min-height: 844px;
+      border: 3px solid var(--line);
+      border-radius: 34px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .status {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 14px 18px 18px;
+      border-bottom: 2px solid var(--line);
+      background:
+        radial-gradient(circle at 84% 22%, rgba(168, 63, 91, .18), transparent 34%),
+        linear-gradient(135deg, #fff7e3 0%, #f8e1e8 100%);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .72);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .language {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .city-kicker {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--accent-soft);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .hero h1 {
+      margin: 12px 0 6px;
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hero-sketch {
+      height: 126px;
+      margin-top: 16px;
+      border: 2px dashed var(--line);
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.64), rgba(255,255,255,.18)),
+        repeating-linear-gradient(-12deg, rgba(31,37,40,.06) 0 8px, transparent 8px 18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .peony {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      width: 94px;
+      height: 94px;
+      border: 2px solid var(--line);
+      border-radius: 52% 48% 55% 45%;
+      transform: rotate(-4deg);
+      background: var(--accent-soft);
+    }
+
+    .peony::before,
+    .peony::after {
+      content: "";
+      position: absolute;
+      border: 2px solid var(--line);
+      border-radius: 55% 45% 50% 50%;
+      background: rgba(255,255,255,.55);
+    }
+
+    .peony::before {
+      width: 52px;
+      height: 52px;
+      left: 18px;
+      top: 18px;
+      transform: rotate(24deg);
+    }
+
+    .peony::after {
+      width: 24px;
+      height: 24px;
+      left: 33px;
+      top: 34px;
+      background: var(--yellow-soft);
+    }
+
+    .river {
+      position: absolute;
+      right: -20px;
+      bottom: 22px;
+      width: 230px;
+      height: 36px;
+      border: 2px solid var(--blue);
+      border-radius: 999px;
+      background: var(--blue-soft);
+      transform: rotate(-8deg);
+    }
+
+    .gate {
+      position: absolute;
+      right: 50px;
+      top: 28px;
+      width: 72px;
+      height: 70px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.82);
+    }
+
+    .gate::before,
+    .gate::after {
+      content: "";
+      position: absolute;
+      left: -10px;
+      width: 92px;
+      height: 11px;
+      border: 2px solid var(--line);
+      background: #fff3d0;
+    }
+
+    .gate::before {
+      top: -14px;
+    }
+
+    .gate::after {
+      top: 24px;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 2px solid var(--line);
+      background: #fff;
+    }
+
+    .tab {
+      min-height: 58px;
+      border: 2px solid var(--soft-line);
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      padding: 6px 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .tab.active {
+      border-color: var(--line);
+      background: var(--accent-soft);
+      color: var(--ink);
+    }
+
+    .tab-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .content {
+      padding: 14px 16px 88px;
+    }
+
+    .image-card,
+    .section-card,
+    .fact-card {
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .image-card {
+      min-height: 156px;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 10px;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(168,63,91,.11), rgba(62,113,136,.12)),
+        var(--card);
+    }
+
+    .image-slot-large,
+    .image-slot-small {
+      border: 2px dashed rgba(31, 37, 40, .5);
+      border-radius: 14px;
+      background: rgba(255,255,255,.58);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .image-slot-large {
+      min-height: 128px;
+    }
+
+    .image-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 5px 8px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .fact-card {
+      padding: 10px;
+      min-height: 74px;
+    }
+
+    .fact-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+
+    .fact-card span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .section-card {
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .section-title small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .line {
+      height: 11px;
+      background: #e4ded1;
+      border-radius: 999px;
+      margin: 9px 0;
+    }
+
+    .line.short {
+      width: 68%;
+    }
+
+    .real-copy {
+      margin: 0;
+      color: #475057;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mini {
+      border: 2px solid var(--soft-line);
+      border-radius: 14px;
+      padding: 10px;
+      min-height: 74px;
+      background: #fff;
+    }
+
+    .mini b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .mini span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      padding: 10px 18px 18px;
+      border-top: 2px solid var(--line);
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-item {
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .notes {
+      border: 3px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 253, 248, .86);
+      padding: 18px;
+      box-shadow: 8px 8px 0 rgba(31,37,40,.12);
+    }
+
+    .notes h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+
+    .notes p,
+    .notes li {
+      color: #465057;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .notes ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .num {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-soft);
+      border: 2px solid var(--line);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .flow-step b {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 13px;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 820px) {
+      body {
+        padding: 16px;
+      }
+
+      .board {
+        grid-template-columns: 1fr;
+      }
+
+      .phone {
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <section class="phone" data-screen-label="家乡介绍草图">
+      <div class="status">
+        <span>9:41</span>
+        <span>5G  100%</span>
+      </div>
+
+      <header class="hero">
+        <div class="topbar">
+          <div class="icon-button" aria-label="返回">‹</div>
+          <div class="language">中 / 한 / EN</div>
+        </div>
+        <span class="city-kicker">山东 · 菏泽市</span>
+        <h1>菏泽</h1>
+        <p>一座以牡丹闻名的鲁西南城市，把曹州历史、黄河风物和家乡生活气息放进同一张城市名片。</p>
+        <div class="hero-sketch" aria-label="城市图片占位">
+          <div class="peony"></div>
+          <div class="river"></div>
+          <div class="gate"></div>
+        </div>
+      </header>
+
+      <nav class="tabs" aria-label="城市详情四个页面">
+        <div class="tab active"><span class="tab-icon">⌂</span><span>家乡介绍</span></div>
+        <div class="tab"><span class="tab-icon">⌖</span><span>旅游景点</span></div>
+        <div class="tab"><span class="tab-icon">◌</span><span>美食</span></div>
+        <div class="tab"><span class="tab-icon">↝</span><span>旅行路线</span></div>
+      </nav>
+
+      <section class="content">
+        <div class="image-card">
+          <div class="image-slot-large">牡丹主题<br />城市封面图</div>
+          <div class="image-stack">
+            <div class="image-slot-small">曹州古城<br />或地标</div>
+            <div class="image-slot-small">黄河湿地<br />或田园</div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="fact-card">
+            <strong>牡丹</strong>
+            <span>菏泽最强城市记忆点</span>
+          </div>
+          <div class="fact-card">
+            <strong>曹州</strong>
+            <span>历史文化与地方称谓</span>
+          </div>
+          <div class="fact-card">
+            <strong>黄河</strong>
+            <span>后续可连接旅行路线</span>
+          </div>
+        </div>
+
+        <article class="section-card">
+          <div class="section-title">
+            <h2>家乡概览</h2>
+            <small>核心介绍</small>
+          </div>
+          <p class="real-copy">菏泽位于山东省西南部，是中国牡丹文化的重要代表城市。页面用“牡丹、曹州、黄河、家乡烟火”作为主要元素，先建立城市印象，再引导用户进入景点、美食和路线页面。</p>
+          <div class="chips">
+            <span class="chip">牡丹之都</span>
+            <span class="chip">曹州文化</span>
+            <span class="chip">鲁西南</span>
+            <span class="chip">黄河风物</span>
+          </div>
+        </article>
+
+        <article class="section-card">
+          <div class="section-title">
+            <h2>城市速览</h2>
+            <small>旅行前先知道</small>
+          </div>
+          <div class="two-col">
+            <div class="mini">
+              <b>最佳季节</b>
+              <span>春季适合看牡丹，秋季适合城市慢游。</span>
+            </div>
+            <div class="mini">
+              <b>城市气质</b>
+              <span>花城气质鲜明，生活氛围朴素亲切。</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card">
+          <div class="section-title">
+            <h2>下一步入口</h2>
+            <small>引导到其他页面</small>
+          </div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line short"></div>
+          <div class="chips">
+            <span class="chip">去看景点</span>
+            <span class="chip">去找美食</span>
+            <span class="chip">查看路线</span>
+          </div>
+        </article>
+      </section>
+
+      <footer class="bottom-nav">
+        <div class="nav-item active">首页</div>
+        <div class="nav-item">收藏</div>
+        <div class="nav-item">我的</div>
+      </footer>
+    </section>
+
+    <aside class="notes">
+      <h2>审核重点</h2>
+      <p>这是一张“家乡介绍”页面草图，先确定信息顺序和手机页面结构。后续三页会沿用顶部城市 Hero 与四页面切换。</p>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">1</div>
+          <div>
+            <b>页面顶部</b>
+            <span>返回、语言切换、城市名、城市代表图，建立城市详情页身份。</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">2</div>
+          <div>
+            <b>四个页面入口</b>
+            <span>家乡介绍、旅游景点、美食、旅行路线做成并列 Tab，当前页高亮。</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">3</div>
+          <div>
+            <b>介绍内容</b>
+            <span>城市图片拼贴、数据速览、概览文字、标签、旅行前信息、跳转入口。</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>如果你想更像 Flutter 成品页，我下一版可以改成高保真深色风格。</li>
+        <li>如果作业要求更“草图”，我可以继续降低颜色和装饰，只保留框线。</li>
+      </ul>
+    </aside>
+  </main>
+</body>
+</html>
