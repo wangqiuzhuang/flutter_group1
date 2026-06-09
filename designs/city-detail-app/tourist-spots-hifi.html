@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>菏泽城市详情页 - 旅游景点高保真</title>
+  <style>
+    :root {
+      --bg: #ede7db;
+      --phone: #fbf7ef;
+      --ink: #1f2422;
+      --muted: #6c746f;
+      --line: rgba(31, 36, 34, .1);
+      --peony: #b83d62;
+      --peony-deep: #812a48;
+      --leaf: #356f56;
+      --river: #477f98;
+      --gold: #d6a94f;
+      --cream: #fff8eb;
+      --shadow: 0 28px 70px rgba(38, 33, 26, .22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(120deg, rgba(184, 61, 98, .1), transparent 42%),
+        linear-gradient(250deg, rgba(53, 111, 86, .12), transparent 40%),
+        var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, "SF Pro Text", "PingFang SC", "Noto Sans SC", sans-serif;
+      padding: 28px;
+    }
+
+    .stage {
+      width: min(100%, 980px);
+      display: grid;
+      grid-template-columns: 390px minmax(280px, 1fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .phone {
+      width: 390px;
+      height: 844px;
+      position: relative;
+      overflow: hidden;
+      border: 10px solid #171b1a;
+      border-radius: 46px;
+      background: var(--phone);
+      box-shadow: var(--shadow);
+    }
+
+    .screen {
+      height: 100%;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-bottom: 24px;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    .status {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      position: absolute;
+      inset: 0 0 auto 0;
+      z-index: 5;
+    }
+
+    .hero {
+      min-height: 330px;
+      position: relative;
+      padding: 46px 18px 18px;
+      color: #fff;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(23, 27, 26, .1), rgba(23, 27, 26, .76)),
+        radial-gradient(circle at 28% 36%, rgba(255, 204, 222, .9) 0 8%, transparent 26%),
+        radial-gradient(circle at 66% 28%, rgba(255, 234, 154, .8) 0 4%, transparent 18%),
+        linear-gradient(135deg, #b84066, #6f2948 48%, #2d5d56);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: -38px;
+      top: 76px;
+      width: 210px;
+      height: 210px;
+      border-radius: 48% 52% 44% 56%;
+      background:
+        radial-gradient(circle at 50% 50%, #ffd77a 0 12%, transparent 13%),
+        radial-gradient(circle at 36% 34%, #ffd8e6 0 20%, transparent 21%),
+        radial-gradient(circle at 64% 32%, #f5a4c0 0 22%, transparent 23%),
+        radial-gradient(circle at 36% 66%, #e26992 0 22%, transparent 23%),
+        radial-gradient(circle at 64% 66%, #c74873 0 22%, transparent 23%),
+        #a8325d;
+      filter: drop-shadow(0 22px 28px rgba(74, 15, 40, .28));
+      opacity: .92;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -54px;
+      bottom: 22px;
+      width: 270px;
+      height: 78px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.58), rgba(255,255,255,.12)),
+        var(--river);
+      transform: rotate(-9deg);
+      opacity: .9;
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .round-button,
+    .lang-button {
+      min-width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+      font-weight: 900;
+    }
+
+    .lang-button {
+      width: auto;
+      padding: 0 12px;
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      margin-top: 72px;
+    }
+
+    .province {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 13px 0 8px;
+      font-size: 48px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      width: 290px;
+      margin: 0;
+      color: rgba(255,255,255,.88);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .tab-card {
+      margin: -28px 16px 0;
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 8px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 18px 34px rgba(77, 61, 43, .14);
+      border: 1px solid rgba(255,255,255,.8);
+      backdrop-filter: blur(18px);
+    }
+
+    .tab {
+      min-height: 62px;
+      text-decoration: none;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      color: #7d807b;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .tab.active {
+      color: #fff;
+      background: linear-gradient(160deg, var(--peony), var(--peony-deep));
+      box-shadow: 0 10px 18px rgba(184, 61, 98, .28);
+    }
+
+    .tab-icon {
+      font-size: 19px;
+      line-height: 1;
+    }
+
+    .content {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 10px;
+    }
+
+    .photo {
+      min-height: 150px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
+      box-shadow: 0 18px 34px rgba(74, 62, 49, .12);
+    }
+
+    .photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 36%, rgba(0,0,0,.62));
+    }
+
+    .photo-main {
+      background:
+        radial-gradient(circle at 46% 35%, #ffe38d 0 7%, transparent 8%),
+        radial-gradient(circle at 30% 34%, #ffd4e3 0 16%, transparent 17%),
+        radial-gradient(circle at 62% 28%, #f394b6 0 17%, transparent 18%),
+        radial-gradient(circle at 40% 62%, #c84878 0 20%, transparent 21%),
+        radial-gradient(circle at 72% 64%, #8f3156 0 18%, transparent 19%),
+        linear-gradient(145deg, #eac0ce, #9f3156 55%, #2f654e);
+    }
+
+    .photo-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .photo-small {
+      min-height: 70px;
+      border-radius: 20px;
+    }
+
+    .photo-city {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.36), transparent 38%),
+        linear-gradient(135deg, #d2b06d, #8d563d 52%, #395b50);
+    }
+
+    .photo-river {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.46), transparent 35%),
+        linear-gradient(135deg, #d8e6df, #6aa0ad 48%, #d1b56f);
+    }
+
+    .photo-label {
+      position: absolute;
+      z-index: 2;
+      left: 12px;
+      right: 12px;
+      bottom: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      text-shadow: 0 2px 10px rgba(0,0,0,.32);
+    }
+
+    .photo-label small {
+      font-size: 10px;
+      font-weight: 800;
+      opacity: .86;
+    }
+
+    .section {
+      padding: 16px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 14px 30px rgba(78, 66, 52, .08);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--peony);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .intro {
+      margin: 0;
+      color: #555e59;
+      font-size: 14px;
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .stat {
+      min-height: 84px;
+      padding: 12px 10px;
+      border-radius: 20px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: space-between;
+    }
+
+    .stat b {
+      font-size: 18px;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      color: #5d2e42;
+      background: #f7e4ea;
+      border: 1px solid rgba(184,61,98,.16);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .info {
+      min-height: 92px;
+      padding: 13px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+    }
+
+    .info b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .bottom-safe {
+      height: 10px;
+    }
+
+    .spot-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .spot-card {
+      min-height: 136px;
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 14px 30px rgba(78, 66, 52, .08);
+    }
+
+    .spot-thumb {
+      border-radius: 20px;
+      min-height: 116px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spot-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.22));
+    }
+
+    .thumb-peony {
+      background:
+        radial-gradient(circle at 52% 42%, #ffe28f 0 8%, transparent 9%),
+        radial-gradient(circle at 34% 38%, #ffc7dc 0 18%, transparent 19%),
+        radial-gradient(circle at 66% 34%, #ec88ad 0 20%, transparent 21%),
+        radial-gradient(circle at 44% 68%, #b83d62 0 23%, transparent 24%),
+        linear-gradient(145deg, #f2ccdc, #963356 58%, #356f56);
+    }
+
+    .thumb-city {
+      background: linear-gradient(145deg, #dfbd78, #8f563e 52%, #344f4a);
+    }
+
+    .thumb-river {
+      background: linear-gradient(145deg, #dcece8, #5a97a6 52%, #d0b468);
+    }
+
+    .spot-copy {
+      display: grid;
+      align-content: center;
+      gap: 7px;
+    }
+
+    .spot-copy h3 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .spot-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.58;
+      font-weight: 700;
+    }
+
+    .spot-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meta-pill {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #f7e4ea;
+      color: #6b2d43;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .side-note {
+      padding: 24px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: 0 18px 40px rgba(78, 66, 52, .12);
+      backdrop-filter: blur(16px);
+    }
+
+    .side-note h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .side-note p {
+      margin: 0;
+      color: #59635d;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .audit-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .audit {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(31,36,34,.08);
+    }
+
+    .audit b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .audit span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding: 16px;
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .side-note {
+        width: min(100%, 390px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="phone" data-screen-label="菏泽旅游景点高保真">
+      <div class="status">
+        <span>9:41</span>
+        <span>5G 100%</span>
+      </div>
+
+      <div class="screen">
+        <header class="hero">
+          <div class="hero-top">
+            <div class="round-button" aria-label="返回">‹</div>
+            <div class="lang-button">中 / 한 / EN</div>
+          </div>
+          <div class="hero-copy">
+            <span class="province">山东省 · 菏泽市</span>
+            <h1>景点</h1>
+            <p>从牡丹花海到曹州古城，再到黄河风物，串起菏泽最有代表性的旅行印象。</p>
+          </div>
+        </header>
+
+        <nav class="tab-card" aria-label="城市详情四个页面">
+          <a class="tab" href="hometown-intro-hifi.html"><span class="tab-icon">⌂</span><span>家乡介绍</span></a>
+          <a class="tab active" href="tourist-spots-hifi.html"><span class="tab-icon">⌖</span><span>旅游景点</span></a>
+          <a class="tab" href="food-hifi.html"><span class="tab-icon">◌</span><span>美食</span></a>
+          <a class="tab" href="travel-route-hifi.html"><span class="tab-icon">↝</span><span>旅行路线</span></a>
+        </nav>
+
+        <section class="content">
+          <div class="gallery" aria-label="菏泽景点图片区域">
+            <div class="photo photo-main">
+              <div class="photo-label">
+                <span>曹州牡丹园</span>
+                <small>春季必看</small>
+              </div>
+            </div>
+            <div class="photo-stack">
+              <div class="photo photo-small photo-city">
+                <div class="photo-label">
+                  <span>曹州古城</span>
+                </div>
+              </div>
+              <div class="photo photo-small photo-river">
+                <div class="photo-label">
+                  <span>黄河湿地</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <b>花海</b>
+              <span>牡丹主题游览</span>
+            </div>
+            <div class="stat">
+              <b>古城</b>
+              <span>历史街区漫步</span>
+            </div>
+            <div class="stat">
+              <b>黄河</b>
+              <span>自然风物路线</span>
+            </div>
+          </div>
+
+          <article class="section">
+            <div class="section-head">
+              <h2>推荐景点</h2>
+              <span>SPOTS</span>
+            </div>
+            <div class="spot-list">
+              <div class="spot-card">
+                <div class="spot-thumb thumb-peony"></div>
+                <div class="spot-copy">
+                  <h3>曹州牡丹园</h3>
+                  <p>作为菏泽城市名片，适合放在景点页首位，突出花城印象。</p>
+                  <div class="spot-meta">
+                    <span class="meta-pill">牡丹</span>
+                    <span class="meta-pill">拍照</span>
+                  </div>
+                </div>
+              </div>
+              <div class="spot-card">
+                <div class="spot-thumb thumb-city"></div>
+                <div class="spot-copy">
+                  <h3>曹州古城</h3>
+                  <p>承接城市历史和夜游氛围，可以和美食页面形成自然联动。</p>
+                  <div class="spot-meta">
+                    <span class="meta-pill">历史</span>
+                    <span class="meta-pill">夜游</span>
+                  </div>
+                </div>
+              </div>
+              <div class="spot-card">
+                <div class="spot-thumb thumb-river"></div>
+                <div class="spot-copy">
+                  <h3>黄河湿地风物</h3>
+                  <p>用于展示菏泽的自然风光，给路线页预留一条郊游方向。</p>
+                  <div class="spot-meta">
+                    <span class="meta-pill">自然</span>
+                    <span class="meta-pill">慢游</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section">
+            <div class="section-head">
+              <h2>游览提示</h2>
+              <span>TIPS</span>
+            </div>
+            <div class="info-grid">
+              <div class="info">
+                <b>页面重点</b>
+                <span>景点页以图片卡为主，让用户快速判断想去哪里。</span>
+              </div>
+              <div class="info">
+                <b>信息层级</b>
+                <span>每个景点展示名称、简短介绍、标签，后续可加详情弹窗。</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="bottom-safe"></div>
+        </section>
+      </div>
+    </section>
+
+    <aside class="side-note">
+      <h2>旅游景点页</h2>
+      <p>沿用家乡介绍页的视觉系统，把内容重点改成景点卡片。图片区目前是 UI 内置的高保真占位，后续可以替换成真实菏泽图片。</p>
+      <div class="audit-list">
+        <div class="audit">
+          <b>视觉元素</b>
+          <span>牡丹花海、曹州古城、黄河湿地分别形成三种景点类型。</span>
+        </div>
+        <div class="audit">
+          <b>页面结构</b>
+          <span>Hero、四页 Tab、景点图片、分类数据、推荐景点列表、游览提示。</span>
+        </div>
+        <div class="audit">
+          <b>待确认</b>
+          <span>你可以重点看颜色、图片区域比例、Tab 位置、正文信息密度。</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>

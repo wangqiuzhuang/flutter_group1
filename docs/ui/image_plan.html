@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>图片增强方案</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a2e;display:flex;justify-content:center;padding:30px;gap:30px;flex-wrap:wrap;font-family:'PingFang SC',sans-serif}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{width:190px;border-radius:28px;overflow:hidden;border:5px solid #1a1a1a;background:#0a0a0a}
+.notch{width:46px;height:14px;background:#1a1a1a;border-radius:0 0 9px 9px;margin:0 auto;position:relative;z-index:10}
+.screen{background:#0d0d14;padding-top:16px;overflow:hidden}
+.label{color:rgba(255,255,255,0.5);font-size:10px;text-align:center;line-height:1.5}
+.tag{display:inline-block;padding:2px 6px;border-radius:10px;font-size:7px;font-weight:600}
+.tag-green{background:rgba(76,175,80,.2);color:#4CAF50}
+.tag-orange{background:rgba(255,152,0,.2);color:#FF9800}
+.tag-blue{background:rgba(33,150,243,.2);color:#2196F3}
+
+/* ── 位置 1: 介绍页顶部横幅 ── */
+.banner{height:100px;margin:0 10px 10px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;color:rgba(255,255,255,0.5);border:2px dashed rgba(255,255,255,0.15)}
+.banner.has{background:linear-gradient(135deg,#1a1028,#28150F);border:2px solid #C8A96E;color:#C8A96E;font-size:16px;font-weight:600}
+
+/* ── 位置 2: 景点卡片图片区 ── */
+.spot-card{width:100px;height:130px;border-radius:10px;margin-right:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.spot-img{height:65px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,0.4);border-bottom:2px dashed rgba(255,255,255,0.1)}
+.spot-img.has{font-size:22px;color:#fff;border:none}
+.spot-info{padding:5px 7px;font-size:8px;color:rgba(255,255,255,0.7)}
+.spot-info .name{font-size:9px;font-weight:600;color:#fff}
+.row-scroll{display:flex;padding:5px 10px;overflow-x:auto;gap:8px}
+
+/* ── 位置 3: 美食卡片图片区 ── */
+.food-card{width:78px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.food-img{height:42px;display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,0.4);border-bottom:2px dashed rgba(255,255,255,0.1)}
+.food-img.has{font-size:18px;color:#fff;border:none}
+.food-info{padding:4px 6px;font-size:7px;color:rgba(255,255,255,0.6)}
+.food-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px 10px}
+
+/* ── 位置 4: 详情弹窗图片轮播 ── */
+.sheet{background:#161622;border-radius:16px 16px 0 0;padding:0;overflow:hidden}
+.sheet-handle{width:28px;height:3px;background:rgba(255,255,255,0.15);border-radius:3px;margin:8px auto 0}
+.carousel{height:120px;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,0.4);border-bottom:2px dashed rgba(255,255,255,0.1);margin:6px 12px;border-radius:8px}
+.carousel.has{font-size:28px;color:#fff;border:none;background:linear-gradient(135deg,#141820,#1a1028)}
+.dots{display:flex;justify-content:center;gap:4px;margin-bottom:8px}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.2)}
+.dot.active{background:#C8A96E;width:14px;border-radius:3px}
+.sheet-info{padding:0 12px 12px;font-size:8px;color:rgba(255,255,255,0.5);line-height:1.5}
+.sheet-title{font-size:14px;font-weight:600;color:#fff;text-align:center;margin:8px 0}
+
+/* ── 位置 5: 路线封面图 ── */
+.route-cover{height:55px;margin:0 10px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.4);border:2px dashed rgba(255,255,255,0.1)}
+.route-cover.has{font-size:20px;color:#fff;border:2px solid #C8A96E;background:linear-gradient(135deg,#081420,#14202A)}
+</style>
+</head>
+<body>
+
+<!-- ══ 图1: 介绍页顶部横幅 ══ -->
+<div class="col">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen" style="height:300px;overflow-y:auto">
+      <div class="banner has">[太原全景横幅 750×300]</div>
+      <div style="padding:5px 10px;font-size:8px;color:rgba(255,255,255,0.7);line-height:1.6">
+        <div style="font-size:10px;font-weight:600;color:#C8A96E;margin-bottom:4px">📊 城市统计</div>
+        人口551万 · 历史2500+年 · 4A+景区<br>
+        太原古称晋阳、并州，也被称作"龙城"...
+      </div>
+    </div>
+  </div>
+  <div class="label"><span class="tag tag-green">位置 1</span><br>介绍 Tab 顶部<br>城市全景横幅</div>
+</div>
+
+<!-- ══ 图2: 景点卡片 + 详情轮播 ══ -->
+<div class="col">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div style="font-size:9px;font-weight:600;color:#fff;padding:0 10px 4px">🏯 代表景点</div>
+      <div class="row-scroll">
+        <div class="spot-card"><div class="spot-img has">🏯 [图]</div><div class="spot-info"><div class="name">晋祠</div>¥80 · 5A</div></div>
+        <div class="spot-card"><div class="spot-img has">🏛️ [图]</div><div class="spot-info"><div class="name">博物院</div>免费 · 4A</div></div>
+        <div class="spot-card"><div class="spot-img has">🗼 [图]</div><div class="spot-info"><div class="name">双塔</div>¥30 · 4A</div></div>
+      </div>
+      <!-- 详情弹窗 -->
+      <div style="margin:8px">
+        <div class="sheet">
+          <div class="sheet-handle"></div>
+          <div class="carousel has">🏯 [晋祠实景 1/3]</div>
+          <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+          <div class="sheet-title">晋祠</div>
+          <div class="sheet-info">中国现存最早的皇家祭祀园林...<br>🕐 08:00-18:00<br>📍 太原市晋源区</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="label"><span class="tag tag-orange">位置 2+4</span><br>景点卡片 +<br>详情图片轮播</div>
+</div>
+
+<!-- ══ 图3: 美食卡片 ══ -->
+<div class="col">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div style="font-size:9px;font-weight:600;color:#fff;padding:0 10px 4px">🍜 代表美食</div>
+      <div class="food-grid">
+        <div class="food-card"><div class="food-img has">🍜 [图]</div><div class="food-info"><b>刀削面</b><br>山西面食名片 ★5</div></div>
+        <div class="food-card"><div class="food-img">🥩</div><div class="food-info"><b>过油肉</b><br>晋菜头牌 ★4</div></div>
+        <div class="food-card"><div class="food-img has">🍲 [图]</div><div class="food-info"><b>头脑</b><br>太原独有药膳 ★3</div></div>
+        <div class="food-card"><div class="food-img">🐑</div><div class="food-info"><b>羊杂割</b><br>冬日暖身 ★4</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="label"><span class="tag tag-orange">位置 3</span><br>美食卡片图片区<br>有图显示/无图保留emoji</div>
+</div>
+
+<!-- ══ 图4: 路线封面 ══ -->
+<div class="col">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen" style="height:270px">
+      <div style="font-size:9px;font-weight:600;color:#fff;padding:5px 10px 3px">🗺️ 龙城印象</div>
+      <div class="route-cover has">[太原城市封面 400×150]</div>
+      <div style="padding:8px 10px;font-size:8px;color:rgba(255,255,255,0.6);line-height:1.8">
+        ① 晋祠 · 08:00<br>
+        ② 山西博物院 · 13:00<br>
+        ③ 柳巷夜市 · 19:00<br>
+        ④ 双塔+蒙山 · 09:00
+      </div>
+    </div>
+  </div>
+  <div class="label"><span class="tag tag-blue">位置 5</span><br>路线封面图<br>每条路线一张</div>
+</div>
+
+</body>
+</html>
