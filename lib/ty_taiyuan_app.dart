@@ -11,33 +11,13 @@
 
 import 'package:flutter/material.dart';
 import 'ty_app.dart';
-import 'ty_city_page.dart';
-import 'ty_taiyuan/ty_taiyuan_intro.dart';
-import 'ty_taiyuan/ty_taiyuan_spots.dart';
-import 'ty_taiyuan/ty_taiyuan_food.dart';
-import 'ty_taiyuan/ty_taiyuan_routes.dart';
+import 'ty_home_page.dart';
 
 /// 太原城市 App
 /// 其他成员参考此结构，替换 tabs 为自己的 Tab 内容
 class TaiyuanApp extends StatelessWidget {
   const TaiyuanApp();
 
-  /// 太原专属：4 个 Tab 的背景色 + emoji
-  static const _heroBg = [
-    (color: Color(0xFF1a1028), emoji: '🏯'),
-    (color: Color(0xFF0f1a14), emoji: '🌲'),
-    (color: Color(0xFF1a0d08), emoji: '🍲'),
-    (color: Color(0xFF081420), emoji: '🗺️'),
-  ];
-
   @override
-  Widget build(BuildContext context) => MyApp(home: CityPage(
-    tabs: const [
-      TaiyuanIntroTab(),
-      TaiyuanSpotsTab(),
-      TaiyuanFoodTab(),
-      TaiyuanRoutesTab(),
-    ],
-    heroBackgrounds: _heroBg,
-  ));
+  Widget build(BuildContext context) => const MyApp(home: TyHomePage());
 }

@@ -1,0 +1,36 @@
+{
+  "type": "design",
+  "designSystems": [],
+  "primaryDesignSystem": null,
+  "assets": {
+    "太原城市详情优化版": {
+      "versions": [
+        {
+          "path": "taiyuan-city-optimized.html",
+          "createdAt": "2026-06-09T13:00:08.310Z",
+          "status": "needs-review"
+        }
+      ]
+    },
+    "太原城市手账导览版": {
+      "versions": [
+        {
+          "path": "taiyuan-city-guidebook.html",
+          "createdAt": "2026-06-09T13:04:25.507Z",
+          "status": "needs-review"
+        }
+      ]
+    },
+    "太原原稿提亮版": {
+      "versions": [
+        {
+          "path": "taiyuan-original-lightened.html",
+          "createdAt": "2026-06-09T13:15:19.530Z",
+          "status": "needs-review"
+        }
+      ]
+    }
+  },
+  "createdAt": "2026-06-09T13:00:08.311Z",
+  "updatedAt": "2026-06-09T13:15:19.530Z"
+}

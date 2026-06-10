@@ -1,130 +1,114 @@
 // ============================================
 // 文件: lib/ty_shared/ty_widgets.dart
-// 用途: 共用 UI 组件（标签、卡片、统计格、列表项等）
+// 用途: 共用 UI 组件 — 浅色主题 v2
 // 作者: testerwm
 // 创建: 2026-06-09
-// 说明: 所有城市页面共用，不包含城市专属数据
-//       如需城市专属样式，在 lib/cities/<name>/ 下覆盖
-//       视觉增强：毛玻璃面板 + 杂志感排版
+// 说明: 白色卡片 + 砖红强调 + 晋商金点缀
 // ============================================
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'ty_colors.dart';
 
-// ── 毛玻璃装饰 ──
+// ── 卡片装饰（白色 + 阴影 + 细边框） ──
 
-/// 面板毛玻璃样式（半透明 + 微秒边框，无 BackdropFilter 性能开销）
-BoxDecoration glassDecoration({double radius = 12}) {
+BoxDecoration cardDecoration({double radius = 14}) {
   return BoxDecoration(
-    color: AppColors.panelGlass,
+    color: AppColors.bgCard,
     borderRadius: BorderRadius.circular(radius),
-    border: Border.all(color: AppColors.glassBorder),
-  );
-}
-
-/// 毛玻璃包装容器
-class GlassBox extends StatelessWidget {
-  final Widget child;
-  final double radius;
-  final EdgeInsetsGeometry padding;
-  const GlassBox({
-    required this.child,
-    this.radius = 12,
-    this.padding = const EdgeInsets.all(14),
-  });
-
-  @override
-  Widget build(BuildContext c) => Container(
-    width: double.infinity,
-    padding: padding,
-    decoration: glassDecoration(radius: radius),
-    child: child,
-  );
-}
-
-// ── 文字标签 ──
-
-class GoldPill extends StatelessWidget {
-  final String text;
-  const GoldPill(this.text);
-  @override
-  Widget build(BuildContext c) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    decoration: BoxDecoration(
-      color: AppColors.gold.withValues(alpha: .16),
-      borderRadius: BorderRadius.circular(999),
-      border: Border.all(color: AppColors.gold.withValues(alpha: .32)),
-    ),
-    child: Text(
-      text,
-      style: const TextStyle(
-        color: AppColors.gold,
-        fontSize: 11,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.3,
-      ),
-    ),
-  );
-}
-
-class DimPill extends StatelessWidget {
-  final String text;
-  const DimPill(this.text);
-  @override
-  Widget build(BuildContext c) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    decoration: BoxDecoration(
-      color: AppColors.textPrimary.withValues(alpha: .07),
-      borderRadius: BorderRadius.circular(999),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(
-        color: AppColors.textPrimary.withValues(alpha: .52),
-        fontSize: 11,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  );
-}
-
-/// 带英文小标的标题（杂志感排版）
-class SectionTitle extends StatelessWidget {
-  final String text;
-  final String? kicker;
-  const SectionTitle(this.text, {this.kicker});
-
-  @override
-  Widget build(BuildContext c) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      if (kicker != null) ...[
-        Text(
-          kicker!,
-          style: const TextStyle(
-            color: AppColors.gold,
-            fontSize: 8,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 2.5,
-          ),
-        ),
-        const SizedBox(height: 4),
-      ],
-      Text(
-        text,
-        style: const TextStyle(
-          color: AppColors.textPrimary,
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-          height: 1.3,
-        ),
+    border: Border.all(color: AppColors.border2),
+    boxShadow: const [
+      BoxShadow(
+        color: AppColors.shadowLight,
+        blurRadius: 12,
+        offset: Offset(0, 2),
       ),
     ],
   );
 }
 
-// ── 统计格 ──
+// ── 标签 ──
+
+class AccentPill extends StatelessWidget {
+  final String text;
+  final bool highlight;
+  const AccentPill(this.text, {this.highlight = true});
+
+  @override
+  Widget build(BuildContext c) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    decoration: BoxDecoration(
+      color: highlight ? AppColors.goldBg : AppColors.bgCard,
+      borderRadius: BorderRadius.circular(100),
+      border: Border.all(
+        color: highlight ? AppColors.goldBorder : AppColors.border,
+      ),
+    ),
+    child: Text(
+      text,
+      style: TextStyle(
+        color: highlight ? AppColors.gold : AppColors.ink3,
+        fontSize: 10,
+        fontWeight: highlight ? FontWeight.w500 : FontWeight.w400,
+      ),
+    ),
+  );
+}
+
+/// 兼容旧名
+class GoldPill extends StatelessWidget {
+  final String text;
+  const GoldPill(this.text);
+
+  @override
+  Widget build(BuildContext c) => AccentPill(text);
+}
+
+class DimPill extends StatelessWidget {
+  final String text;
+  const DimPill(this.text);
+
+  @override
+  Widget build(BuildContext c) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    decoration: BoxDecoration(
+      color: AppColors.bgCard,
+      borderRadius: BorderRadius.circular(100),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Text(
+      text,
+      style: const TextStyle(
+        color: AppColors.ink3,
+        fontSize: 10,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
+  );
+}
+
+// ── 标题 ──
+
+class SectionTitle extends StatelessWidget {
+  final String text;
+  const SectionTitle(this.text);
+
+  @override
+  Widget build(BuildContext c) => Padding(
+    padding: const EdgeInsets.only(bottom: 8),
+    child: Text(
+      text,
+      style: const TextStyle(
+        color: AppColors.ink,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+      ),
+    ),
+  );
+}
+
+// ── 统计卡片 ──
 
 class StatTile extends StatelessWidget {
   final String value, label;
@@ -132,28 +116,26 @@ class StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 13),
-    decoration: glassDecoration(),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+    decoration: cardDecoration(),
     child: Column(children: [
       Text(
         value,
         maxLines: 1,
         style: const TextStyle(
-          color: AppColors.gold,
-          fontSize: 20,
-          fontWeight: FontWeight.w200,
-          height: 1.1,
-          letterSpacing: -0.5,
+          color: AppColors.red,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          height: 1.2,
         ),
       ),
-      const SizedBox(height: 5),
+      const SizedBox(height: 2),
       Text(
         label,
         maxLines: 1,
-        style: TextStyle(
-          color: AppColors.textPrimary.withValues(alpha: .38),
-          fontSize: 10,
-          letterSpacing: 0.3,
+        style: const TextStyle(
+          color: AppColors.ink4,
+          fontSize: 9,
         ),
       ),
     ]),
@@ -174,7 +156,7 @@ class StatsRow extends StatelessWidget {
   ]);
 }
 
-// ── 信息格 ──
+// ── 信息卡片 ──
 
 class InfoTile extends StatelessWidget {
   final String label, value;
@@ -182,29 +164,22 @@ class InfoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-    decoration: glassDecoration(),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+    decoration: cardDecoration(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: AppColors.textPrimary.withValues(alpha: .36),
-            fontSize: 10,
-            letterSpacing: 0.5,
-          ),
-        ),
+        Text(label, style: const TextStyle(color: AppColors.ink4, fontSize: 9)),
         const SizedBox(height: 3),
         Text(
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
+            color: AppColors.ink,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],
@@ -238,19 +213,22 @@ class TextBlock extends StatelessWidget {
   const TextBlock(this.text);
 
   @override
-  Widget build(BuildContext c) => GlassBox(
+  Widget build(BuildContext c) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+    decoration: cardDecoration(),
     child: Text(
       text,
-      style: TextStyle(
-        color: AppColors.textPrimary.withValues(alpha: .62),
-        fontSize: 12,
-        height: 1.8,
+      style: const TextStyle(
+        color: AppColors.ink3,
+        fontSize: 11,
+        height: 1.6,
       ),
     ),
   );
 }
 
-// ── 触觉反馈包装 ──
+// ── 触觉反馈 ──
 
 class HapticTap extends StatelessWidget {
   final VoidCallback onTap;
@@ -267,7 +245,7 @@ class HapticTap extends StatelessWidget {
   );
 }
 
-// ── 占位图 ──
+// ── 占位图（浅色版） ──
 
 class PlaceholderImage extends StatelessWidget {
   final String emoji;
@@ -278,7 +256,7 @@ class PlaceholderImage extends StatelessWidget {
     required this.emoji,
     required this.height,
     required this.bg,
-    this.radius = 12,
+    this.radius = 14,
   });
 
   @override
@@ -289,53 +267,17 @@ class PlaceholderImage extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          bg.withValues(alpha: .9),
-          Color.lerp(bg, Colors.black, .35)!,
-        ],
+        colors: [bg, Color.lerp(bg, const Color(0xFF3D3528), 0.18)!],
       ),
     ),
     clipBehavior: Clip.antiAlias,
-    child: Stack(
-      fit: StackFit.expand,
-      children: [
-        // 装饰圆
-        Positioned(
-          right: -12,
-          top: -8,
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withValues(alpha: .06),
-            ),
-          ),
-        ),
-        Positioned(
-          left: -10,
-          bottom: -14,
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withValues(alpha: .04),
-            ),
-          ),
-        ),
-        Center(
-          child: Text(
-            emoji,
-            style: TextStyle(fontSize: height > 60 ? 38 : 26),
-          ),
-        ),
-      ],
+    child: Center(
+      child: Text(emoji, style: TextStyle(fontSize: height * 0.5)),
     ),
   );
 }
 
-// ── 卡片组件 ──
+// ── 景点卡片（横向滚动） ──
 
 class SpotCard extends StatelessWidget {
   final String emoji, name, badge, price, tag;
@@ -351,12 +293,13 @@ class SpotCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) => Container(
-    width: 116,
+    width: 130,
     margin: const EdgeInsets.only(right: 10),
-    decoration: glassDecoration(radius: 13),
+    decoration: cardDecoration(radius: 14),
+    clipBehavior: Clip.antiAlias,
     child: Column(children: [
       Stack(children: [
-        PlaceholderImage(emoji: emoji, height: 78, bg: bg, radius: 12),
+        PlaceholderImage(emoji: emoji, height: 88, bg: bg),
         if (badge.isNotEmpty)
           Positioned(
             top: 7,
@@ -364,50 +307,48 @@ class SpotCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
               decoration: BoxDecoration(
-                color: AppColors.gold.withValues(alpha: .92),
-                borderRadius: BorderRadius.circular(5),
+                color: AppColors.gold,
+                borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
                 badge,
                 style: const TextStyle(
-                  color: Color(0xFF1a0f00),
-                  fontSize: 8,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 9,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
                 ),
               ),
             ),
           ),
       ]),
       Padding(
-        padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               name,
               style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 11,
+                color: AppColors.ink,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             Row(children: [
               Text(
                 price,
                 style: const TextStyle(
-                  color: AppColors.gold,
-                  fontSize: 9,
-                  fontWeight: FontWeight.w500,
+                  color: AppColors.red,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(width: 6),
               Text(
                 tag,
-                style: TextStyle(
-                  color: AppColors.textPrimary.withValues(alpha: .36),
-                  fontSize: 8,
-                ),
+                style: const TextStyle(color: AppColors.ink4, fontSize: 9),
               ),
             ]),
           ],
@@ -416,6 +357,8 @@ class SpotCard extends StatelessWidget {
     ]),
   );
 }
+
+// ── 美食卡片（网格） ──
 
 class FoodCard extends StatelessWidget {
   final String emoji, name, sub;
@@ -432,65 +375,120 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext c) => Container(
-    decoration: glassDecoration(radius: 12),
+    decoration: cardDecoration(radius: 14),
+    clipBehavior: Clip.antiAlias,
     child: Column(children: [
-      PlaceholderImage(emoji: emoji, height: 48, bg: bg, radius: 11),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(9, 6, 9, 6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                ),
+      PlaceholderImage(emoji: emoji, height: 80, bg: bg),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: const TextStyle(
+                color: AppColors.ink,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(height: 1),
-              Text(
-                sub,
-                style: TextStyle(
-                  color: AppColors.textPrimary.withValues(alpha: .38),
-                  fontSize: 8,
-                ),
-              ),
-              const Spacer(),
-              Row(
-                children: List.generate(5, (i) {
-                  final active = i < heat;
-                  return TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0.0, end: 1.0),
-                    duration: Duration(
-                      milliseconds: 180 + delay + i * 40,
+            ),
+            const SizedBox(height: 2),
+            Text(
+              sub,
+              style: const TextStyle(color: AppColors.ink3, fontSize: 9),
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: List.generate(5, (i) {
+                final active = i < heat;
+                return TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.0, end: 1.0),
+                  duration: Duration(milliseconds: 180 + delay + i * 40),
+                  builder: (_, v, child) => Opacity(
+                    opacity: active ? v : 0.15,
+                    child: Transform.scale(
+                      scale: active ? 0.6 + v * 0.4 : 1.0,
+                      child: child,
                     ),
-                    builder: (_, v, child) => Opacity(
-                      opacity: active ? v : 0.12,
-                      child: Transform.scale(
-                        scale: active ? 0.6 + v * 0.4 : 1.0,
-                        child: child,
-                      ),
+                  ),
+                  child: Container(
+                    width: 6,
+                    height: 6,
+                    margin: const EdgeInsets.only(right: 3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: active
+                          ? AppColors.red2
+                          : AppColors.border,
                     ),
-                    child: Container(
-                      width: 4,
-                      height: 4,
-                      margin: const EdgeInsets.only(right: 2),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: active
-                            ? const Color(0xFFe05c30)
-                            : AppColors.textPrimary.withValues(alpha: .12),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ],
-          ),
+                  ),
+                );
+              }),
+            ),
+          ],
         ),
       ),
     ]),
+  );
+}
+
+// ── 路线步骤点 ──
+
+class RouteStepDot extends StatelessWidget {
+  final int step;
+  const RouteStepDot(this.step);
+
+  @override
+  Widget build(BuildContext c) => Container(
+    width: 24,
+    height: 24,
+    decoration: BoxDecoration(
+      color: AppColors.red,
+      shape: BoxShape.circle,
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0x59B84C2E),
+          blurRadius: 8,
+          offset: Offset(0, 2),
+        ),
+      ],
+    ),
+    child: Center(
+      child: Text(
+        '$step',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+  );
+}
+
+/// 虚线（用 dashed border 模拟）
+class DashedLine extends StatelessWidget {
+  final double height;
+  const DashedLine({this.height = 32});
+
+  @override
+  Widget build(BuildContext c) => Container(
+    width: 2,
+    height: height,
+    margin: const EdgeInsets.symmetric(vertical: 4),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(2),
+      gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          AppColors.red2,
+          AppColors.red2,
+          Colors.transparent,
+          Colors.transparent,
+        ],
+        stops: [0.0, 0.5, 0.5, 1.0],
+      ),
+    ),
   );
 }
