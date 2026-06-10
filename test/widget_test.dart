@@ -27,6 +27,20 @@ void main() {
     expect(find.text('景点'), findsOneWidget);
     expect(find.text('美食'), findsOneWidget);
     expect(find.text('路线'), findsOneWidget);
+
+    await tester.pump(const Duration(milliseconds: 700));
+    await tester.tapAt(const Offset(720, 100));
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump();
+
+    expect(find.text('旅行助手'), findsOneWidget);
+    expect(find.text('了解太原城市信息'), findsOneWidget);
+
+    await tester.tapAt(const Offset(400, 80));
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump();
+
+    expect(find.text('旅行助手'), findsNothing);
   });
 }
 

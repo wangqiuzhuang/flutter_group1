@@ -14,6 +14,7 @@ class CityHeroHeader extends StatelessWidget {
   final int tab;
   final String provinceKey, cityKey, subtitleKey;
   final List<({Color color, String emoji})> backgrounds;
+  final VoidCallback? onLogoTap;
 
   const CityHeroHeader({
     required this.tab,
@@ -21,6 +22,7 @@ class CityHeroHeader extends StatelessWidget {
     this.cityKey = 'heroCityName',
     this.subtitleKey = 'heroSubtitle',
     required this.backgrounds,
+    this.onLogoTap,
   });
 
   @override
@@ -90,7 +92,19 @@ class CityHeroHeader extends StatelessWidget {
           ),
           SizedBox(width: (18.0 * s).clamp(10.0, 24.0)),
           // 右侧 Emoji — 与 Pill 对齐
-          Text(d.emoji, style: TextStyle(fontSize: emojiSize)),
+          Semantics(
+            button: onLogoTap != null,
+            label: '打开旅行助手',
+            child: GestureDetector(
+              onTap: onLogoTap,
+              child: MouseRegion(
+                cursor: onLogoTap == null
+                    ? SystemMouseCursors.basic
+                    : SystemMouseCursors.click,
+                child: Text(d.emoji, style: TextStyle(fontSize: emojiSize)),
+              ),
+            ),
+          ),
         ],
       ),
     );

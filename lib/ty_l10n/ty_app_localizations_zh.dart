@@ -366,4 +366,19 @@ const Map<String, String> zhTranslations = {
   'introFoodText': '太原是"中国面食之乡"，面食种类超过 280 种。山西老陈醋与面食密不可分——一碗好面，三份在面，七份在醋。太原人吃面讲究"面、菜、汤、醋"四绝，缺一不可。来到太原，一定要尝一碗地道的刀削面。',
   'introTransport': '交通贴士',
   'introTransportText': '✈️ 太原武宿国际机场，距市区约 15 公里，地铁 2 号线可直达。\n🚄 太原南站（高铁站），太原站（普速站），均在市中心。\n🚇 地铁 2 号线贯通南北，覆盖主要商圈和景点。\n🚌 公交线路密集，支持支付宝/微信扫码乘车。',
+
+  // ── AI 助手 ──
+  'aiTitle': '旅行助手',
+  'aiSubtitle': '了解太原城市信息',
+  'aiClose': '关闭',
+  'aiQuickFood': '🍜 美食推荐',
+  'aiQuickSpots': '🏛️ 景点介绍',
+  'aiQuickHistory': '📚 城市历史',
+  'aiQuickRoute': '🗺️ 旅行路线',
+  'aiPlaceholder': '输入你的问题...',
+  'aiWaiting': '等待回复中...',
+  'aiGreeting': '你好！👋 我是太原旅行助手，很高兴认识你。我可以帮你了解太原的美食、景点、历史文化和旅行路线。你想了解些什么呢？',
+  'aiNetworkError': '网络连接失败，请检查代理服务器是否已启动',
+  'aiTimeoutError': '请求超时，请稍后重试',
+  'aiUnknownError': '请求失败，请稍后重试',
 };
