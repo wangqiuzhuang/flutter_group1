@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_group1/ty_taiyuan_app.dart';
+import 'package:flutter_group1/ty/ty_taiyuan_app.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
 /// 太原城市 App 测试
