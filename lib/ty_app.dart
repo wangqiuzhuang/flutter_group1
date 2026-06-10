@@ -43,7 +43,15 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      theme: ThemeData(useMaterial3: true, scaffoldBackgroundColor: AppColors.ink, colorScheme: ColorScheme.fromSeed(seedColor: AppColors.gold, brightness: Brightness.dark, surface: AppColors.panel)),
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.bg,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.red,
+          brightness: Brightness.light,
+          surface: AppColors.bgCard,
+        ),
+      ),
       home: widget.home,
     );
   }
