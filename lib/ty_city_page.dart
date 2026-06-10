@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'ty_l10n/ty_app_localizations.dart';
 import 'ty_shared/ty_colors.dart';
+import 'ty_shared/ty_ai_assistant_sheet.dart';
 import 'ty_shared/ty_hero_header.dart';
 import 'ty_shared/ty_tab_row.dart';
 import 'ty_shared/ty_lang_sheet.dart';
@@ -78,101 +79,82 @@ class _CityPageState extends State<CityPage> {
       backgroundColor: AppColors.bg,
       body: SafeArea(
         bottom: false,
-        child: Stack(children: [
-          // ── 主内容 ──
-          Column(children: [
-            // ── 返回首页按钮（Hero 上方独立空间）──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 8, 0, 0),
-              child: Row(children: [
-                GestureDetector(
-                  onTap: () => Navigator.of(context).maybePop(),
+        child: Stack(
+          children: [
+            // ── 主内容 ──
+            Column(
+              children: [
+                CityHeroHeader(
+                  tab: _tab,
+                  provinceKey: widget.provinceKey,
+                  cityKey: widget.cityKey,
+                  subtitleKey: widget.subtitleKey,
+                  backgrounds: widget.heroBackgrounds,
+                  onLogoTap: () => showTyAiAssistantSheet(context),
+                ),
+                CityTabRow(
+                  tabs: tabNames,
+                  pageCtrl: _pageCtrl,
+                  onTap: (i) => _pageCtrl.animateToPage(
+                    i,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  ),
+                ),
+                Expanded(
+                  child: PageView(
+                    controller: _pageCtrl,
+                    onPageChanged: (i) => setState(() {
+                      _tab = i;
+                      CityPage.activeTab.value = i;
+                    }),
+                    children: widget.tabs,
+                  ),
+                ),
+              ],
+            ),
+            // ── 可拖动语言按钮 ──
+            if (_langReady)
+              Positioned(
+                left: _langX,
+                top: _langY,
+                child: GestureDetector(
+                  onPanUpdate: (d) {
+                    setState(() {
+                      _langX = (_langX + d.delta.dx).clamp(
+                        4.0,
+                        MediaQuery.of(context).size.width - 36,
+                      );
+                      _langY = (_langY + d.delta.dy).clamp(
+                        4.0,
+                        MediaQuery.of(context).size.height - 80,
+                      );
+                    });
+                  },
+                  onTap: () => showLangSheet(context),
                   child: Container(
-                    width: 28,
-                    height: 28,
+                    width: 30,
+                    height: 30,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.bgCard,
-                      border: Border.all(color: AppColors.goldBorder, width: 1.2),
+                      color: AppColors.goldBg,
+                      border: Border.all(color: AppColors.goldBorder),
                       boxShadow: const [
                         BoxShadow(
-                          color: AppColors.shadowMid,
-                          blurRadius: 8,
+                          color: AppColors.shadowLight,
+                          blurRadius: 6,
                           offset: Offset(0, 2),
                         ),
                       ],
                     ),
                     child: const Center(
-                      child: Icon(Icons.arrow_back_rounded, size: 16, color: AppColors.gold),
+                      child: Text('🌐', style: TextStyle(fontSize: 14)),
                     ),
                   ),
                 ),
-              ]),
-            ),
-            CityHeroHeader(
-                tab: _tab,
-                provinceKey: widget.provinceKey,
-                cityKey: widget.cityKey,
-                subtitleKey: widget.subtitleKey,
-                backgrounds: widget.heroBackgrounds,
               ),
-              CityTabRow(
-                tabs: tabNames,
-                pageCtrl: _pageCtrl,
-                onTap: (i) => _pageCtrl.animateToPage(
-                  i,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                ),
-              ),
-              Expanded(
-                child: PageView(
-                  controller: _pageCtrl,
-                  onPageChanged: (i) => setState(() {
-                    _tab = i;
-                    CityPage.activeTab.value = i;
-                  }),
-                  children: widget.tabs,
-                ),
-              ),
-            ]),
-          // ── 可拖动语言按钮 ──
-          if (_langReady)
-            Positioned(
-              left: _langX,
-              top: _langY,
-              child: GestureDetector(
-                onPanUpdate: (d) {
-                  setState(() {
-                    _langX = (_langX + d.delta.dx)
-                        .clamp(4.0, MediaQuery.of(context).size.width - 36);
-                    _langY = (_langY + d.delta.dy)
-                        .clamp(4.0, MediaQuery.of(context).size.height - 80);
-                  });
-                },
-                onTap: () => showLangSheet(context),
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.goldBg,
-                    border: Border.all(color: AppColors.goldBorder),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: AppColors.shadowLight,
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text('🌐', style: TextStyle(fontSize: 14)),
-                  ),
-                ),
-              ),
-            ),
-        ]),
+          ],
+        ),
       ),
     );
   }

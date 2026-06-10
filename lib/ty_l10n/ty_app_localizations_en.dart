@@ -368,4 +368,19 @@ const Map<String, String> enTranslations = {
   'introFoodText': 'Taiyuan is the "Noodle Capital of China" with over 280 varieties of noodles. Shanxi aged vinegar is inseparable from its noodle culture — a good bowl of noodles is 30% noodle and 70% vinegar. The Taiyuan noodle philosophy demands four perfections: noodle, topping, broth, and vinegar. Don\'t leave without trying authentic knife-cut noodles.',
   'introTransport': 'Getting Around',
   'introTransportText': '✈️ Taiyuan Wusu International Airport — ~15 km from downtown, Metro Line 2 connects directly.\n🚄 Taiyuan South (high-speed) & Taiyuan Station (regular) — both centrally located.\n🚇 Metro Line 2 runs north-south, covering major commercial areas and attractions.\n🚌 Extensive bus network; Alipay/WeChat scan-to-ride supported.',
+
+  // ── AI Assistant ──
+  'aiTitle': 'Travel Assistant',
+  'aiSubtitle': 'Learn about Taiyuan',
+  'aiClose': 'Close',
+  'aiQuickFood': '🍜 Food',
+  'aiQuickSpots': '🏛️ Spots',
+  'aiQuickHistory': '📚 History',
+  'aiQuickRoute': '🗺️ Routes',
+  'aiPlaceholder': 'Ask me anything...',
+  'aiWaiting': 'Waiting for reply...',
+  'aiGreeting': 'Hello! 👋 I\'m your Taiyuan travel assistant. I can help you learn about Taiyuan\'s food, attractions, history, and travel routes. What would you like to know?',
+  'aiNetworkError': 'Connection failed. Please check if the proxy server is running.',
+  'aiTimeoutError': 'Request timed out. Please try again later.',
+  'aiUnknownError': 'Request failed. Please try again later.',
 };
