@@ -1,12 +1,11 @@
 // ============================================
 // 文件: lib/main.dart
 // 用途: App 启动入口（当前: 太原）
-// 作者: testerwm
 // 说明: 切换到其他城市时，替换 runApp 中的 App 即可
 //       例如: runApp(const ChengduApp())
 // ============================================
 
 import 'package:flutter/material.dart';
-import 'ty_taiyuan_app.dart';
+import 'ty/ty_taiyuan_app.dart';
 
 void main() => runApp(const TaiyuanApp());
