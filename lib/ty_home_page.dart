@@ -44,6 +44,66 @@ class TyHomePage extends StatelessWidget {
       emoji: '🌸',
       colors: [Color(0xFFE8E0F0), Color(0xFFD0C8E0)],
     ),
+    _HomeCity(
+      name: '南京',
+      desc: '六朝古都 · 十里秦淮',
+      emoji: '🏮',
+      colors: [Color(0xFFF0E8E0), Color(0xFFE0D0C0)],
+    ),
+    _HomeCity(
+      name: '苏州',
+      desc: '园林古城 · 人间天堂',
+      emoji: '🌊',
+      colors: [Color(0xFFE8F0F0), Color(0xFFD0E0E0)],
+    ),
+    _HomeCity(
+      name: '武汉',
+      desc: '九省通衢 · 江汉明珠',
+      emoji: '🌉',
+      colors: [Color(0xFFF0F0E8), Color(0xFFE0E0D0)],
+    ),
+    _HomeCity(
+      name: '重庆',
+      desc: '山城夜景 · 火锅之都',
+      emoji: '🏔️',
+      colors: [Color(0xFFF5E8E0), Color(0xFFE8D0C0)],
+    ),
+    _HomeCity(
+      name: '广州',
+      desc: '花城商都 · 食在广州',
+      emoji: '🌺',
+      colors: [Color(0xFFF8E0E8), Color(0xFFE8C0D0)],
+    ),
+    _HomeCity(
+      name: '深圳',
+      desc: '鹏城创新 · 科技之窗',
+      emoji: '🌴',
+      colors: [Color(0xFFE0F0E8), Color(0xFFC8E0D0)],
+    ),
+    _HomeCity(
+      name: '长沙',
+      desc: '星城热辣 · 湘味之魂',
+      emoji: '🔥',
+      colors: [Color(0xFFF8E8E0), Color(0xFFF0D0C0)],
+    ),
+    _HomeCity(
+      name: '厦门',
+      desc: '海上花园 · 文艺鹭岛',
+      emoji: '🏖️',
+      colors: [Color(0xFFE0F0F8), Color(0xFFC8E0F0)],
+    ),
+    _HomeCity(
+      name: '青岛',
+      desc: '红瓦绿树 · 啤酒之都',
+      emoji: '🍺',
+      colors: [Color(0xFFE8F0E8), Color(0xFFD0E0D0)],
+    ),
+    _HomeCity(
+      name: '昆明',
+      desc: '春城花都 · 云岭之南',
+      emoji: '🦚',
+      colors: [Color(0xFFF0E8F0), Color(0xFFE0D0E0)],
+    ),
   ];
 
   @override
