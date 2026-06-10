@@ -6,6 +6,6 @@
 // ============================================
 
 import 'package:flutter/material.dart';
-import 'ty_taiyuan_app.dart';
+import 'ty/ty_taiyuan_app.dart';
 
 void main() => runApp(const TaiyuanApp());
