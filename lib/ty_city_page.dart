@@ -1,10 +1,8 @@
 // ============================================
 // 文件: lib/ty_city_page.dart
-// 用途: 城市页面框架（Hero + Tab栏 + 内容区 + 滑动切换）
+// 用途: 城市页面框架 — 浅色主题 v2 + 可拖动语言按钮
 // 作者: testerwm
 // 创建: 2026-06-09
-// 说明: 所有城市页面共用此框架，
-//       只需传入 4 个 Tab 内容 Widget + Hero 背景配置
 // ============================================
 
 import 'package:flutter/material.dart';
@@ -15,18 +13,10 @@ import 'ty_shared/ty_tab_row.dart';
 import 'ty_shared/ty_lang_sheet.dart';
 
 class CityPage extends StatefulWidget {
-  /// 当前激活的 Tab 索引，供子组件（如视频）判断是否可见
   static final ValueNotifier<int> activeTab = ValueNotifier(0);
-  /// 4 个 Tab 的内容 Widget
   final List<Widget> tabs;
-
-  /// Hero 背景配置（每个 Tab 一个背景色+emoji）
   final List<({Color color, String emoji})> heroBackgrounds;
-
-  /// Hero 中 l10n key 前缀（默认 heroProvince / heroCityName / heroSubtitle）
-  final String provinceKey;
-  final String cityKey;
-  final String subtitleKey;
+  final String provinceKey, cityKey, subtitleKey;
 
   const CityPage({
     required this.tabs,
@@ -42,33 +32,148 @@ class CityPage extends StatefulWidget {
 
 class _CityPageState extends State<CityPage> {
   int _tab = 0;
-  double _scroll = 0;
   late final PageController _pageCtrl = PageController();
 
+  // ── 可拖动语言按钮状态 ──
+  double _langX = 0; // 将在 initState 中初始化
+  double _langY = 0;
+  bool _langReady = false;
+
   @override
-  void dispose() { _pageCtrl.dispose(); super.dispose(); }
+  void initState() {
+    super.initState();
+    // 延迟计算初始位置（需要 context 获取屏幕尺寸）
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initLangPos());
+  }
+
+  void _initLangPos() {
+    if (!mounted) return;
+    final screenW = MediaQuery.of(context).size.width;
+    final s = (screenW / 260.0).clamp(1.0, 1.7);
+    final emojiSize = 52.0 * s;
+
+    setState(() {
+      _langX = screenW - 42;
+      _langY = emojiSize + 8; // hero topPad=0，emoji 下方 8px
+      _langReady = true;
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final tabNames = [l10n['tabIntro'], l10n['tabSpots'], l10n['tabFood'], l10n['tabRoute']];
-
+    final tabNames = [
+      l10n['tabIntro'],
+      l10n['tabSpots'],
+      l10n['tabFood'],
+      l10n['tabRoute'],
+    ];
     return Scaffold(
-      body: SafeArea(bottom: false, child: Column(children: [
-        CityHeroHeader(tab: _tab, onLangTap: () => showLangSheet(context), provinceKey: widget.provinceKey, cityKey: widget.cityKey, subtitleKey: widget.subtitleKey, backgrounds: widget.heroBackgrounds),
-        Container(
-          decoration: BoxDecoration(
-            border: const Border(bottom: BorderSide(color: AppColors.hairline, width: .6)),
-            boxShadow: _scroll > 2 ? [BoxShadow(color: Colors.black.withValues(alpha: .22), blurRadius: 5, offset: const Offset(0, 2))] : null,
-          ),
-          child: CityTabRow(tabs: tabNames, pageCtrl: _pageCtrl, onTap: (i) => _pageCtrl.animateToPage(i, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut)),
-        ),
-        Expanded(child: PageView(
-          controller: _pageCtrl,
-          onPageChanged: (i) => setState(() { _tab = i; _scroll = 0; CityPage.activeTab.value = i; }),
-          children: widget.tabs,
-        )),
-      ])),
+      backgroundColor: AppColors.bg,
+      body: SafeArea(
+        bottom: false,
+        child: Stack(children: [
+          // ── 主内容 ──
+          Column(children: [
+            // ── 返回首页按钮（Hero 上方独立空间）──
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 0, 0),
+              child: Row(children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).maybePop(),
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.bgCard,
+                      border: Border.all(color: AppColors.goldBorder, width: 1.2),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.shadowMid,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.arrow_back_rounded, size: 16, color: AppColors.gold),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+            CityHeroHeader(
+                tab: _tab,
+                provinceKey: widget.provinceKey,
+                cityKey: widget.cityKey,
+                subtitleKey: widget.subtitleKey,
+                backgrounds: widget.heroBackgrounds,
+              ),
+              CityTabRow(
+                tabs: tabNames,
+                pageCtrl: _pageCtrl,
+                onTap: (i) => _pageCtrl.animateToPage(
+                  i,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                ),
+              ),
+              Expanded(
+                child: PageView(
+                  controller: _pageCtrl,
+                  onPageChanged: (i) => setState(() {
+                    _tab = i;
+                    CityPage.activeTab.value = i;
+                  }),
+                  children: widget.tabs,
+                ),
+              ),
+            ]),
+          // ── 可拖动语言按钮 ──
+          if (_langReady)
+            Positioned(
+              left: _langX,
+              top: _langY,
+              child: GestureDetector(
+                onPanUpdate: (d) {
+                  setState(() {
+                    _langX = (_langX + d.delta.dx)
+                        .clamp(4.0, MediaQuery.of(context).size.width - 36);
+                    _langY = (_langY + d.delta.dy)
+                        .clamp(4.0, MediaQuery.of(context).size.height - 80);
+                  });
+                },
+                onTap: () => showLangSheet(context),
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.goldBg,
+                    border: Border.all(color: AppColors.goldBorder),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: AppColors.shadowLight,
+                        blurRadius: 6,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text('🌐', style: TextStyle(fontSize: 14)),
+                  ),
+                ),
+              ),
+            ),
+        ]),
+      ),
     );
   }
 }

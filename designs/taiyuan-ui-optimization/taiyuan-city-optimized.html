@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>太原城市详情页 - 优化版高保真</title>
+  <style>
+    :root {
+      --canvas: #ebe3d4;
+      --phone: #fffaf0;
+      --ink: #211d18;
+      --muted: #746c61;
+      --line: rgba(75, 62, 45, .12);
+      --gold: #b8893e;
+      --gold-deep: #8a642b;
+      --river: #427b92;
+      --river-soft: #dceef1;
+      --cinnabar: #b3523d;
+      --sage: #5d7b5f;
+      --night: #242137;
+      --card: rgba(255, 255, 255, .78);
+      --shadow: 0 26px 70px rgba(58, 46, 31, .24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(184, 137, 62, .2), transparent 28%),
+        radial-gradient(circle at 86% 22%, rgba(66, 123, 146, .18), transparent 26%),
+        linear-gradient(135deg, #f4ead8, var(--canvas));
+      color: var(--ink);
+      font-family: -apple-system, "SF Pro Text", "PingFang SC", "Noto Sans SC", sans-serif;
+      padding: 26px;
+    }
+
+    .workbench {
+      width: min(100%, 1080px);
+      display: grid;
+      grid-template-columns: 410px minmax(320px, 1fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .phone {
+      width: 410px;
+      height: 884px;
+      border-radius: 48px;
+      border: 10px solid #171513;
+      overflow: hidden;
+      background: var(--phone);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .screen {
+      height: 100%;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-bottom: 28px;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    .status {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 36px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      color: rgba(255,255,255,.95);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .hero {
+      min-height: 302px;
+      padding: 48px 20px 20px;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(24,22,32,.1), rgba(24,22,32,.52)),
+        radial-gradient(circle at 24% 28%, rgba(255, 220, 140, .42), transparent 21%),
+        radial-gradient(circle at 78% 34%, rgba(117, 177, 190, .42), transparent 24%),
+        linear-gradient(135deg, #8b4d2f 0%, #25374a 50%, #171722 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: -38px;
+      bottom: -30px;
+      width: 280px;
+      height: 96px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.15), rgba(255,255,255,.5), rgba(255,255,255,.1)),
+        var(--river);
+      transform: rotate(-8deg);
+      opacity: .88;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 32px;
+      top: 112px;
+      width: 90px;
+      height: 88px;
+      background:
+        linear-gradient(#3a3b47 0 0) center 30px / 58px 46px no-repeat,
+        linear-gradient(#d7c8a1 0 0) center 52px / 74px 10px no-repeat,
+        linear-gradient(#1d253b 0 0) center 17px / 82px 12px no-repeat;
+      clip-path: polygon(50% 0, 98% 20%, 86% 24%, 86% 96%, 14% 96%, 14% 24%, 2% 20%);
+      filter: drop-shadow(0 18px 26px rgba(0,0,0,.24));
+      opacity: .95;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .circle-btn,
+    .lang-btn {
+      min-width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.32);
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(16px);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+    }
+
+    .lang-btn {
+      padding: 0 13px;
+      font-size: 12px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      margin-top: 56px;
+      max-width: 280px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,244,215,.18);
+      border: 1px solid rgba(255,230,170,.38);
+      color: #ffe3a8;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    h1 {
+      margin: 13px 0 7px;
+      font-size: 48px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    .tabs {
+      position: sticky;
+      top: 0;
+      z-index: 7;
+      margin: -28px 16px 0;
+      padding: 7px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.74);
+      box-shadow: 0 16px 34px rgba(72, 54, 29, .12);
+    }
+
+    .tab {
+      appearance: none;
+      border: 0;
+      min-height: 58px;
+      border-radius: 16px;
+      background: transparent;
+      color: #857b6e;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 850;
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: #fff;
+      background: linear-gradient(150deg, var(--gold), var(--gold-deep));
+      box-shadow: 0 10px 18px rgba(184,137,62,.28);
+    }
+
+    .tab span:first-child {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .content {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .section {
+      padding: 16px;
+      border-radius: 24px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 14px 30px rgba(72,54,29,.08);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .section-head small {
+      color: var(--gold-deep);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 10px;
+    }
+
+    .photo {
+      min-height: 150px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background: #ddd;
+      box-shadow: 0 18px 32px rgba(72,54,29,.13);
+    }
+
+    .photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 32%, rgba(0,0,0,.62));
+    }
+
+    .photo-main {
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.25), transparent 38%),
+        linear-gradient(135deg, #d2b076 0%, #8e563b 52%, #244054 100%);
+    }
+
+    .photo-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .photo-small {
+      min-height: 70px;
+      border-radius: 20px;
+    }
+
+    .photo-river {
+      background: linear-gradient(135deg, #d9eced, #568ea2 52%, #caaa64);
+    }
+
+    .photo-food {
+      background: linear-gradient(135deg, #f1c777, #a64e34 52%, #4b3027);
+    }
+
+    .photo-label {
+      position: absolute;
+      z-index: 2;
+      left: 13px;
+      right: 13px;
+      bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 900;
+      text-shadow: 0 2px 10px rgba(0,0,0,.28);
+    }
+
+    .photo-label small {
+      font-size: 10px;
+      font-weight: 850;
+      opacity: .88;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .stat {
+      min-height: 82px;
+      padding: 12px 10px;
+      border-radius: 20px;
+      background: rgba(255,248,235,.86);
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: space-between;
+    }
+
+    .stat b {
+      color: var(--gold-deep);
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
+    .intro-copy {
+      margin: 0;
+      color: #5a534a;
+      font-size: 14px;
+      line-height: 1.78;
+      text-wrap: pretty;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .chip,
+    .filter-chip {
+      border: 0;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(184,137,62,.12);
+      color: #735424;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .filter-chip {
+      cursor: pointer;
+      background: #fff;
+      color: #746c61;
+      border: 1px solid var(--line);
+    }
+
+    .filter-chip.active {
+      background: var(--night);
+      color: #fff;
+      border-color: var(--night);
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .spot-grid,
+    .food-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .spot-card,
+    .food-card {
+      border: 0;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      min-height: 184px;
+      padding: 10px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 14px 30px rgba(72,54,29,.08);
+      cursor: pointer;
+      display: grid;
+      gap: 10px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .spot-card:hover,
+    .food-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 38px rgba(72,54,29,.12);
+    }
+
+    .spot-art,
+    .food-art {
+      min-height: 92px;
+      border-radius: 19px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      background: linear-gradient(135deg, #d2b076, #244054);
+    }
+
+    .spot-art.museum {
+      background: linear-gradient(135deg, #d6c08b, #5c5145);
+    }
+
+    .spot-art.river {
+      background: linear-gradient(135deg, #d9eced, #427b92);
+    }
+
+    .spot-art.temple {
+      background: linear-gradient(135deg, #d5b46a, #6d3c2b);
+    }
+
+    .food-art.noodle {
+      background: linear-gradient(135deg, #f2ca80, #a94d32);
+    }
+
+    .food-art.meat {
+      background: linear-gradient(135deg, #d88955, #753629);
+    }
+
+    .food-art.soup {
+      background: linear-gradient(135deg, #e5cf9b, #6e6f4d);
+    }
+
+    .badge {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #5a3f13;
+      background: rgba(255,230,170,.88);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .spot-card h3,
+    .food-card h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .spot-card p,
+    .food-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+      font-weight: 730;
+    }
+
+    .mini-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold-deep);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .favorite {
+      appearance: none;
+      border: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.74);
+      color: #8b8074;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .favorite.on {
+      color: #fff;
+      background: var(--cinnabar);
+    }
+
+    .route-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .route-option {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 11px 9px;
+      background: #fff;
+      color: var(--muted);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .route-option.active {
+      background: var(--night);
+      color: #fff;
+      border-color: var(--night);
+    }
+
+    .route-option b {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .route-option span {
+      font-size: 11px;
+      font-weight: 750;
+      opacity: .76;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 13px;
+    }
+
+    .stop {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .stop-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(145deg, var(--gold), var(--gold-deep));
+      font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 9px 16px rgba(184,137,62,.24);
+    }
+
+    .stop-card {
+      padding: 13px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .stop-card b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .stop-card span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 720;
+    }
+
+    .primary-action {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(150deg, var(--gold), var(--gold-deep));
+      font: inherit;
+      font-size: 15px;
+      font-weight: 950;
+      cursor: pointer;
+      box-shadow: 0 16px 24px rgba(184,137,62,.22);
+    }
+
+    .detail-sheet {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 20;
+      border-radius: 28px;
+      background: rgba(255,250,240,.96);
+      border: 1px solid rgba(255,255,255,.8);
+      box-shadow: 0 26px 80px rgba(32,26,17,.32);
+      padding: 18px;
+      transform: translateY(calc(100% + 26px));
+      transition: transform .24s ease;
+      pointer-events: none;
+    }
+
+    .detail-sheet.open {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(33,29,24,.18);
+      margin: 0 auto 14px;
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .sheet-top h3 {
+      margin: 0 0 6px;
+      font-size: 21px;
+    }
+
+    .sheet-top p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .close-sheet {
+      border: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: rgba(33,29,24,.08);
+      color: var(--ink);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .notes {
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.76);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 40px rgba(72,54,29,.12);
+    }
+
+    .notes h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .notes p {
+      margin: 0;
+      color: #62594e;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .design-points {
+      display: grid;
+      gap: 11px;
+      margin-top: 18px;
+    }
+
+    .point {
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(75,62,45,.09);
+    }
+
+    .point b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .point span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 16px;
+      }
+
+      .workbench {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .notes {
+        width: min(100%, 410px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="workbench">
+    <section class="phone" data-screen-label="太原城市详情优化版">
+      <div class="status">
+        <span>21:55</span>
+        <span>5G 100%</span>
+      </div>
+
+      <div class="screen">
+        <header class="hero">
+          <div class="topbar">
+            <button class="circle-btn" aria-label="返回">‹</button>
+            <button class="lang-btn" aria-label="切换语言">中 / 한 / EN</button>
+          </div>
+          <div class="hero-copy">
+            <span class="kicker">山西省省会</span>
+            <h1>太原</h1>
+            <p>锦绣太原城，龙城文脉、晋祠古韵与汾河烟火在这里汇合。</p>
+          </div>
+        </header>
+
+        <nav class="tabs" aria-label="城市详情页面切换">
+          <button class="tab active" data-tab="intro"><span>⌂</span><span>介绍</span></button>
+          <button class="tab" data-tab="spots"><span>⌖</span><span>景点</span></button>
+          <button class="tab" data-tab="food"><span>◌</span><span>美食</span></button>
+          <button class="tab" data-tab="route"><span>↝</span><span>路线</span></button>
+        </nav>
+
+        <section class="content" id="content"></section>
+      </div>
+
+      <aside class="detail-sheet" id="detailSheet" aria-live="polite">
+        <div class="sheet-handle"></div>
+        <div class="sheet-top">
+          <div>
+            <h3 id="sheetTitle">晋祠</h3>
+            <p id="sheetText">千年园林与晋水文化，是太原景点页的核心推荐。</p>
+            <div class="chips" id="sheetChips"></div>
+          </div>
+          <button class="close-sheet" id="closeSheet" aria-label="关闭">×</button>
+        </div>
+      </aside>
+    </section>
+
+    <aside class="notes">
+      <h2>设计优化方向</h2>
+      <p>这版把原来的黑色界面调亮，保留“龙城金”的文化感，同时增加更明确的点击反馈和内容操作，让景点、美食、路线不再只是静态列表。</p>
+      <div class="design-points">
+        <div class="point">
+          <b>亮度与可读性</b>
+          <span>背景从纯黑改为暖玉白，深色只保留在 Hero 和重点 Tab，文字对比更清楚。</span>
+        </div>
+        <div class="point">
+          <b>景点交互</b>
+          <span>增加分类筛选、精选卡片、点击详情抽屉，参考旅行 App 的快速决策模式。</span>
+        </div>
+        <div class="point">
+          <b>美食与路线</b>
+          <span>美食可收藏，路线可切换方案并复制，强化真实 App 操作感。</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const state = {
+      tab: "intro",
+      spotFilter: "全部",
+      route: "龙城印象",
+      favorites: new Set(["刀削面"])
+    };
+
+    const spots = [
+      { title: "晋祠", type: "历史", icon: "🏯", art: "", rating: "5A", text: "太原最具代表性的历史景点，适合放在景点首位。", chips: ["古建", "晋水", "必去"] },
+      { title: "山西博物院", type: "文化", icon: "🏛", art: "museum", rating: "4A", text: "适合了解晋商、青铜器和山西历史文脉。", chips: ["室内", "文化", "免费"] },
+      { title: "汾河公园", type: "自然", icon: "🌿", art: "river", rating: "免费", text: "城市绿道与夜景空间，可承接路线页傍晚段。", chips: ["散步", "夜景", "免费"] },
+      { title: "永祚寺双塔", type: "历史", icon: "🗼", art: "temple", rating: "4A", text: "太原地标性景观，适合做城市视觉符号。", chips: ["地标", "拍照", "古迹"] }
+    ];
+
+    const foods = [
+      { title: "刀削面", icon: "🍜", art: "noodle", text: "山西面食名片，适合做美食页主卡。", heat: 3 },
+      { title: "过油肉", icon: "🥩", art: "meat", text: "晋菜经典头牌，适合表现地方家常菜。", heat: 2 },
+      { title: "羊杂割", icon: "🥣", art: "soup", text: "冬日暖身小吃，烟火气很强。", heat: 4 },
+      { title: "剔尖", icon: "🥢", art: "noodle", text: "筷子拨出的花样，适合做面食分类。", heat: 2 }
+    ];
+
+    const routes = {
+      "龙城印象": [
+        ["09:00", "山西博物院", "先用博物馆建立历史背景"],
+        ["13:00", "晋祠", "下午看古建、晋水与园林"],
+        ["17:30", "汾河公园", "傍晚看城市水岸与日落"]
+      ],
+      "古建寻踪": [
+        ["08:30", "晋祠", "从圣母殿和鱼沼飞梁开始"],
+        ["12:30", "本地面馆", "午餐安排刀削面"],
+        ["15:00", "永祚寺双塔", "用城市地标收尾"]
+      ],
+      "烟火美食": [
+        ["10:00", "钟楼街", "逛街区与老字号"],
+        ["12:00", "过油肉", "尝晋菜经典"],
+        ["18:00", "夜市小吃", "羊杂割、面食、甜食"]
+      ]
+    };
+
+    const content = document.getElementById("content");
+    const sheet = document.getElementById("detailSheet");
+    const sheetTitle = document.getElementById("sheetTitle");
+    const sheetText = document.getElementById("sheetText");
+    const sheetChips = document.getElementById("sheetChips");
+
+    function setTab(tab) {
+      state.tab = tab;
+      document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button.dataset.tab === tab));
+      render();
+    }
+
+    function openSheet(item) {
+      sheetTitle.textContent = item.title;
+      sheetText.textContent = item.text;
+      sheetChips.innerHTML = item.chips.map((chip) => `<span class="chip">${chip}</span>`).join("");
+      sheet.classList.add("open");
+    }
+
+    function closeSheet() {
+      sheet.classList.remove("open");
+    }
+
+    function renderIntro() {
+      content.innerHTML = `
+        <div class="gallery">
+          <div class="photo photo-main"><div class="photo-label"><span>晋祠古韵</span><small>城市名片</small></div></div>
+          <div class="photo-stack">
+            <div class="photo photo-small photo-river"><div class="photo-label"><span>汾河水岸</span></div></div>
+            <div class="photo photo-small photo-food"><div class="photo-label"><span>面食烟火</span></div></div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>551万</b><span>城市人口</span></div>
+          <div class="stat"><b>2500+</b><span>建城历史</span></div>
+          <div class="stat"><b>4A+</b><span>代表景区</span></div>
+        </div>
+        <article class="section">
+          <div class="section-head"><h2>家乡介绍</h2><small>INTRO</small></div>
+          <p class="intro-copy">太原古称晋阳、并州，也被称作“龙城”。它坐落在汾河谷地，是山西的政治、经济、文化中心。新版用更亮的底色承载文字，把古都厚重感放在 Hero 和图片区，而不是让整页都陷入黑色。</p>
+          <div class="chips">
+            <span class="chip">国家历史文化名城</span>
+            <span class="chip">龙城</span>
+            <span class="chip">晋阳古都</span>
+            <span class="chip">汾河穿城</span>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderSpots() {
+      const filters = ["全部", "历史", "文化", "自然"];
+      const visible = state.spotFilter === "全部" ? spots : spots.filter((spot) => spot.type === state.spotFilter);
+      content.innerHTML = `
+        <div class="filters">${filters.map((filter) => `<button class="filter-chip ${state.spotFilter === filter ? "active" : ""}" data-filter="${filter}">${filter}</button>`).join("")}</div>
+        <div class="section">
+          <div class="section-head"><h2>代表景点</h2><small>点击看详情</small></div>
+          <div class="spot-grid">
+            ${visible.map((spot, index) => `
+              <button class="spot-card" data-spot="${spots.indexOf(spot)}">
+                <div class="spot-art ${spot.art}">${spot.icon}<span class="badge">${spot.rating}</span></div>
+                <div>
+                  <h3>${spot.title}</h3>
+                  <p>${spot.text}</p>
+                </div>
+                <div class="mini-meta"><span>${spot.type}</span><span>查看 →</span></div>
+              </button>
+            `).join("")}
+          </div>
+        </div>
+      `;
+
+      content.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.spotFilter = button.dataset.filter;
+          renderSpots();
+        });
+      });
+
+      content.querySelectorAll("[data-spot]").forEach((button) => {
+        button.addEventListener("click", () => openSheet(spots[Number(button.dataset.spot)]));
+      });
+    }
+
+    function renderFood() {
+      content.innerHTML = `
+        <div class="filters">
+          <button class="filter-chip active">推荐</button>
+          <button class="filter-chip">面食</button>
+          <button class="filter-chip">晋菜</button>
+          <button class="filter-chip">小吃</button>
+        </div>
+        <div class="section">
+          <div class="section-head"><h2>代表美食</h2><small>可收藏</small></div>
+          <div class="food-grid">
+            ${foods.map((food) => `
+              <div class="food-card">
+                <div class="food-art ${food.art}">${food.icon}</div>
+                <div>
+                  <div class="mini-meta">
+                    <h3>${food.title}</h3>
+                    <button class="favorite ${state.favorites.has(food.title) ? "on" : ""}" data-food="${food.title}" aria-label="收藏 ${food.title}">♥</button>
+                  </div>
+                  <p>${food.text}</p>
+                  <div class="chips">${Array.from({ length: food.heat }).map(() => `<span class="chip">热</span>`).join("")}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+
+      content.querySelectorAll("[data-food]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const name = button.dataset.food;
+          if (state.favorites.has(name)) state.favorites.delete(name);
+          else state.favorites.add(name);
+          renderFood();
+        });
+      });
+    }
+
+    function renderRoute() {
+      const stops = routes[state.route];
+      content.innerHTML = `
+        <div class="route-options">
+          ${Object.keys(routes).map((name) => `
+            <button class="route-option ${state.route === name ? "active" : ""}" data-route="${name}">
+              <b>${name}</b><span>${routes[name].length} 站</span>
+            </button>
+          `).join("")}
+        </div>
+        <article class="section">
+          <div class="section-head"><h2>${state.route}</h2><small>可执行路线</small></div>
+          <div class="timeline">
+            ${stops.map((stop, index) => `
+              <div class="stop">
+                <div class="stop-dot">${index + 1}</div>
+                <div class="stop-card"><b>${stop[1]}</b><span>${stop[0]} · ${stop[2]}</span></div>
+              </div>
+            `).join("")}
+          </div>
+        </article>
+        <button class="primary-action" id="copyRoute">复制路线</button>
+        <div class="stats">
+          <div class="stat"><b>${stops.length}</b><span>打卡点</span></div>
+          <div class="stat"><b>1天</b><span>推荐时长</span></div>
+          <div class="stat"><b>¥150</b><span>预算/人</span></div>
+        </div>
+      `;
+
+      content.querySelectorAll("[data-route]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.route = button.dataset.route;
+          renderRoute();
+        });
+      });
+
+      document.getElementById("copyRoute").addEventListener("click", (event) => {
+        event.currentTarget.textContent = "已复制路线";
+        setTimeout(() => { event.currentTarget.textContent = "复制路线"; }, 1100);
+      });
+    }
+
+    function render() {
+      closeSheet();
+      if (state.tab === "intro") renderIntro();
+      if (state.tab === "spots") renderSpots();
+      if (state.tab === "food") renderFood();
+      if (state.tab === "route") renderRoute();
+    }
+
+    document.querySelectorAll(".tab").forEach((button) => {
+      button.addEventListener("click", () => setTab(button.dataset.tab));
+    });
+
+    document.getElementById("closeSheet").addEventListener("click", closeSheet);
+    render();
+  </script>
+</body>
+</html>
