@@ -84,43 +84,6 @@ class _CityPageState extends State<CityPage> {
             // ── 主内容 ──
             Column(
               children: [
-                // ── 返回首页按钮（Hero 上方独立空间）──
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 8, 0, 0),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).maybePop(),
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.bgCard,
-                            border: Border.all(
-                              color: AppColors.goldBorder,
-                              width: 1.2,
-                            ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: AppColors.shadowMid,
-                                blurRadius: 8,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.arrow_back_rounded,
-                              size: 16,
-                              color: AppColors.gold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 CityHeroHeader(
                   tab: _tab,
                   provinceKey: widget.provinceKey,

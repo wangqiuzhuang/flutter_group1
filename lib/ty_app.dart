@@ -28,7 +28,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = AppLocalizations.supportedLocales.first;
+  Locale _locale = const Locale('ko'); // 默认韩语
   void setLocale(Locale l) => setState(() => _locale = l);
 
   @override
