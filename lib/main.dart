@@ -176,7 +176,7 @@ class _CityCardState extends State<_CityCard> {
           onTap: widget.onTap,
           borderRadius: BorderRadius.circular(14),
           child: Ink(
-            height: 160,
+            height: 320,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: AppColors.border2),
@@ -220,7 +220,7 @@ class _CityCardState extends State<_CityCard> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 26,
+                            fontSize: 34,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 4,
                             shadows: [Shadow(blurRadius: 8, offset: Offset(0, 2), color: Color(0x66000000))],
@@ -231,7 +231,7 @@ class _CityCardState extends State<_CityCard> {
                           widget.city.nameKo,
                           style: const TextStyle(
                             color: Colors.white70,
-                            fontSize: 13,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 2,
                             shadows: [Shadow(blurRadius: 4, offset: Offset(0, 1), color: Color(0x44000000))],
