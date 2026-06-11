@@ -108,9 +108,11 @@ class _HomeHeader extends StatelessWidget {
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('旅见', style: TextStyle(color: AppColors.ink, fontSize: 28, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: .4)),
-          SizedBox(height: 6),
-          Text('探索中国 · 每座城都有故事', style: TextStyle(color: AppColors.ink4, fontSize: 12, height: 1.35, letterSpacing: .5)),
+          Text('我和我的家乡', style: TextStyle(color: AppColors.ink, fontSize: 28, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: .4)),
+          SizedBox(height: 4),
+          Text('나와 나의 고향', style: TextStyle(color: AppColors.ink3, fontSize: 13, fontWeight: FontWeight.w500, height: 1.3, letterSpacing: 1)),
+          SizedBox(height: 4),
+          Text('探索中国 · 每座城都有故事', style: TextStyle(color: AppColors.ink4, fontSize: 11, height: 1.35, letterSpacing: .5)),
         ],
       ),
     );
