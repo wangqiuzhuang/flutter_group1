@@ -11,7 +11,8 @@
       "Bash(ls -la ~/.ssh/)",
       "Read(//Users/king/.ssh/**)",
       "Bash(ssh -T git@github-testerwm)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(flutter emulators *)"
     ]
   }
 }

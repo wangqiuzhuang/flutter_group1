@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_lang_sheet.dart
+// 文件: lib/shared/ty_lang_sheet.dart
 // 用途: 语言选择 Bottom Sheet — 浅色主题 v2
 // 作者: testerwm
 // 创建: 2026-06-09
@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'ty_colors.dart';
-import '../ty_l10n/ty_app_localizations.dart';
+import '../l10n/ty_app_localizations.dart';
 import '../ty_app.dart';
 
 void showLangSheet(BuildContext ctx) {

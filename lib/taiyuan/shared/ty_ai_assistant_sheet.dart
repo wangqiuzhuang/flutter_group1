@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_ai_assistant_sheet.dart
+// 文件: lib/shared/ty_ai_assistant_sheet.dart
 // 用途: AI 旅行助手底部弹窗 — 对接 DeepSeek API 流式对话
 // 说明:
 //   - 点击城市页 emoji 图标唤起
@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../ty_l10n/ty_app_localizations.dart';
+import '../l10n/ty_app_localizations.dart';
 import 'ty_ai_service.dart';
 import 'ty_colors.dart';
 
