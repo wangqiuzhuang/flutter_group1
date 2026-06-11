@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_l10n/ty_app_localizations.dart
+// 文件: lib/l10n/ty_app_localizations.dart
 // 用途: 翻译代理类 + LocalizationsDelegate（共用框架）
 // 作者: testerwm
 // 创建: 2026-06-09

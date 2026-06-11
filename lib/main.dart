@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'ty/ty_taiyuan_app.dart';
-import 'ty/ty_shared/ty_colors.dart';
-import 'ty/ty_taiyuan/ty_taiyuan_city_page.dart';
+import 'taiyuan/ty_taiyuan_app.dart';
+import 'taiyuan/shared/ty_colors.dart';
+import 'taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
 
 void main() => runApp(const TaiyuanApp());
