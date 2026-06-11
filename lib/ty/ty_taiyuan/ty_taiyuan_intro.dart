@@ -95,7 +95,7 @@ class _VideoCardState extends State<_VideoCard>
   void initState() {
     super.initState();
     _ctrl = VideoPlayerController.asset(
-      'assets/ty_taiyuan/video/ty_taiyuan.mp4',
+      'assets/ty_taiyuan/video/taiyuan.mp4',
     )
       ..initialize().then((_) {
         if (mounted) {
