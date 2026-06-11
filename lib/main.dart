@@ -23,11 +23,12 @@ class TyHomePage extends StatefulWidget {
 
 class _TyHomePageState extends State<TyHomePage> {
   static const _cities = [
-    _HomeCity(name: '太原', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
-    _HomeCity(name: '北京', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
-    _HomeCity(name: '临沂', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
-    _HomeCity(name: '其他', videoAsset: 'assets/videos/other1.mp4', enabled: false),
-    _HomeCity(name: '其他', videoAsset: 'assets/videos/other2.mp4', enabled: false),
+    _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
+    _HomeCity(name: '北京', nameKo: '베이징', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
+    _HomeCity(name: '临沂', nameKo: '린이', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
+    _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other1.mp4', enabled: false),
+    _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other2.mp4', enabled: false),
+    _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other3.mp4', enabled: false),
   ];
 
   @override
@@ -209,7 +210,7 @@ class _CityCardState extends State<_CityCard> {
                   /// 暗色遮罩 — 让白色文字清晰可见
                   Container(color: Colors.black.withValues(alpha: 0.4)),
 
-                  /// 城市名 — 大号居中
+                  /// 城市名 — 中文 + 韩语居中
                   Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -219,10 +220,21 @@ class _CityCardState extends State<_CityCard> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 28,
+                            fontSize: 26,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 4,
                             shadows: [Shadow(blurRadius: 8, offset: Offset(0, 2), color: Color(0x66000000))],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.city.nameKo,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 2,
+                            shadows: [Shadow(blurRadius: 4, offset: Offset(0, 1), color: Color(0x44000000))],
                           ),
                         ),
                         if (!widget.city.enabled)
@@ -245,8 +257,9 @@ class _CityCardState extends State<_CityCard> {
 
 class _HomeCity {
   final String name;
+  final String nameKo;
   final String videoAsset;
   final bool enabled;
 
-  const _HomeCity({required this.name, required this.videoAsset, this.enabled = false});
+  const _HomeCity({required this.name, required this.nameKo, required this.videoAsset, this.enabled = false});
 }
