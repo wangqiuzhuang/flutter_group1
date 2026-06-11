@@ -13,7 +13,7 @@
 // ║  ④ 推荐路线页  추천 코스 페이지  — 6节点当日游时间轴                  ║
 // ╠══════════════════════════════════════════════════════════════╣
 // ║  代码结构 / 코드 구조                                              ║
-// ║  AppColors        — 全局颜色常量 / 전역 색상 상수                   ║
+// ║  LinyiColors        — 全局颜色常量 / 전역 색상 상수                   ║
 // ║  Attraction/Food/TourStep — 数据模型 / 데이터 모델               ║
 // ║  attractions/foods/tourSteps — 静态数据 / 정적 데이터             ║
 // ║  LinyiPage        — 根组件，管理底部导航 / 루트 위젯, 탭 관리         ║
@@ -46,7 +46,7 @@ import 'package:flutter/material.dart';
 // 作用：统一管理应用中所有颜色，修改颜色只需改这里
 // 역할：앱의 모든 색상을 통합 관리, 색상 변경 시 여기만 수정
 // ──────────────────────────────────────────
-class AppColors {
+class LinyiColors {
   // 主色调：取自蒙山绿色，代表临沂的山水特色
   // 기본 색상: 몽산 녹색에서 가져옴, 임기의 산수 특색을 표현
   static const Color primary   = Color(0xFF2E7D32);
@@ -276,14 +276,14 @@ class _LinyiPageState extends State<LinyiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bg,
+      backgroundColor: LinyiColors.bg,
       // 底部导航栏 / 하단 탭 네비게이션 바
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i), // 切换页面 / 페이지 전환
         type: BottomNavigationBarType.fixed,              // 固定宽度标签 / 고정 너비 탭
-        selectedItemColor: AppColors.primary,             // 选中颜色：蒙山绿 / 선택 색상: 몽산 녹색
-        unselectedItemColor: AppColors.textSub,           // 未选中颜色 / 미선택 색상
+        selectedItemColor: LinyiColors.primary,             // 选中颜色：蒙山绿 / 선택 색상: 몽산 녹색
+        unselectedItemColor: LinyiColors.textSub,           // 未选中颜色 / 미선택 색상
         backgroundColor: Colors.white,
         elevation: 8,                                     // 阴影高度 / 그림자 높이
         // 底部导航项（中韩双语）/ 하단 탭 항목 (중한 이중언어)
@@ -350,7 +350,7 @@ class _IntroPage extends StatelessWidget {
         SliverAppBar(
           expandedHeight: 200,
           pinned: true,
-          backgroundColor: AppColors.primary,
+          backgroundColor: LinyiColors.primary,
           flexibleSpace: FlexibleSpaceBar(
             // 标题（中韩双语）/ 제목 (중한 이중언어)
             title: const Text('临沂 · 임기',
@@ -407,7 +407,7 @@ class _IntroPage extends StatelessWidget {
                     '这里山清水秀，人杰地灵，孕育了王羲之、诸葛亮等历史名人。\n\n'
                     '임기시는 산동성 동남부에 위치하며 이몽산 지역의 중심 도시이자 유명한 혁명 노구입니다. '
                     '아름다운 산수와 뛰어난 인재를 배출한 곳으로 왕희지, 제갈량 등 역사적 명인의 고향입니다.',
-                    style: TextStyle(fontSize: 13, height: 1.7, color: AppColors.textSub),
+                    style: TextStyle(fontSize: 13, height: 1.7, color: LinyiColors.textSub),
                   ),
                 ),
 
@@ -538,7 +538,7 @@ class _IntroPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(6),
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
+                              color: LinyiColors.primary,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text('🤖', style: TextStyle(fontSize: 16)),
@@ -549,7 +549,7 @@ class _IntroPage extends StatelessWidget {
                             children: [
                               Text('AI 使用内容',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
-                                      color: AppColors.primary)),
+                                      color: LinyiColors.primary)),
                               Text('AI 활용 내용',
                                   style: TextStyle(fontSize: 11, color: Color(0xFF66BB6A))),
                             ],
@@ -602,7 +602,7 @@ class _AttractionsPage extends StatelessWidget {
         // 页面标题AppBar / 페이지 제목 앱바
         SliverAppBar(
           pinned: true,
-          backgroundColor: AppColors.primary,
+          backgroundColor: LinyiColors.primary,
           title: const Text('旅游景点 · 관광지',
               style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
         ),
@@ -645,7 +645,7 @@ class _FoodsPage extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          backgroundColor: AppColors.primary,
+          backgroundColor: LinyiColors.primary,
           title: const Text('代表美食 · 대표 음식',
               style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
         ),
@@ -692,7 +692,7 @@ class _TourRoutePage extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          backgroundColor: AppColors.primary,
+          backgroundColor: LinyiColors.primary,
           title: const Text('推荐路线（1日游）· 추천 코스 (당일치기)',
               style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
         ),
@@ -701,7 +701,7 @@ class _TourRoutePage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.card,
+                color: LinyiColors.card,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06),
                     blurRadius: 12, offset: const Offset(0, 4))],
@@ -737,9 +737,9 @@ class _SectionTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        Text(zh, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.textMain)),
+        Text(zh, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: LinyiColors.textMain)),
         const SizedBox(width: 6),
-        Text('· $ko', style: const TextStyle(fontSize: 11, color: AppColors.primary)),
+        Text('· $ko', style: const TextStyle(fontSize: 11, color: LinyiColors.primary)),
       ],
     );
   }
@@ -756,9 +756,9 @@ class _InfoCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: LinyiColors.card,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: LinyiColors.border),
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 2))],
       ),
       child: child,
@@ -785,7 +785,7 @@ class _Tag extends StatelessWidget {
         text: TextSpan(
           style: const TextStyle(fontSize: 12),
           children: [
-            TextSpan(text: zh, style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w500)),
+            TextSpan(text: zh, style: const TextStyle(color: LinyiColors.primary, fontWeight: FontWeight.w500)),
             TextSpan(text: ' · $ko', style: const TextStyle(color: Color(0xFF66BB6A))),
           ],
         ),
@@ -806,9 +806,9 @@ class _StatItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+        Text(label, style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
         const SizedBox(height: 2),
-        Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.textMain)),
+        Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: LinyiColors.textMain)),
       ],
     );
   }
@@ -826,9 +826,9 @@ class _AttractionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: LinyiColors.card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: LinyiColors.border),
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 3))],
       ),
       child: Column(
@@ -843,7 +843,7 @@ class _AttractionCard extends StatelessWidget {
                     width: double.infinity, height: 120,
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [AppColors.heroStart, AppColors.heroEnd],
+                        colors: [LinyiColors.heroStart, LinyiColors.heroEnd],
                         begin: Alignment.topLeft, end: Alignment.bottomRight,
                       ),
                     ),
@@ -860,19 +860,19 @@ class _AttractionCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(attraction.name,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textMain)),
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: LinyiColors.textMain)),
                     const SizedBox(width: 6),
                     Text(attraction.nameKo,
-                        style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+                        style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
                   ],
                 ),
                 const SizedBox(height: 4),
                 // 中文描述 / 중국어 설명
                 Text(attraction.desc,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSub, height: 1.5)),
+                    style: const TextStyle(fontSize: 12, color: LinyiColors.textSub, height: 1.5)),
                 // 韩文描述 / 한국어 설명
                 Text(attraction.descKo,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textHint, height: 1.4)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textHint, height: 1.4)),
                 const SizedBox(height: 6),
                 // 评分显示 / 평점 표시
                 Row(
@@ -880,7 +880,7 @@ class _AttractionCard extends StatelessWidget {
                     const Icon(Icons.star_rounded, color: Colors.orange, size: 14),
                     const SizedBox(width: 3),
                     Text('${attraction.rating}',
-                        style: const TextStyle(fontSize: 12, color: AppColors.textSub, fontWeight: FontWeight.w500)),
+                        style: const TextStyle(fontSize: 12, color: LinyiColors.textSub, fontWeight: FontWeight.w500)),
                   ],
                 ),
               ],
@@ -904,9 +904,9 @@ class _FoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: LinyiColors.card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: LinyiColors.border),
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 3))],
       ),
       child: Column(
@@ -933,19 +933,19 @@ class _FoodCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(food.name,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textMain)),
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: LinyiColors.textMain)),
                     const SizedBox(width: 6),
                     Text(food.nameKo,
-                        style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+                        style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
                   ],
                 ),
                 const SizedBox(height: 4),
                 // 中文描述 / 중국어 설명
                 Text(food.desc,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSub, height: 1.5)),
+                    style: const TextStyle(fontSize: 12, color: LinyiColors.textSub, height: 1.5)),
                 // 韩文描述 / 한국어 설명
                 Text(food.descKo,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textHint, height: 1.4)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textHint, height: 1.4)),
                 const SizedBox(height: 6),
                 // 评分显示 / 평점 표시
                 Row(
@@ -953,7 +953,7 @@ class _FoodCard extends StatelessWidget {
                     const Icon(Icons.star_rounded, color: Colors.orange, size: 14),
                     const SizedBox(width: 3),
                     Text('${food.rating}',
-                        style: const TextStyle(fontSize: 12, color: AppColors.textSub, fontWeight: FontWeight.w500)),
+                        style: const TextStyle(fontSize: 12, color: LinyiColors.textSub, fontWeight: FontWeight.w500)),
                   ],
                 ),
               ],
@@ -985,7 +985,7 @@ class _TourStepTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 2),
             child: Text(step.time,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.accent),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: LinyiColors.accent),
                 textAlign: TextAlign.center),
           ),
         ),
@@ -993,7 +993,7 @@ class _TourStepTile extends StatelessWidget {
         Column(
           children: [
             Container(width: 12, height: 12,
-                decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle)),
+                decoration: const BoxDecoration(color: LinyiColors.primary, shape: BoxShape.circle)),
             if (!isLast) // 最后一步不画连接线 / 마지막 단계에는 연결선 없음
               Container(width: 2, height: 72, color: const Color(0xFFC8E6C9)),
           ],
@@ -1008,15 +1008,15 @@ class _TourStepTile extends StatelessWidget {
               children: [
                 // 地点名称（中韩双语）/ 장소 이름 (중한 이중언어)
                 Text(step.place,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textMain)),
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: LinyiColors.textMain)),
                 Text(step.placeKo,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
                 const SizedBox(height: 4),
                 // 活动描述（中韩双语）/ 활동 설명 (중한 이중언어)
                 Text(step.activity,
                     style: const TextStyle(fontSize: 12, color: Color(0xFF616161), height: 1.5)),
                 Text(step.activityKo,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textHint, height: 1.4)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textHint, height: 1.4)),
               ],
             ),
           ),
@@ -1080,10 +1080,10 @@ class _BigStatCard extends StatelessWidget {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color)),
                 // 中文标签 / 중국어 라벨
                 Text(labelZh,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
                 // 韩文标签 / 한국어 라벨
                 Text(labelKo,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textSub)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textSub)),
               ],
             ),
           ],
@@ -1122,9 +1122,9 @@ class _HonorChip extends StatelessWidget {
           const SizedBox(height: 2),
           // 中文标签 / 중국어 라벨
           Text(zh, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600,
-              color: AppColors.primary)),
+              color: LinyiColors.primary)),
           // 韩文标签 / 한국어 라벨
-          Text(ko, style: const TextStyle(fontSize: 9, color: AppColors.textSub)),
+          Text(ko, style: const TextStyle(fontSize: 9, color: LinyiColors.textSub)),
         ],
       ),
     );
@@ -1185,13 +1185,13 @@ class _StrengthCard extends StatelessWidget {
                 Text(item.zh,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: c)),
                 Text(item.ko,
-                    style: const TextStyle(fontSize: 10, color: AppColors.textSub)),
+                    style: const TextStyle(fontSize: 10, color: LinyiColors.textSub)),
                 const SizedBox(height: 6),
                 // 详情（中韩双语）/ 상세 (중한 이중언어)
                 Text(item.detail,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textMain, height: 1.5)),
+                    style: const TextStyle(fontSize: 11, color: LinyiColors.textMain, height: 1.5)),
                 Text(item.detailKo,
-                    style: const TextStyle(fontSize: 10, color: AppColors.textHint, height: 1.4)),
+                    style: const TextStyle(fontSize: 10, color: LinyiColors.textHint, height: 1.4)),
               ],
             ),
           ),
@@ -1229,7 +1229,7 @@ class _CultureCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: LinyiColors.border),
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)],
       ),
       child: Column(
@@ -1264,7 +1264,7 @@ class _CultureCard extends StatelessWidget {
                             children: [
                               Text(item.zh,
                                   style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold,
-                                      color: AppColors.primary)),
+                                      color: LinyiColors.primary)),
                               const SizedBox(width: 5),
                               Text('· ${item.ko}',
                                   style: const TextStyle(fontSize: 11, color: Color(0xFF66BB6A))),
@@ -1273,11 +1273,11 @@ class _CultureCard extends StatelessWidget {
                           const SizedBox(height: 4),
                           // 中文内容 / 중국어 내용
                           Text(item.content,
-                              style: const TextStyle(fontSize: 12, color: AppColors.textMain,
+                              style: const TextStyle(fontSize: 12, color: LinyiColors.textMain,
                                   height: 1.5)),
                           // 韩文内容 / 한국어 내용
                           Text(item.contentKo,
-                              style: const TextStyle(fontSize: 11, color: AppColors.textSub,
+                              style: const TextStyle(fontSize: 11, color: LinyiColors.textSub,
                                   height: 1.4)),
                         ],
                       ),
@@ -1287,7 +1287,7 @@ class _CultureCard extends StatelessWidget {
               ),
               // 分隔线（最后一项不显示）/ 구분선 (마지막 항목에는 미표시)
               if (!isLast)
-                const Divider(height: 1, thickness: 0.5, indent: 64, color: AppColors.border),
+                const Divider(height: 1, thickness: 0.5, indent: 64, color: LinyiColors.border),
             ],
           );
         }).toList(),
@@ -1318,7 +1318,7 @@ class _AiItem extends StatelessWidget {
             child: Container(
               width: 7, height: 7,
               decoration: const BoxDecoration(
-                color: AppColors.primary,
+                color: LinyiColors.primary,
                 shape: BoxShape.circle,
               ),
             ),
@@ -1330,10 +1330,10 @@ class _AiItem extends StatelessWidget {
               children: [
                 // 中文说明 / 중국어 설명
                 Text(zh, style: const TextStyle(fontSize: 12,
-                    color: AppColors.textMain, height: 1.5)),
+                    color: LinyiColors.textMain, height: 1.5)),
                 // 韩文说明 / 한국어 설명
                 Text(ko, style: const TextStyle(fontSize: 11,
-                    color: AppColors.textSub, height: 1.4)),
+                    color: LinyiColors.textSub, height: 1.4)),
               ],
             ),
           ),
