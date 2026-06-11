@@ -6,10 +6,10 @@
 // ============================================
 
 import 'package:flutter/material.dart';
-import '../ty_l10n/ty_app_localizations.dart';
-import '../ty_shared/ty_colors.dart';
-import '../ty_shared/ty_widgets.dart';
-import '../ty_shared/ty_detail_sheet.dart';
+import '../l10n/ty_app_localizations.dart';
+import '../shared/ty_colors.dart';
+import '../shared/ty_widgets.dart';
+import '../shared/ty_detail_sheet.dart';
 
 class TaiyuanSpotsTab extends StatelessWidget {
   const TaiyuanSpotsTab();
