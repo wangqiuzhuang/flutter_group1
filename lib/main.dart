@@ -50,11 +50,6 @@ class _TyHomePageState extends State<TyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '热门城市',
-                      style: TextStyle(color: AppColors.ink, fontSize: 14, fontWeight: FontWeight.w600, height: 1.25),
-                    ),
-                    const SizedBox(height: 10),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final cardWidth = (constraints.maxWidth - 10) / 2;
