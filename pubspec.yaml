@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/ty_taiyuan/video/
     - assets/images/beijing/
+    - assets/videos/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

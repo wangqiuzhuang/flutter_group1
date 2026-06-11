@@ -1,122 +1,33 @@
 // ============================================
 // 文件: lib/main.dart
-// 用途: App 启动入口（当前: 太原）
-// 说明: 切换到其他城市时，替换 runApp 中的 App 即可
-//       例如: runApp(const ChengduApp())
+// 用途: App 启动入口 — 城市选择主页
+// 卡片: 太原 / 北京 / 临沂 / 其他 / 其他 共5个
+// 背景: 每个卡片为城市视频 (assets/videos/)
 // ============================================
 
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'ty/ty_taiyuan_app.dart';
-
 import 'ty/ty_shared/ty_colors.dart';
 import 'ty/ty_taiyuan/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
 
 void main() => runApp(const TaiyuanApp());
 
-
-class TyHomePage extends StatelessWidget {
+class TyHomePage extends StatefulWidget {
   const TyHomePage({super.key});
 
+  @override
+  State<TyHomePage> createState() => _TyHomePageState();
+}
+
+class _TyHomePageState extends State<TyHomePage> {
   static const _cities = [
-    _HomeCity(
-      name: '太原',
-      desc: '龙城文脉 · 汾河烟火',
-      emoji: '🏯',
-      colors: [Color(0xFFF0E8D8), Color(0xFFDDD0B8)],
-      enabled: true,
-    ),
-    _HomeCity(
-      name: '成都',
-      desc: '天府之国 · 悠闲慢生活',
-      emoji: '🏮',
-      colors: [Color(0xFFE8EEF5), Color(0xFFCCD8E8)],
-    ),
-    _HomeCity(
-      name: '北京',
-      desc: '千年古都 · 国家中心',
-      emoji: '🏰',
-      colors: [Color(0xFFF8E8E0), Color(0xFFE8C8B8)],
-      enabled: true,
-    ),
-    _HomeCity(
-      name: '上海',
-      desc: '魔都繁华 · 现代摩天',
-      emoji: '🌉',
-      colors: [Color(0xFFE0F0D8), Color(0xFFC0D8A8)],
-    ),
-    _HomeCity(
-      name: '西安',
-      desc: '古都长安 · 十朝故都',
-      emoji: '🏛️',
-      colors: [Color(0xFFF0E0E8), Color(0xFFE0C0D0)],
-    ),
-    _HomeCity(
-      name: '杭州',
-      desc: '西湖梦幻 · 江南诗画',
-      emoji: '🌸',
-      colors: [Color(0xFFE8E0F0), Color(0xFFD0C8E0)],
-    ),
-    _HomeCity(
-      name: '南京',
-      desc: '六朝古都 · 十里秦淮',
-      emoji: '🏮',
-      colors: [Color(0xFFF0E8E0), Color(0xFFE0D0C0)],
-    ),
-    _HomeCity(
-      name: '苏州',
-      desc: '园林古城 · 人间天堂',
-      emoji: '🌊',
-      colors: [Color(0xFFE8F0F0), Color(0xFFD0E0E0)],
-    ),
-    _HomeCity(
-      name: '武汉',
-      desc: '九省通衢 · 江汉明珠',
-      emoji: '🌉',
-      colors: [Color(0xFFF0F0E8), Color(0xFFE0E0D0)],
-    ),
-    _HomeCity(
-      name: '重庆',
-      desc: '山城夜景 · 火锅之都',
-      emoji: '🏔️',
-      colors: [Color(0xFFF5E8E0), Color(0xFFE8D0C0)],
-    ),
-    _HomeCity(
-      name: '广州',
-      desc: '花城商都 · 食在广州',
-      emoji: '🌺',
-      colors: [Color(0xFFF8E0E8), Color(0xFFE8C0D0)],
-    ),
-    _HomeCity(
-      name: '深圳',
-      desc: '鹏城创新 · 科技之窗',
-      emoji: '🌴',
-      colors: [Color(0xFFE0F0E8), Color(0xFFC8E0D0)],
-    ),
-    _HomeCity(
-      name: '长沙',
-      desc: '星城热辣 · 湘味之魂',
-      emoji: '🔥',
-      colors: [Color(0xFFF8E8E0), Color(0xFFF0D0C0)],
-    ),
-    _HomeCity(
-      name: '厦门',
-      desc: '海上花园 · 文艺鹭岛',
-      emoji: '🏖️',
-      colors: [Color(0xFFE0F0F8), Color(0xFFC8E0F0)],
-    ),
-    _HomeCity(
-      name: '青岛',
-      desc: '红瓦绿树 · 啤酒之都',
-      emoji: '🍺',
-      colors: [Color(0xFFE8F0E8), Color(0xFFD0E0D0)],
-    ),
-    _HomeCity(
-      name: '昆明',
-      desc: '春城花都 · 云岭之南',
-      emoji: '🦚',
-      colors: [Color(0xFFF0E8F0), Color(0xFFE0D0E0)],
-    ),
+    _HomeCity(name: '太原', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
+    _HomeCity(name: '北京', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
+    _HomeCity(name: '临沂', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
+    _HomeCity(name: '其他', videoAsset: 'assets/videos/other1.mp4', enabled: false),
+    _HomeCity(name: '其他', videoAsset: 'assets/videos/other2.mp4', enabled: false),
   ];
 
   @override
@@ -133,31 +44,21 @@ class TyHomePage extends StatelessWidget {
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.fromLTRB(
-                  18,
-                  16,
-                  18,
-                  MediaQuery.of(context).padding.bottom + 18,
+                  18, 16, 18, MediaQuery.of(context).padding.bottom + 18,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       '热门城市',
-                      style: TextStyle(
-                        color: AppColors.ink,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.25,
-                      ),
+                      style: TextStyle(color: AppColors.ink, fontSize: 14, fontWeight: FontWeight.w600, height: 1.25),
                     ),
                     const SizedBox(height: 10),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final cardWidth = (constraints.maxWidth - 10) / 2;
-
                         return Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
+                          spacing: 10, runSpacing: 10,
                           children: [
                             for (final city in _cities)
                               SizedBox(
@@ -199,167 +100,137 @@ class _HomeHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topLeft, end: Alignment.bottomRight,
           colors: [Color(0xFFEAE2D6), Color(0xFFDDD3C2)],
         ),
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '旅见',
-            style: TextStyle(
-              color: AppColors.ink,
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-              height: 1.2,
-              letterSpacing: .4,
-            ),
-          ),
+          Text('旅见', style: TextStyle(color: AppColors.ink, fontSize: 28, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: .4)),
           SizedBox(height: 6),
-          Text(
-            '探索中国 · 每座城都有故事',
-            style: TextStyle(
-              color: AppColors.ink4,
-              fontSize: 12,
-              height: 1.35,
-              letterSpacing: .5,
-            ),
-          ),
+          Text('探索中国 · 每座城都有故事', style: TextStyle(color: AppColors.ink4, fontSize: 12, height: 1.35, letterSpacing: .5)),
         ],
       ),
     );
   }
 }
 
-class _CityCard extends StatelessWidget {
-  const _CityCard({required this.city, required this.onTap});
-
+/// 城市卡片 — 视频背景 + 大号居中城市名
+class _CityCard extends StatefulWidget {
   final _HomeCity city;
   final VoidCallback? onTap;
 
+  const _CityCard({required this.city, required this.onTap});
+
+  @override
+  State<_CityCard> createState() => _CityCardState();
+}
+
+class _CityCardState extends State<_CityCard> {
+  VideoPlayerController? _controller;
+  bool _initFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  void _initVideo() {
+    try {
+      _controller = VideoPlayerController.asset(widget.city.videoAsset)
+        ..initialize().then((_) {
+          if (mounted) {
+            setState(() {});
+            _controller!.setLooping(true);
+            _controller!.setVolume(0); // 静音播放
+            _controller!.play();
+          }
+        }).catchError((_) {
+          if (mounted) setState(() => _initFailed = true);
+        });
+    } catch (_) {
+      if (mounted) setState(() => _initFailed = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hasVideo = _controller != null && _controller!.value.isInitialized;
+
     return Semantics(
-      button: city.enabled,
-      label: city.enabled ? '查看${city.name}详情' : '${city.name}暂未开放',
+      button: widget.city.enabled,
+      label: widget.city.enabled ? '查看${widget.city.name}详情' : '${widget.city.name}暂未开放',
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
-          onTap: onTap,
+          onTap: widget.onTap,
           borderRadius: BorderRadius.circular(14),
           child: Ink(
-            height: 140,
+            height: 160,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: AppColors.border2),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: city.colors,
-              ),
+              color: const Color(0xFF2C2C2C), // 默认暗色背景 (视频加载前)
               boxShadow: const [
-                BoxShadow(
-                  color: AppColors.shadowMid,
-                  blurRadius: 20,
-                  offset: Offset(0, 4),
-                ),
+                BoxShadow(color: AppColors.shadowMid, blurRadius: 20, offset: Offset(0, 4)),
               ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  Positioned(
-                    left: -20,
-                    top: -24,
-                    child: Container(
-                      width: 92,
-                      height: 92,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: .22),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 18,
-                    left: 0,
-                    right: 0,
-                    child: Text(
-                      city.emoji,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 36, height: 1),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(12, 28, 12, 12),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0x00000000), Color(0x66000000)],
+                  /// 视频背景（加载完成后显示）
+                  if (hasVideo)
+                    Positioned.fill(
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: SizedBox(
+                          width: _controller!.value.size.width,
+                          height: _controller!.value.size.height,
+                          child: VideoPlayer(_controller!),
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            city.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Color(0xFFFFFCF7),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              height: 1.25,
-                              letterSpacing: 1,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                  color: Color(0x33000000),
-                                ),
-                              ],
-                            ),
+                    ),
+
+                  /// 加载失败时的纯色背景
+                  if (!hasVideo && !_initFailed)
+                    const Center(child: CircularProgressIndicator(color: Colors.white24, strokeWidth: 2)),
+
+                  /// 暗色遮罩 — 让白色文字清晰可见
+                  Container(color: Colors.black.withValues(alpha: 0.4)),
+
+                  /// 城市名 — 大号居中
+                  Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          widget.city.name,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 4,
+                            shadows: [Shadow(blurRadius: 8, offset: Offset(0, 2), color: Color(0x66000000))],
                           ),
-                          const SizedBox(height: 3),
-                          Text(
-                            city.desc,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Color(0xEFFFFCF7),
-                              fontSize: 9,
-                              height: 1.4,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 2,
-                                  offset: Offset(0, 1),
-                                  color: Color(0x33000000),
-                                ),
-                              ],
-                            ),
+                        ),
+                        if (!widget.city.enabled)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 6),
+                            child: Text('即将开放', style: TextStyle(color: Colors.white54, fontSize: 11)),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            city.enabled ? '★★★★★' : '即将开放',
-                            style: const TextStyle(
-                              color: Color(0xFFFFFCF7),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              height: 1,
-                            ),
-                          ),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 ],
@@ -374,16 +245,8 @@ class _CityCard extends StatelessWidget {
 
 class _HomeCity {
   final String name;
-  final String desc;
-  final String emoji;
-  final List<Color> colors;
+  final String videoAsset;
   final bool enabled;
 
-  const _HomeCity({
-    required this.name,
-    required this.desc,
-    required this.emoji,
-    required this.colors,
-    this.enabled = false,
-  });
+  const _HomeCity({required this.name, required this.videoAsset, this.enabled = false});
 }
