@@ -11,6 +11,7 @@ import 'ty/ty_taiyuan_app.dart';
 import 'ty/ty_shared/ty_colors.dart';
 import 'ty/ty_taiyuan/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
+import 'ty/ty_shared/ty_flag_bg.dart';
 
 void main() => runApp(const TaiyuanApp());
 
@@ -33,8 +34,9 @@ class _TyHomePageState extends State<TyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SafeArea(
+      backgroundColor: const Color(0xFFDE2910),
+      body: FlagBackground(
+        child: SafeArea(
         bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,6 +89,7 @@ class _TyHomePageState extends State<TyHomePage> {
           ],
         ),
       ),
+      ), // FlagBackground
     );
   }
 }
@@ -101,15 +104,15 @@ class _HomeHeader extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft, end: Alignment.bottomRight,
-          colors: [Color(0xFFEAE2D6), Color(0xFFDDD3C2)],
+          colors: [Color(0xFFDE2910), Color(0xFFBE1A0A)],
         ),
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('旅见', style: TextStyle(color: AppColors.ink, fontSize: 28, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: .4)),
+          Text('旅见', style: TextStyle(color: Color(0xFFFFDE00), fontSize: 28, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: .4)),
           SizedBox(height: 6),
-          Text('探索中国 · 每座城都有故事', style: TextStyle(color: AppColors.ink4, fontSize: 12, height: 1.35, letterSpacing: .5)),
+          Text('探索中国 · 每座城都有故事', style: TextStyle(color: Color(0xFFFFEBA0), fontSize: 12, height: 1.35, letterSpacing: .5)),
         ],
       ),
     );
