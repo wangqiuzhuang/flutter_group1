@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: _scrollController,
             slivers: [
               /// Hero 大图区
-              SliverToBoxAdapter(child: HeroSection(controller: controller)),
+              SliverToBoxAdapter(child: HeroSection(controller: widget.controller)),
 
               /// 白色内容区（顶部圆角，向上覆盖 Hero 底部）
               SliverToBoxAdapter(
