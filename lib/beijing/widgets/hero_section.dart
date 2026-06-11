@@ -15,7 +15,8 @@ import '../utils/themes.dart';
 import '../utils/constants.dart';
 
 class HeroSection extends StatefulWidget {
-  const HeroSection({super.key});
+  final VideoPlayerController? controller;
+  const HeroSection({super.key, this.controller});
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -27,20 +28,27 @@ class _HeroSectionState extends State<HeroSection> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/beijing.mp4')
-      ..initialize().then((_) {
-        if (mounted) {
-          setState(() {});
-          _controller!.setLooping(true);
-          _controller!.setVolume(0);
-          _controller!.play();
-        }
-      });
+    _controller = widget.controller;
+    if (_controller != null && _controller!.value.isInitialized) {
+      _controller!.play();
+    } else if (_controller != null) {
+      _controller!.addListener(_onReady);
+    }
+  }
+
+  void _onReady() {
+    if (_controller!.value.isInitialized) {
+      _controller!.play();
+      _controller!.removeListener(_onReady);
+      if (mounted) setState(() {});
+    }
   }
 
   @override
   void dispose() {
-    _controller?.dispose();
+    if (_controller != widget.controller) {
+      _controller?.dispose();
+    }
     super.dispose();
   }
 
