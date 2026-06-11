@@ -10,8 +10,8 @@
 // ============================================
 
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'ty_app.dart';
-import 'ty_home_page.dart';
 
 /// 太原城市 App
 /// 其他成员参考此结构，替换 tabs 为自己的 Tab 内容
