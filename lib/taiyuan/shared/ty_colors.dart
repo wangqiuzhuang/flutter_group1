@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_colors.dart
+// 文件: lib/shared/ty_colors.dart
 // 用途: 全局颜色常量 — 晋商色系（浅色主题 v2）
 // 作者: testerwm
 // 创建: 2026-06-09

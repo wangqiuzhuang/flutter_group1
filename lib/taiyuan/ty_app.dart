@@ -9,8 +9,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'ty_l10n/ty_app_localizations.dart';
-import 'ty_shared/ty_colors.dart';
+import 'l10n/ty_app_localizations.dart';
+import 'shared/ty_colors.dart';
 
 class MyApp extends StatefulWidget {
   /// 起始页面（默认太原，其他成员可替换为自己的城市页）

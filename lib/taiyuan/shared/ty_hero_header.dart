@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_hero_header.dart
+// 文件: lib/shared/ty_hero_header.dart
 // 用途: 城市页顶部 Hero — 按设计稿比例缩放
 // 作者: testerwm
 // 创建: 2026-06-09
@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'ty_colors.dart';
-import '../ty_l10n/ty_app_localizations.dart';
+import '../l10n/ty_app_localizations.dart';
 
 class CityHeroHeader extends StatelessWidget {
   final int tab;

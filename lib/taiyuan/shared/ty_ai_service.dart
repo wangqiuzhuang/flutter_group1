@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_ai_service.dart
+// 文件: lib/shared/ty_ai_service.dart
 // 用途: AI 聊天服务 — 通过代理调用 DeepSeek API
 // 说明:
 //   - chatStream(): 流式聊天，返回 SSE 文本块
