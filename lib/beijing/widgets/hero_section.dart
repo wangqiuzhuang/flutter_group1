@@ -1,42 +1,80 @@
 /// ============================================================
 /// Hero 区域 — 顶部展示区
 /// ============================================================
-/// 设计要点：
-///   - 背景大图 + 暗色渐变遮罩（确保白色文字可读）
-///   - 语言/主题切换按钮直接展示在右上角（不隐藏）
-///   - 城市数据标签（首都 / 3000+年 / 2189万人口）
-///   - 装饰性圆圈增加视觉层次
+///   - 视频背景 (assets/videos/beijing.mp4) 循环静音播放
+///   - 暗色渐变遮罩（确保白色文字可读）
+///   - 语言/主题切换按钮直接展示在右上角
+///   - 城市数据标签
 /// ============================================================
 
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import '../utils/app_state.dart';
 import '../utils/translations.dart';
 import '../utils/themes.dart';
 import '../utils/constants.dart';
 
-class HeroSection extends StatelessWidget {
+class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
+
+  @override
+  State<HeroSection> createState() => _HeroSectionState();
+}
+
+class _HeroSectionState extends State<HeroSection> {
+  VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/videos/beijing.mp4')
+      ..initialize().then((_) {
+        if (mounted) {
+          setState(() {});
+          _controller!.setLooping(true);
+          _controller!.setVolume(0);
+          _controller!.play();
+        }
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = AppState.of(context).colors;
     final t = AppState.of(context).t;
     final appState = AppState.of(context);
+    final hasVideo = _controller != null && _controller!.value.isInitialized;
 
     return SizedBox(
       height: 400,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          /// 背景图片 — 替换 assets/images/hero_bg.png 即可更换
-          Image.asset(BeijingImages.heroBg, fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(decoration: BoxDecoration(gradient: colors.primaryGradient)),
-          ),
+          /// 视频背景 — 替换 assets/videos/beijing.mp4 即可更换
+          if (hasVideo)
+            Positioned.fill(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller!.value.size.width,
+                  height: _controller!.value.size.height,
+                  child: VideoPlayer(_controller!),
+                ),
+              ),
+            )
+          else
+            Container(decoration: BoxDecoration(gradient: colors.primaryGradient)),
 
-          /// 暗色渐变遮罩 — 让白色文字更清晰可读
+          /// 暗色渐变遮罩
           Container(decoration: BoxDecoration(gradient: colors.heroGradient)),
 
-          /// 装饰圆圈 — 增加视觉层次感
+          /// 装饰圆圈
           Positioned(top: -40, right: -40,
             child: Container(
               width: 200, height: 200,
@@ -54,16 +92,11 @@ class HeroSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// 控制栏：语言切换 + 主题色点
                   _buildControlBar(appState, colors),
                   const Spacer(),
-
-                  /// 金色装饰线
                   Container(width: 40, height: 3,
                       decoration: BoxDecoration(color: colors.accent, borderRadius: BorderRadius.circular(2))),
                   const SizedBox(height: 12),
-
-                  /// 主标题
                   Text(t.heroTitle, style: AppTextStyles.heroTitle),
                   const SizedBox(height: 6),
                   Text(t.heroSubtitle, style: AppTextStyles.heroSubtitle),
@@ -72,8 +105,6 @@ class HeroSection extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(t.heroTagline, style: const TextStyle(fontSize: 15, color: Colors.white60, letterSpacing: 2)),
                   const SizedBox(height: 16),
-
-                  /// 城市数据指标
                   Row(
                     children: [
                       _StatChip(icon: Icons.location_on, value: t.heroStatCapital, label: '中国', color: colors.accent),
@@ -92,12 +123,10 @@ class HeroSection extends StatelessWidget {
     );
   }
 
-  /// 语言切换 + 主题色点控制栏
   Widget _buildControlBar(AppState appState, dynamic colors) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        /// 语言切换胶囊
         Container(
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
@@ -116,8 +145,6 @@ class HeroSection extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-
-        /// 主题色点选择器
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
@@ -155,7 +182,6 @@ class HeroSection extends StatelessWidget {
   }
 }
 
-/// 语言切换按钮
 class _LangChip extends StatelessWidget {
   final String label;
   final bool active;
@@ -180,7 +206,6 @@ class _LangChip extends StatelessWidget {
   }
 }
 
-/// 城市数据指标标签
 class _StatChip extends StatelessWidget {
   final IconData icon;
   final String value;
