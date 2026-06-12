@@ -1,5 +1,5 @@
 // ============================================
-// 文件: proxy/lib/server.dart
+// 文件: proxy/server.dart
 // 用途: DeepSeek API 代理服务器
 // 说明:
 //   - 接收 Flutter 端请求，转发到 DeepSeek API
