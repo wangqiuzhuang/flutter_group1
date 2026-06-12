@@ -7,10 +7,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'ty/ty_taiyuan_app.dart';
-import 'ty/ty_shared/ty_colors.dart';
-import 'ty/ty_taiyuan/ty_taiyuan_city_page.dart';
+import 'taiyuan/ty_taiyuan_app.dart';
+import 'taiyuan/shared/ty_colors.dart';
+import 'taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
+import 'linyi/linyi_page.dart'; // 导入临沂页面 / 임기 페이지 불러오기
 
 void main() => runApp(const TaiyuanApp());
 
@@ -50,11 +51,6 @@ class _TyHomePageState extends State<TyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '热门城市',
-                      style: TextStyle(color: AppColors.ink, fontSize: 14, fontWeight: FontWeight.w600, height: 1.25),
-                    ),
-                    const SizedBox(height: 10),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final cardWidth = (constraints.maxWidth - 10) / 2;
@@ -69,9 +65,12 @@ class _TyHomePageState extends State<TyHomePage> {
                                   onTap: city.enabled
                                       ? () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => city.name == '北京'
-                                          ? const BeijingEntry()
-                                          : const TaiyuanCityPage(),
+                                      builder: (_) {
+                                        // 根据城市名跳转对应页面 / 도시 이름에 따라 해당 페이지로 이동
+                                        if (city.name == '北京') return const BeijingEntry();
+                                        if (city.name == '临沂') return const LinyiPage(); // 临沂页面 / 임기 페이지
+                                        return const TaiyuanCityPage(); // 默认太原 / 기본 타이위안
+                                      },
                                     ),
                                   )
                                       : null,
@@ -170,7 +169,7 @@ class _CityCardState extends State<_CityCard> {
 
     return Semantics(
       button: widget.city.enabled,
-      label: widget.city.enabled ? '查看${widget.city.name}详情' : '${widget.city.name}暂未开放',
+      label: widget.city.enabled ? '查看\${widget.city.name}详情' : '\${widget.city.name}暂未开放',
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),

@@ -8,9 +8,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../ty_shared/ty_colors.dart';
-import '../ty_l10n/ty_app_localizations.dart';
-import '../ty_shared/ty_widgets.dart';
+import '../shared/ty_colors.dart';
+import '../l10n/ty_app_localizations.dart';
+import '../shared/ty_widgets.dart';
 
 class TaiyuanRoutesTab extends StatefulWidget {
   const TaiyuanRoutesTab();

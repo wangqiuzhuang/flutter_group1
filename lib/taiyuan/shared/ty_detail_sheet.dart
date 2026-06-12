@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_detail_sheet.dart
+// 文件: lib/shared/ty_detail_sheet.dart
 // 用途: 景点/美食详情 Bottom Sheet — 浅色主题 v2
 // 作者: testerwm
 // 创建: 2026-06-09
@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'ty_colors.dart';
-import '../ty_l10n/ty_app_localizations.dart';
+import '../l10n/ty_app_localizations.dart';
 
 void showSpotDetail(BuildContext c, String key, String emoji) {
   final l10n = AppLocalizations.of(c);

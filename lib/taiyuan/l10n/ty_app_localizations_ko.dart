@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_l10n/app_localizations_ko.dart
+// 文件: lib/l10n/app_localizations_ko.dart
 // 用途: ko语言翻译（通用 + 太原专属内容）
 // 作者: testerwm
 // 创建: 2026-06-09

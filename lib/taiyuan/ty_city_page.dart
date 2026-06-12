@@ -6,12 +6,12 @@
 // ============================================
 
 import 'package:flutter/material.dart';
-import 'ty_l10n/ty_app_localizations.dart';
-import 'ty_shared/ty_colors.dart';
-import 'ty_shared/ty_ai_assistant_sheet.dart';
-import 'ty_shared/ty_hero_header.dart';
-import 'ty_shared/ty_tab_row.dart';
-import 'ty_shared/ty_lang_sheet.dart';
+import 'l10n/ty_app_localizations.dart';
+import 'shared/ty_colors.dart';
+import 'shared/ty_ai_assistant_sheet.dart';
+import 'shared/ty_hero_header.dart';
+import 'shared/ty_tab_row.dart';
+import 'shared/ty_lang_sheet.dart';
 
 class CityPage extends StatefulWidget {
   static final ValueNotifier<int> activeTab = ValueNotifier(0);
