@@ -1,5 +1,5 @@
 // ============================================
-// 文件: lib/ty_shared/ty_widgets.dart
+// 文件: lib/shared/ty_widgets.dart
 // 用途: 共用 UI 组件 — 浅色主题 v2
 // 作者: testerwm
 // 创建: 2026-06-09
