@@ -96,6 +96,7 @@ class CityHeroHeader extends StatelessWidget {
             button: onLogoTap != null,
             label: '打开旅行助手',
             child: GestureDetector(
+              key: const ValueKey('taiyuanCityLogoButton'),
               onTap: onLogoTap,
               child: MouseRegion(
                 cursor: onLogoTap == null

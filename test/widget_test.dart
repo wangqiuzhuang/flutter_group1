@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_group1/ty/ty_taiyuan_app.dart';
+import 'package:flutter_group1/taiyuan/ty_app.dart';
+import 'package:flutter_group1/taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
 /// 太原城市 App 测试
@@ -11,36 +12,30 @@ void main() {
     VideoPlayerPlatform.instance = _FakeVideoPlayerPlatform();
   });
 
-  testWidgets('starts on home and opens Taiyuan detail', (tester) async {
-    await tester.pumpWidget(const TaiyuanApp());
+  testWidgets('shows Taiyuan detail and opens AI assistant', (tester) async {
+    await tester.pumpWidget(const MyApp(home: TaiyuanCityPage()));
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.text('旅见'), findsOneWidget);
-    expect(find.text('热门城市'), findsOneWidget);
-    expect(find.text('太原'), findsOneWidget);
-
-    await tester.tap(find.text('太原'));
-    await tester.pump(const Duration(milliseconds: 400));
-    await tester.pump();
-
-    expect(find.text('介绍'), findsOneWidget);
-    expect(find.text('景点'), findsOneWidget);
-    expect(find.text('美食'), findsOneWidget);
-    expect(find.text('路线'), findsOneWidget);
+    expect(find.text('타이위안'), findsOneWidget);
+    expect(find.text('소개'), findsOneWidget);
+    expect(find.text('명소'), findsOneWidget);
+    expect(find.text('음식'), findsOneWidget);
+    expect(find.text('코스'), findsOneWidget);
 
     await tester.pump(const Duration(milliseconds: 700));
-    await tester.tapAt(const Offset(720, 100));
+    await tester.tap(find.byKey(const ValueKey('taiyuanCityLogoButton')));
     await tester.pump(const Duration(milliseconds: 400));
     await tester.pump();
 
-    expect(find.text('旅行助手'), findsOneWidget);
-    expect(find.text('了解太原城市信息'), findsOneWidget);
+    expect(find.text('여행 도우미'), findsOneWidget);
+    expect(find.text('타이위안 도시 정보'), findsOneWidget);
 
     await tester.tapAt(const Offset(400, 80));
     await tester.pump(const Duration(milliseconds: 400));
     await tester.pump();
 
-    expect(find.text('旅行助手'), findsNothing);
+    expect(find.text('여행 도우미'), findsNothing);
   });
 }
 
