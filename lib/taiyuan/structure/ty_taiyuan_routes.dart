@@ -1,19 +1,129 @@
 // ============================================
-// 文件: lib/ty_taiyuan/ty_taiyuan_routes.dart
-// 用途: 太原城市 - 路线 Tab — 浅色主题 v2
-// 作者: testerwm
-// 创建: 2026-06-09
-// 说明: Chip 切换器 + 时间线步骤
+// 文件: lib/taiyuan/structure/ty_taiyuan_routes.dart
+// 用途: 太原城市 - 路线 Tab — redesign v3
+// 作者: testerwm + Claude
+// 创建: 2026-06-09 / 更新: 2026-06-13
+// 说明: 步骤卡片增加缩略图，展开显示标签组 + 说明文字
+//       交互增强：点击展开详情，箭头旋转 90°
 // ============================================
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../shared/ty_colors.dart';
 import '../l10n/ty_app_localizations.dart';
-import '../shared/ty_widgets.dart';
+import '../shared/ty_colors.dart';
+
+// ── 路线步骤数据模型 ──
+
+class _RouteStepData {
+  final String name;
+  final String desc;
+  final String time;
+  final String image;
+  final List<String> tags;
+  final String detailText;
+
+  const _RouteStepData({
+    required this.name,
+    required this.desc,
+    required this.time,
+    required this.image,
+    required this.tags,
+    required this.detailText,
+  });
+}
+
+class _RouteData {
+  final String title;
+  final String sub;
+  final String pill;
+  final String day;
+  final String stops;
+  final String budget;
+  final List<_RouteStepData> steps;
+
+  const _RouteData({
+    required this.title,
+    required this.sub,
+    required this.pill,
+    required this.day,
+    required this.stops,
+    required this.budget,
+    required this.steps,
+  });
+}
+
+// ── 路线数据构建器（从 l10n 获取翻译文案） ──
+
+List<_RouteData> _buildRoutes(AppLocalizations l10n) {
+  String g(String k) => l10n[k];
+  String gn(String k) => l10n[k].isEmpty ? '' : l10n[k];
+
+  return [
+    _RouteData(
+      title: g('rt_lc_title'), sub: g('rt_lc_sub'), pill: g('rt_lc_pill'),
+      day: g('rt_lc_day'), stops: g('rt_lc_stops'), budget: g('rt_lc_budget'),
+      steps: [
+        _RouteStepData(name: g('rt_lc_s0n'), desc: g('rt_lc_s0d'), time: '09:00', image: 'assets/images/taiyuan/bwy.jpg',
+          tags: [g('rt_lc_s0t0'), g('rt_lc_s0t1'), g('rt_lc_s0t2'), g('rt_lc_s0t3')], detailText: g('rt_lc_s0dt')),
+        _RouteStepData(name: g('rt_lc_s1n'), desc: g('rt_lc_s1d'), time: '13:00', image: 'assets/images/taiyuan/st.jpg',
+          tags: [g('rt_lc_s1t0'), g('rt_lc_s1t1'), g('rt_lc_s1t2'), g('rt_lc_s1t3')], detailText: g('rt_lc_s1dt')),
+        _RouteStepData(name: g('rt_lc_s2n'), desc: g('rt_lc_s2d'), time: '17:00', image: 'assets/images/taiyuan/fh.jpg',
+          tags: [g('rt_lc_s2t0'), g('rt_lc_s2t1'), g('rt_lc_s2t2'), g('rt_lc_s2t3')], detailText: g('rt_lc_s2dt')),
+      ],
+    ),
+    _RouteData(
+      title: g('rt_gj_title'), sub: g('rt_gj_sub'), pill: gn('rt_gj_pill'),
+      day: g('rt_gj_day'), stops: g('rt_gj_stops'), budget: g('rt_gj_budget'),
+      steps: [
+        _RouteStepData(name: g('rt_gj_s0n'), desc: g('rt_gj_s0d'), time: '08:30', image: 'assets/images/taiyuan/jinci.jpg',
+          tags: [g('rt_gj_s0t0'), g('rt_gj_s0t1'), g('rt_gj_s0t2'), g('rt_gj_s0t3')], detailText: g('rt_gj_s0dt')),
+        _RouteStepData(name: g('rt_gj_s1n'), desc: g('rt_gj_s1d'), time: '13:30', image: 'assets/images/taiyuan/tls.jpg',
+          tags: [g('rt_gj_s1t0'), g('rt_gj_s1t1'), g('rt_gj_s1t2'), g('rt_gj_s1t3')], detailText: g('rt_gj_s1dt')),
+        _RouteStepData(name: g('rt_gj_s2n'), desc: g('rt_gj_s2d'), time: '16:00', image: 'assets/images/taiyuan/ms.jpg',
+          tags: [g('rt_gj_s2t0'), g('rt_gj_s2t1'), g('rt_gj_s2t2'), g('rt_gj_s2t3')], detailText: g('rt_gj_s2dt')),
+      ],
+    ),
+    _RouteData(
+      title: g('rt_wd_title'), sub: g('rt_wd_sub'), pill: g('rt_wd_pill'),
+      day: g('rt_wd_day'), stops: g('rt_wd_stops'), budget: g('rt_wd_budget'),
+      steps: [
+        _RouteStepData(name: g('rt_wd_s0n'), desc: g('rt_wd_s0d'), time: '08:00', image: 'assets/images/taiyuan/tn.jpg',
+          tags: [g('rt_wd_s0t0'), g('rt_wd_s0t1'), g('rt_wd_s0t2'), g('rt_wd_s0t3')], detailText: g('rt_wd_s0dt')),
+        _RouteStepData(name: g('rt_wd_s1n'), desc: g('rt_wd_s1d'), time: '12:00', image: 'assets/images/taiyuan/noodle.jpg',
+          tags: [g('rt_wd_s1t0'), g('rt_wd_s1t1'), g('rt_wd_s1t2'), g('rt_wd_s1t3')], detailText: g('rt_wd_s1dt')),
+        _RouteStepData(name: g('rt_wd_s2n'), desc: g('rt_wd_s2d'), time: '14:30', image: 'assets/images/taiyuan/sm1.jpg',
+          tags: [g('rt_wd_s2t0'), g('rt_wd_s2t1'), g('rt_wd_s2t2'), g('rt_wd_s2t3')], detailText: g('rt_wd_s2dt')),
+      ],
+    ),
+    _RouteData(
+      title: g('rt_qz_title'), sub: g('rt_qz_sub'), pill: gn('rt_qz_pill'),
+      day: g('rt_qz_day'), stops: g('rt_qz_stops'), budget: g('rt_qz_budget'),
+      steps: [
+        _RouteStepData(name: g('rt_qz_s0n'), desc: g('rt_qz_s0d'), time: '09:30', image: 'assets/images/taiyuan/bwy.jpg',
+          tags: [g('rt_qz_s0t0'), g('rt_qz_s0t1'), g('rt_qz_s0t2'), g('rt_qz_s0t3')], detailText: g('rt_qz_s0dt')),
+        _RouteStepData(name: g('rt_qz_s1n'), desc: g('rt_qz_s1d'), time: '14:00', image: 'assets/images/taiyuan/zwy.jpg',
+          tags: [g('rt_qz_s1t0'), g('rt_qz_s1t1'), g('rt_qz_s1t2'), g('rt_qz_s1t3')], detailText: g('rt_qz_s1dt')),
+        _RouteStepData(name: g('rt_qz_s2n'), desc: g('rt_qz_s2d'), time: '16:30', image: 'assets/images/taiyuan/fh.jpg',
+          tags: [g('rt_qz_s2t0'), g('rt_qz_s2t1'), g('rt_qz_s2t2'), g('rt_qz_s2t3')], detailText: g('rt_qz_s2dt')),
+      ],
+    ),
+    _RouteData(
+      title: g('rt_ss_title'), sub: g('rt_ss_sub'), pill: gn('rt_ss_pill'),
+      day: g('rt_ss_day'), stops: g('rt_ss_stops'), budget: g('rt_ss_budget'),
+      steps: [
+        _RouteStepData(name: g('rt_ss_s0n'), desc: g('rt_ss_s0d'), time: '08:30', image: 'assets/images/taiyuan/tslqs.jpg',
+          tags: [g('rt_ss_s0t0'), g('rt_ss_s0t1'), g('rt_ss_s0t2'), g('rt_ss_s0t3')], detailText: g('rt_ss_s0dt')),
+        _RouteStepData(name: g('rt_ss_s1n'), desc: g('rt_ss_s1d'), time: '14:00', image: 'assets/images/taiyuan/tls.jpg',
+          tags: [g('rt_ss_s1t0'), g('rt_ss_s1t1'), g('rt_ss_s1t2'), g('rt_ss_s1t3')], detailText: g('rt_ss_s1dt')),
+      ],
+    ),
+  ];
+}
+
+// ── 路线 Tab ──
 
 class TaiyuanRoutesTab extends StatefulWidget {
-  const TaiyuanRoutesTab();
+  const TaiyuanRoutesTab({super.key});
 
   @override
   State<TaiyuanRoutesTab> createState() => _TaiyuanRoutesTabState();
@@ -23,170 +133,127 @@ class _TaiyuanRoutesTabState extends State<TaiyuanRoutesTab> {
   int _sel = 0;
 
   @override
-  Widget build(BuildContext c) {
-    final l10n = AppLocalizations.of(c);
-    final routes = [
-      (l10n['routeTitle'], l10n['routeSubtitle'], l10n['routeRecommend'],
-          '1', '3', l10n['routeBudget']),
-      (l10n['route2Title'], l10n['route2Subtitle'], '',
-          '1', '3', l10n['route2Budget']),
-      (l10n['route3Title'], l10n['route3Subtitle'], '',
-          '0.5', '5', l10n['route3Budget']),
-      (l10n['route4Title'], l10n['route4Subtitle'], '',
-          '1', '3', l10n['route4Budget']),
-      (l10n['route5Title'], l10n['route5Subtitle'], '',
-          '1', '3', l10n['route5Budget']),
-    ];
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final routes = _buildRoutes(l10n);
+    final route = routes[_sel];
 
-    return Column(children: [
-      const SizedBox(height: 12),
-      // ── Chip 切换器 ──
-      SizedBox(
-        height: 36,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          itemCount: routes.length,
-          separatorBuilder: (_, i) => const SizedBox(width: 8),
-          itemBuilder: (c, i) {
-            final active = i == _sel;
-            return GestureDetector(
-              onTap: () => setState(() => _sel = i),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: active ? AppColors.red : AppColors.bgCard,
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: active ? AppColors.red : AppColors.border,
-                  ),
-                ),
-                child: Text(
-                  routes[i].$1,
-                  style: TextStyle(
-                    color: active ? Colors.white : AppColors.ink2,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-      const SizedBox(height: 14),
-      // ── 路线内容 ──
-      Expanded(
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          child: ListView(
-            key: ValueKey(_sel),
-            padding: const EdgeInsets.only(bottom: 20),
+    return Column(
+      children: [
+        const SizedBox(height: 12),
+        // ── Chip 切换器 ──
+        SizedBox(
+          height: 34,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            children: [
-              _buildRoute(
-                c,
-                l10n,
-                routes[_sel].$1,
-                routes[_sel].$2,
-                routes[_sel].$3,
-                routes[_sel].$4,
-                routes[_sel].$5,
-                routes[_sel].$6,
-                _stepDefs(l10n),
-              ),
-            ],
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            itemCount: routes.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, i) {
+              final active = i == _sel;
+              return GestureDetector(
+                onTap: () => setState(() => _sel = i),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                  decoration: BoxDecoration(
+                    gradient: active
+                        ? const LinearGradient(
+                            colors: [AppColors.red2, AppColors.red],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          )
+                        : null,
+                    color: active
+                        ? null
+                        : Colors.white.withValues(alpha: 0.72),
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: active ? Colors.transparent : AppColors.goldBorder,
+                    ),
+                    boxShadow: active
+                        ? const [
+                            BoxShadow(
+                              color: Color(0x38B84C2E),
+                              blurRadius: 14,
+                              offset: Offset(0, 4),
+                            ),
+                          ]
+                        : const [
+                            BoxShadow(
+                              color: Color(0x0A1E1810),
+                              blurRadius: 6,
+                              offset: Offset(0, 1),
+                            ),
+                          ],
+                  ),
+                  child: Text(
+                    routes[i].title,
+                    style: TextStyle(
+                      color: active ? Colors.white : AppColors.ink2,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
-      ),
-    ]);
-  }
-
-  List<(int, String, String, String, String, String, Color)> _stepDefs(
-      AppLocalizations l10n) {
-    final routes =
-        <List<(int, String, String, String, String, String, Color)>>[
-      [
-        (1, l10n['routeStep1Time'], l10n['routeStep1Title'],
-            l10n['routeStep1Sub'], l10n['routeStep1Transport'],
-            l10n['routeStep1Tip'], AppColors.red),
-        (2, l10n['routeStep2Time'], l10n['routeStep2Title'],
-            l10n['routeStep2Sub'], l10n['routeStep2Transport'],
-            l10n['routeStep2Tip'], const Color(0xFFB84C2E)),
-        (3, l10n['routeStep3Time'], l10n['routeStep3Title'],
-            l10n['routeStep3Sub'], l10n['routeStep3Transport'],
-            l10n['routeStep3Tip'], const Color(0xFF9B3A2A)),
+        const SizedBox(height: 16),
+        // ── 路线内容 ──
+        Expanded(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: ListView(
+              key: ValueKey(_sel),
+              padding: const EdgeInsets.only(bottom: 20),
+              physics: const BouncingScrollPhysics(),
+              children: [
+                _RouteHeader(
+                  title: route.title,
+                  sub: route.sub,
+                  pill: route.pill,
+                ),
+                const SizedBox(height: 8),
+                for (int i = 0; i < route.steps.length; i++)
+                  _RouteStepWidget(
+                    stepNum: i + 1,
+                    data: route.steps[i],
+                    isLast: i == route.steps.length - 1,
+                  ),
+                const SizedBox(height: 6),
+                _CopyRouteButton(route: route),
+                const SizedBox(height: 12),
+                _RouteStats(
+                  day: route.day,
+                  stops: route.stops,
+                  budget: route.budget,
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
       ],
-      [
-        (1, l10n['route2Step1Time'], l10n['route2Step1Title'],
-            l10n['route2Step1Sub'], l10n['route2Step1Transport'],
-            l10n['route2Step1Tip'], AppColors.red),
-        (2, l10n['route2Step2Time'], l10n['route2Step2Title'],
-            l10n['route2Step2Sub'], l10n['route2Step2Transport'],
-            l10n['route2Step2Tip'], const Color(0xFFB84C2E)),
-        (3, l10n['route2Step3Time'], l10n['route2Step3Title'],
-            l10n['route2Step3Sub'], l10n['route2Step3Transport'],
-            l10n['route2Step3Tip'], const Color(0xFF9B3A2A)),
-      ],
-      [
-        (1, l10n['route3Step1Time'], l10n['route3Step1Title'],
-            l10n['route3Step1Sub'], l10n['route3Step1Transport'],
-            l10n['route3Step1Tip'], AppColors.red),
-        (2, l10n['route3Step2Time'], l10n['route3Step2Title'],
-            l10n['route3Step2Sub'], l10n['route3Step2Transport'],
-            l10n['route3Step2Tip'], const Color(0xFFB84C2E)),
-        (3, l10n['route3Step3Time'], l10n['route3Step3Title'],
-            l10n['route3Step3Sub'], l10n['route3Step3Transport'],
-            l10n['route3Step3Tip'], const Color(0xFF9B3A2A)),
-        (4, l10n['route3Step4Time'], l10n['route3Step4Title'],
-            l10n['route3Step4Sub'], l10n['route3Step4Transport'],
-            l10n['route3Step4Tip'], const Color(0xFF6E2A1A)),
-      ],
-      [
-        (1, l10n['route4Step1Time'], l10n['route4Step1Title'],
-            l10n['route4Step1Sub'], l10n['route4Step1Transport'],
-            l10n['route4Step1Tip'], AppColors.red),
-        (2, l10n['route4Step2Time'], l10n['route4Step2Title'],
-            l10n['route4Step2Sub'], l10n['route4Step2Transport'],
-            l10n['route4Step2Tip'], const Color(0xFFB84C2E)),
-        (3, l10n['route4Step3Time'], l10n['route4Step3Title'],
-            l10n['route4Step3Sub'], l10n['route4Step3Transport'],
-            l10n['route4Step3Tip'], const Color(0xFF9B3A2A)),
-      ],
-      [
-        (1, l10n['route5Step1Time'], l10n['route5Step1Title'],
-            l10n['route5Step1Sub'], l10n['route5Step1Transport'],
-            l10n['route5Step1Tip'], AppColors.red),
-        (2, l10n['route5Step2Time'], l10n['route5Step2Title'],
-            l10n['route5Step2Sub'], l10n['route5Step2Transport'],
-            l10n['route5Step2Tip'], const Color(0xFFB84C2E)),
-        (3, l10n['route5Step3Time'], l10n['route5Step3Title'],
-            l10n['route5Step3Sub'], l10n['route5Step3Transport'],
-            l10n['route5Step3Tip'], const Color(0xFF9B3A2A)),
-      ],
-    ];
-    return routes[_sel.clamp(0, 4)];
+    );
   }
 }
 
-Widget _buildRoute(
-  BuildContext c,
-  AppLocalizations l10n,
-  String title,
-  String sub,
-  String pill,
-  String day,
-  String stops,
-  String budget,
-  List<(int, String, String, String, String, String, Color)> steps,
-) {
-  return Column(children: [
-    const SizedBox(height: 4),
-    // ── 路线头部 ──
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+// ── 路线头部 ──
+
+class _RouteHeader extends StatelessWidget {
+  final String title;
+  final String sub;
+  final String pill;
+  const _RouteHeader({required this.title, required this.sub, required this.pill});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -198,16 +265,17 @@ Widget _buildRoute(
                   title,
                   style: const TextStyle(
                     color: AppColors.ink,
-                    fontSize: 16,
+                    fontSize: 27,
                     fontWeight: FontWeight.w700,
+                    fontFamily: 'Noto Serif SC',
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 6),
                 Text(
                   sub,
                   style: const TextStyle(
                     color: AppColors.ink3,
-                    fontSize: 10,
+                    fontSize: 15,
                   ),
                 ),
               ],
@@ -215,7 +283,8 @@ Widget _buildRoute(
           ),
           if (pill.isNotEmpty)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              margin: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
               decoration: BoxDecoration(
                 color: AppColors.goldBg,
                 borderRadius: BorderRadius.circular(100),
@@ -225,234 +294,480 @@ Widget _buildRoute(
                 pill,
                 style: const TextStyle(
                   color: AppColors.gold,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
         ],
       ),
-    ),
-    const SizedBox(height: 14),
-    // ── 时间线步骤 ──
-    for (int i = 0; i < steps.length; i++)
-      _RouteStep(
-        step: steps[i].$1,
-        time: steps[i].$2,
-        title: steps[i].$3,
-        subtitle: steps[i].$4,
-        transport: steps[i].$5,
-        tip: steps[i].$6,
-        isLast: i == steps.length - 1,
-      ),
-    const SizedBox(height: 12),
-    // ── 复制按钮 ──
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: InkWell(
-        onTap: () {
-          final lines = [title, ''];
-          for (final s in steps) {
-            lines.add('${s.$2}  ${s.$3}');
-            lines.add(s.$4);
-            lines.add('');
-          }
-          Clipboard.setData(ClipboardData(text: lines.join('\n')));
-          ScaffoldMessenger.of(c).showSnackBar(
-            SnackBar(
-              content: Text(
-                l10n['detailCopied'],
-                style: const TextStyle(fontSize: 13),
-              ),
-              backgroundColor: AppColors.ink2,
-              duration: const Duration(seconds: 2),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          );
-        },
-        borderRadius: BorderRadius.circular(14),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 13),
-          decoration: BoxDecoration(
-            color: AppColors.red,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x4DB84C2E),
-                blurRadius: 16,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Text(
-              l10n['detailCopyRoute'],
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-    const SizedBox(height: 14),
-    // ── 底部统计 ──
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Row(children: [
-        Expanded(
-            child: StatTile(value: day, label: l10n['statDays'])),
-        const SizedBox(width: 8),
-        Expanded(
-            child: StatTile(
-                value: stops, label: l10n['statCheckpoints'])),
-        const SizedBox(width: 8),
-        Expanded(
-            child: StatTile(
-                value: budget, label: l10n['statBudget'])),
-      ]),
-    ),
-  ]);
+    );
+  }
 }
 
-// ── 单条路线步骤（时间线样式） ──
+// ── 单个路线步骤（可展开/收起） ──
 
-class _RouteStep extends StatefulWidget {
-  final int step;
-  final String time, title, subtitle, transport, tip;
+class _RouteStepWidget extends StatefulWidget {
+  final int stepNum;
+  final _RouteStepData data;
   final bool isLast;
-  const _RouteStep({
-    required this.step,
-    required this.time,
-    required this.title,
-    required this.subtitle,
-    required this.transport,
-    required this.tip,
+
+  const _RouteStepWidget({
+    required this.stepNum,
+    required this.data,
     required this.isLast,
   });
 
   @override
-  State<_RouteStep> createState() => _RouteStepState();
+  State<_RouteStepWidget> createState() => _RouteStepWidgetState();
 }
 
-class _RouteStepState extends State<_RouteStep> {
-  bool _on = false;
+class _RouteStepWidgetState extends State<_RouteStepWidget>
+    with SingleTickerProviderStateMixin {
+  bool _expanded = false;
+  late AnimationController _arrowController;
+  late Animation<double> _arrowTurns;
 
   @override
-  Widget build(BuildContext c) => Padding(
-    padding: const EdgeInsets.only(bottom: 4),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 时间线脊柱
-        SizedBox(
-          width: 44,
-          child: Column(children: [
-            RouteStepDot(widget.step),
-            if (!widget.isLast)
-              DashedLine(height: _on ? 64 : 28),
-          ]),
-        ),
-        // 步骤卡片
-        Expanded(
-          child: GestureDetector(
-            onTap: () => setState(() => _on = !_on),
-            behavior: HitTestBehavior.opaque,
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: widget.isLast ? 0 : 8,
-                right: 18,
-              ),
+  void initState() {
+    super.initState();
+    _arrowController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _arrowTurns = Tween(begin: 0.0, end: 0.25).animate(
+      CurvedAnimation(parent: _arrowController, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _arrowController.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() {
+      _expanded = !_expanded;
+      if (_expanded) {
+        _arrowController.forward();
+      } else {
+        _arrowController.reverse();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: widget.isLast ? 0 : 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── 时间线脊柱 ──
+          SizedBox(
+            width: 46,
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [AppColors.red2, AppColors.red],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x52B84C2E),
+                        blurRadius: 12,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${widget.stepNum}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                if (!widget.isLast)
+                  Container(
+                    width: 3,
+                    height: _expanded ? 70 : 54,
+                    margin: const EdgeInsets.symmetric(vertical: 7),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(3)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AppColors.red2,
+                          AppColors.red2,
+                          Colors.transparent,
+                          Colors.transparent,
+                        ],
+                        stops: [0.0, 0.5, 0.5, 1.0],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          // ── 步骤卡片 ──
+          Expanded(
+            child: GestureDetector(
+              onTap: _toggle,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
-                curve: Curves.easeInOut,
-                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                decoration: cardDecoration(radius: 14),
+                margin: EdgeInsets.only(bottom: widget.isLast ? 0 : 12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.88),
+                  borderRadius: BorderRadius.circular(19),
+                  border: Border.all(color: AppColors.border2),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x141E1810),
+                      blurRadius: 12,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                clipBehavior: Clip.antiAlias,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(children: [
-                      Expanded(
-                        child: Text(
-                          widget.title,
-                          style: const TextStyle(
-                            color: AppColors.ink,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
+                    // ── 摘要行：文字 + 图片 + 箭头 ──
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 15, 12, 14),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // 左侧文字
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.data.name,
+                                  style: const TextStyle(
+                                    color: AppColors.ink,
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.w800,
+                                    height: 1.15,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  widget.data.desc,
+                                  style: const TextStyle(
+                                    color: AppColors.ink3,
+                                    fontSize: 15,
+                                    height: 1.45,
+                                  ),
+                                ),
+                                const SizedBox(height: 13),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.access_time_rounded,
+                                        size: 16, color: AppColors.red),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      widget.data.time,
+                                      style: const TextStyle(
+                                        color: AppColors.red,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
-                      AnimatedRotation(
-                        duration: const Duration(milliseconds: 250),
-                        turns: _on ? 0.5 : 0,
-                        child: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 18,
-                          color: AppColors.ink4,
-                        ),
-                      ),
-                    ]),
-                    const SizedBox(height: 3),
-                    Text(
-                      widget.subtitle,
-                      style: const TextStyle(
-                        color: AppColors.ink3,
-                        fontSize: 10,
-                        height: 1.5,
+                          const SizedBox(width: 12),
+                          // 右侧缩略图
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(13),
+                            child: SizedBox(
+                              width: 142,
+                              height: 95,
+                              child: Image.asset(
+                                widget.data.image,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                  color: const Color(0xFFD6CAB8),
+                                  child: const Center(
+                                    child: Icon(Icons.image_outlined,
+                                        color: Colors.white38, size: 32),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          // 展开箭头
+                          RotationTransition(
+                            turns: _arrowTurns,
+                            child: const Icon(
+                              Icons.chevron_right_rounded,
+                              size: 22,
+                              color: AppColors.ink3,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '🕐 ${widget.time}',
-                      style: const TextStyle(
-                        color: AppColors.red,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
+                    // ── 展开详情：标签 + 说明文字 ──
+                    AnimatedCrossFade(
+                      firstChild: const SizedBox.shrink(),
+                      secondChild: _StepDetail(
+                        tags: widget.data.tags,
+                        detailText: widget.data.detailText,
                       ),
+                      crossFadeState: _expanded
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst,
+                      duration: const Duration(milliseconds: 250),
                     ),
-                    if (_on) ...[
-                      const SizedBox(height: 8),
-                      Container(
-                        height: 0.5,
-                        color: AppColors.border,
-                      ),
-                      const SizedBox(height: 8),
-                      _expRow('🚌', widget.transport),
-                      const SizedBox(height: 5),
-                      _expRow('💡', widget.tip),
-                    ],
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
 
-Widget _expRow(String i, String t) => Row(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    Text(i, style: const TextStyle(fontSize: 12)),
-    const SizedBox(width: 6),
-    Expanded(
-      child: Text(
-        t,
-        style: const TextStyle(
-          color: AppColors.ink3,
-          fontSize: 10,
-          height: 1.45,
+// ── 展开详情区域 ──
+
+class _StepDetail extends StatelessWidget {
+  final List<String> tags;
+  final String detailText;
+
+  const _StepDetail({required this.tags, required this.detailText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.border2)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0x8CF8F3EC),
+            Color(0x59FFFFFF),
+          ],
         ),
       ),
-    ),
-  ],
-);
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 标签行
+          Wrap(
+            spacing: 7,
+            runSpacing: 7,
+            children: tags
+                .map((tag) => Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppColors.goldBg,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                            color: const Color(0x249B7A3A)),
+                      ),
+                      child: Text(
+                        tag,
+                        style: const TextStyle(
+                          color: AppColors.gold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ))
+                .toList(),
+          ),
+          const SizedBox(height: 10),
+          // 详细说明
+          Text(
+            detailText,
+            style: const TextStyle(
+              color: AppColors.ink3,
+              fontSize: 13,
+              height: 1.55,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── 复制路线按钮 ──
+
+class _CopyRouteButton extends StatelessWidget {
+  final _RouteData route;
+  const _CopyRouteButton({required this.route});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: InkWell(
+        onTap: () {
+          final lines = ['${route.title} — ${route.sub}', ''];
+          for (int i = 0; i < route.steps.length; i++) {
+            final s = route.steps[i];
+            lines.add('${i + 1}. ${s.time}  ${s.name}');
+            lines.add('   ${s.desc}');
+            lines.add('');
+          }
+          Clipboard.setData(ClipboardData(text: lines.join('\n')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n['route_copied'],
+                  style: const TextStyle(fontSize: 13)),
+              backgroundColor: AppColors.ink2,
+              duration: const Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(17),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.red2, AppColors.red],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(17)),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x47B84C2E),
+                blurRadius: 18,
+                offset: Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.content_copy_rounded,
+                  color: Colors.white, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                l10n['route_copy_btn'],
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── 底部统计卡片 ──
+
+class _RouteStats extends StatelessWidget {
+  final String day;
+  final String stops;
+  final String budget;
+
+  const _RouteStats({
+    required this.day,
+    required this.stops,
+    required this.budget,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        children: [
+          Expanded(child: _StatBox(num: day, label: l10n['stat_days'])),
+          const SizedBox(width: 10),
+          Expanded(child: _StatBox(num: stops, label: l10n['stat_stops'])),
+          const SizedBox(width: 10),
+          Expanded(child: _StatBox(num: budget, label: l10n['stat_budget_person'])),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatBox extends StatelessWidget {
+  final String num;
+  final String label;
+
+  const _StatBox({required this.num, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 73),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.86),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.border2),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x141E1810),
+            blurRadius: 12,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            num,
+            style: const TextStyle(
+              color: AppColors.red,
+              fontSize: 29,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Noto Serif SC',
+              height: 1.0,
+            ),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            label,
+            style: const TextStyle(
+              color: AppColors.ink3,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

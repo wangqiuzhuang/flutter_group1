@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'ty_colors.dart';
 
 /// 非激活 Tab 颜色 — 与设计稿 #A89E90 一致
-const _tabInactive = Color(0xFFA89E90);
+const _tabInactive = AppColors.ink3; // #5E5248
 
 class CityTabRow extends StatefulWidget {
   final List<String> tabs;
