@@ -24,8 +24,8 @@ class TyHomePage extends StatefulWidget {
 
 class _TyHomePageState extends State<TyHomePage> {
   static const _cities = [
-    _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
     _HomeCity(name: '北京', nameKo: '베이징', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
+    _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
     _HomeCity(name: '临沂', nameKo: '린이', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
     _HomeCity(name: '温州', nameKo: '원저우', videoAsset: 'assets/videos/wenzhou.mp4', enabled: false),
     _HomeCity(name: '哈尔滨', nameKo: '하얼빈', videoAsset: 'assets/videos/haerbin.mp4', enabled: false),
