@@ -12,7 +12,9 @@
       "Read(//Users/king/.ssh/**)",
       "Bash(ssh -T git@github-testerwm)",
       "Bash(git push *)",
-      "Bash(flutter emulators *)"
+      "Bash(flutter emulators *)",
+      "Bash(flutter analyze *)",
+      "WebSearch"
     ]
   }
 }
