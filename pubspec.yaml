@@ -26,8 +26,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+
   assets:
     - assets/images/taiyuan/
     - assets/images/beijing/
     - assets/images/linyi/
     - assets/videos/
+    - assets/images/taishun/
