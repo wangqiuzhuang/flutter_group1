@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'taishun_app/main.dart' as taishun;
+import 'taishun_app/main.dart';
 
 class TaishunEntry extends StatelessWidget {
   const TaishunEntry({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const taishun.TaishunApp();
+    return const TaishunMainScreen();
   }
 }
