@@ -21,11 +21,15 @@ import 'config.dart';
 /// CORS + 日志中间件
 Middleware _pipeline() {
   return const Pipeline()
-      .addMiddleware(corsHeaders(headers: {
-        'ACCESS_CONTROL_ALLOW_ORIGIN': '*',
-        'ACCESS_CONTROL_ALLOW_METHODS': 'GET, POST, OPTIONS',
-        'ACCESS_CONTROL_ALLOW_HEADERS': 'Content-Type, Authorization',
-      }))
+      .addMiddleware(
+        corsHeaders(
+          headers: {
+            'ACCESS_CONTROL_ALLOW_ORIGIN': '*',
+            'ACCESS_CONTROL_ALLOW_METHODS': 'GET, POST, OPTIONS',
+            'ACCESS_CONTROL_ALLOW_HEADERS': 'Content-Type, Authorization',
+          },
+        ),
+      )
       .addMiddleware(logRequests())
       .middleware;
 }
@@ -51,20 +55,19 @@ Future<Response> _handler(Request request) async {
 
   // OPTIONS 预检
   if (method == 'OPTIONS') {
-    return Response.ok('', headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    });
+    return Response.ok(
+      '',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    );
   }
 
   // 404
   return Response.notFound(
-    jsonEncode({
-      'error': 'not found',
-      'path': path,
-      'method': method,
-    }),
+    jsonEncode({'error': 'not found', 'path': path, 'method': method}),
     headers: {'Content-Type': 'application/json'},
   );
 }
@@ -78,17 +81,22 @@ Future<Response> _handleChatCompletion(Request request) async {
   try {
     jsonBody = jsonDecode(body) as Map<String, dynamic>;
   } catch (e) {
-    return Response(400,
-        body: jsonEncode({'error': 'invalid JSON body'}),
-        headers: {'Content-Type': 'application/json'});
+    return Response(
+      400,
+      body: jsonEncode({'error': 'invalid JSON body'}),
+      headers: {'Content-Type': 'application/json'},
+    );
   }
 
   // 2. 检查 API Key
-  if (ProxyConfig.deepseekApiKey == 'YOUR_DEEPSEEK_API_KEY_HERE') {
-    return Response(500,
-        body: jsonEncode(
-            {'error': 'DeepSeek API Key 未配置，请在 proxy/lib/config.dart 中设置'}),
-        headers: {'Content-Type': 'application/json'});
+  if (ProxyConfig.deepseekApiKey.isEmpty) {
+    return Response(
+      500,
+      body: jsonEncode({
+        'error': 'DeepSeek API Key 未配置，请通过 DEEPSEEK_API_KEY 环境变量设置',
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
   }
 
   final isStreaming = jsonBody['stream'] == true;
@@ -99,14 +107,17 @@ Future<Response> _handleChatCompletion(Request request) async {
 
   try {
     final deepseekUri = Uri.parse(
-        '${ProxyConfig.deepseekBaseUrl}/v1/chat/completions');
+      '${ProxyConfig.deepseekBaseUrl}/v1/chat/completions',
+    );
     final deepseekReq = await client.postUrl(deepseekUri);
     // 确保正确的编码
     final bodyBytes = utf8.encode(body);
     deepseekReq.headers.set('Content-Type', 'application/json; charset=utf-8');
     deepseekReq.headers.set('Content-Length', bodyBytes.length.toString());
-    deepseekReq.headers
-        .set('Authorization', 'Bearer ${ProxyConfig.deepseekApiKey}');
+    deepseekReq.headers.set(
+      'Authorization',
+      'Bearer ${ProxyConfig.deepseekApiKey}',
+    );
     deepseekReq.add(bodyBytes);
 
     final deepseekResp = await deepseekReq.close();
@@ -114,26 +125,31 @@ Future<Response> _handleChatCompletion(Request request) async {
     if (deepseekResp.statusCode != 200) {
       final errorBody = await deepseekResp.transform(utf8.decoder).join();
       client.close();
-      return Response(deepseekResp.statusCode,
-          body: errorBody, headers: {'Content-Type': 'application/json'});
+      return Response(
+        deepseekResp.statusCode,
+        body: errorBody,
+        headers: {'Content-Type': 'application/json'},
+      );
     }
 
     if (isStreaming) {
       final streamCtrl = StreamController<List<int>>();
-      deepseekResp.transform(utf8.decoder).listen(
-        (chunk) {
-          streamCtrl.add(utf8.encode(chunk));
-        },
-        onDone: () {
-          streamCtrl.close();
-          client.close();
-        },
-        onError: (error) {
-          streamCtrl.addError(error);
-          streamCtrl.close();
-          client.close();
-        },
-      );
+      deepseekResp
+          .transform(utf8.decoder)
+          .listen(
+            (chunk) {
+              streamCtrl.add(utf8.encode(chunk));
+            },
+            onDone: () {
+              streamCtrl.close();
+              client.close();
+            },
+            onError: (error) {
+              streamCtrl.addError(error);
+              streamCtrl.close();
+              client.close();
+            },
+          );
       return Response.ok(
         streamCtrl.stream,
         headers: {
@@ -145,17 +161,21 @@ Future<Response> _handleChatCompletion(Request request) async {
     } else {
       final respBody = await deepseekResp.transform(utf8.decoder).join();
       client.close();
-      return Response.ok(respBody,
-          headers: {'Content-Type': 'application/json'});
+      return Response.ok(
+        respBody,
+        headers: {'Content-Type': 'application/json'},
+      );
     }
   } catch (e) {
     client.close();
-    return Response(502,
-        body: jsonEncode({
-          'error': '代理错误: 无法连接到 DeepSeek API',
-          'detail': e.toString(),
-        }),
-        headers: {'Content-Type': 'application/json'});
+    return Response(
+      502,
+      body: jsonEncode({
+        'error': '代理错误: 无法连接到 DeepSeek API',
+        'detail': e.toString(),
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
   }
 }
 

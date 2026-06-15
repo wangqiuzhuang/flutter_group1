@@ -2,15 +2,18 @@
 // 文件: proxy/lib/config.dart
 // 用途: DeepSeek API 代理配置
 // 说明:
-//   - deepseekApiKey: 替换为你的 DeepSeek API Key
+//   - deepseekApiKey: 从环境变量 DEEPSEEK_API_KEY 读取
 //   - port: 代理服务器监听端口
-//   - 此文件不提交到 Git（建议加入 .gitignore）
+//   - 启动示例: DEEPSEEK_API_KEY=sk-xxxx dart run lib/taiyuan/proxy/server.dart
 // ============================================
+
+import 'dart:io';
 
 /// 代理服务器配置
 class ProxyConfig {
-  /// DeepSeek API Key — 请替换为真实 Key
-  static const String deepseekApiKey = '';
+  /// DeepSeek API Key
+  static String get deepseekApiKey =>
+      Platform.environment['DEEPSEEK_API_KEY'] ?? '';
 
   /// DeepSeek API 地址
   static const String deepseekBaseUrl = 'https://api.deepseek.com';
