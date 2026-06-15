@@ -12,6 +12,7 @@ import 'taiyuan/shared/ty_colors.dart';
 import 'taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
 import 'linyi/linyi_page.dart'; // 导入临沂页面 / 임기 페이지 불러오기
+import 'haerbin/haerbin.dart';
 
 void main() => runApp(const TaiyuanApp());
 
@@ -70,6 +71,7 @@ class _TyHomePageState extends State<TyHomePage> {
                                         if (city.name == '北京') return const BeijingEntry();
                                         if (city.name == '临沂') return const LinyiPage(); // 临沂页面 / 임기 페이지
                                         return const TaiyuanCityPage(); // 默认太原 / 기본 타이위안
+                                        if (city.name == 'haerbin') return const haerbin();
                                       },
                                     ),
                                   )
