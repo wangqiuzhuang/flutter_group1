@@ -8,6 +8,7 @@ class Attraction {
   final String fullDescKo;
   final String categoryZh;
   final String categoryKo;
+  final String imageName;
 
   Attraction({
     required this.id,
@@ -19,6 +20,7 @@ class Attraction {
     required this.fullDescKo,
     required this.categoryZh,
     required this.categoryKo,
+    required this.imageName,
   });
 }
 
@@ -30,6 +32,7 @@ class FoodItem {
   final String descriptionKo;
   final String tagZh;
   final String tagKo;
+  final String imageName;
 
   FoodItem({
     required this.id,
@@ -39,6 +42,7 @@ class FoodItem {
     required this.descriptionKo,
     required this.tagZh,
     required this.tagKo,
+    required this.imageName,
   });
 }
 
@@ -48,12 +52,7 @@ class RouteItem {
   final String titleKo;
   final List<RouteDay> days;
 
-  RouteItem({
-    required this.id,
-    required this.titleZh,
-    required this.titleKo,
-    required this.days,
-  });
+  RouteItem({required this.id, required this.titleZh, required this.titleKo, required this.days});
 }
 
 class RouteDay {

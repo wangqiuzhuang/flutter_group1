@@ -28,6 +28,7 @@ class AttractionsScreen extends StatelessWidget {
                   contentKo: a.fullDescKo,
                   categoryZh: a.categoryZh,
                   categoryKo: a.categoryKo,
+                  imageName: a.imageName,
                 ),
               ),
             );
@@ -48,29 +49,43 @@ class _AttractionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        onTap: onTap,
-        leading: Container(
-          width: 60,
-          height: 60,
-          color: const Color(0xFF2E5D3A).withOpacity(0.15),
-          alignment: Alignment.center,
-          child: Text(
-            '${attraction.categoryZh}\n${attraction.categoryKo}',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            textAlign: TextAlign.center,
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            'assets/images/taishun/${attraction.imageName}',
+            height: 160,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(
+              height: 160,
+              color: const Color(0xFF2E5D3A).withOpacity(0.15),
+              alignment: Alignment.center,
+              child: Text(
+                '${attraction.categoryZh}\n${attraction.categoryKo}',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
-        ),
-        title: Text(attraction.nameZh, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(attraction.nameKo, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            const SizedBox(height: 2),
-            Text(attraction.shortDescZh, maxLines: 2, overflow: TextOverflow.ellipsis),
-          ],
-        ),
-        trailing: const Icon(Icons.chevron_right),
+          ListTile(
+            onTap: onTap,
+            title: Text(attraction.nameZh, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(attraction.nameKo, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                const SizedBox(height: 2),
+                Text(attraction.shortDescZh, maxLines: 2, overflow: TextOverflow.ellipsis),
+              ],
+            ),
+            trailing: Chip(
+              label: Text('${attraction.categoryZh} / ${attraction.categoryKo}', style: const TextStyle(fontSize: 10)),
+              backgroundColor: const Color(0xFF2E5D3A).withOpacity(0.1),
+            ),
+          ),
+        ],
       ),
     );
   }
