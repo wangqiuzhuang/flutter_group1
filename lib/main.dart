@@ -13,6 +13,7 @@ import 'taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
 import 'linyi/linyi_page.dart';
 import 'wenzhoutaishun/taishun_entry.dart'; // 温州泰顺入口
+import 'haerbin/haerbin.dart'; // 哈尔滨入口
 
 void main() => runApp(const TaiyuanApp());
 
@@ -29,7 +30,7 @@ class _TyHomePageState extends State<TyHomePage> {
     _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
     _HomeCity(name: '临沂', nameKo: '린이', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
     _HomeCity(name: '温州泰顺', nameKo: '원저우시 타이순현', videoAsset: 'assets/videos/wenzhou.mp4', enabled: true),
-    _HomeCity(name: '哈尔滨', nameKo: '하얼빈', videoAsset: 'assets/videos/haerbin.mp4', enabled: false),
+    _HomeCity(name: '哈尔滨', nameKo: '하얼빈', videoAsset: 'assets/videos/haerbin.mp4', enabled: true),
     _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other3.mp4', enabled: false),
   ];
 
@@ -71,6 +72,7 @@ class _TyHomePageState extends State<TyHomePage> {
                                         if (city.name == '北京') return const BeijingEntry();
                                         if (city.name == '临沂') return const LinyiPage();
                                         if (city.name == '温州泰顺') return const TaishunEntry();
+                                        if (city.name == '哈尔滨') return const HarbinHomePage();
                                         return const TaiyuanCityPage(); // 默认太原
                                       },
                                     ),
