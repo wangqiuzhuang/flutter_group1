@@ -28,6 +28,7 @@ class FoodScreen extends StatelessWidget {
                   contentKo: f.descriptionKo,
                   categoryZh: f.tagZh,
                   categoryKo: f.tagKo,
+                  imageName: f.imageName,
                 ),
               ),
             );
@@ -48,32 +49,45 @@ class _FoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        onTap: onTap,
-        leading: Container(
-          width: 60,
-          height: 60,
-          color: const Color(0xFF8B5A2B).withOpacity(0.2),
-          alignment: Alignment.center,
-          child: Text(
-            '${food.tagZh}\n${food.tagKo}',
-            style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        children: [
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: Image.asset(
+              'assets/images/taishun/${food.imageName}',
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                color: const Color(0xFF8B5A2B).withOpacity(0.2),
+                alignment: Alignment.center,
+                child: Text(
+                  '${food.tagZh}\n${food.tagKo}',
+                  style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
-        ),
-        title: Text(food.nameZh, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(food.nameKo, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            const SizedBox(height: 2),
-            Text(food.descriptionZh, maxLines: 2, overflow: TextOverflow.ellipsis),
-          ],
-        ),
-        trailing: Chip(
-          label: Text('${food.tagZh} / ${food.tagKo}', style: const TextStyle(fontSize: 9)),
-          backgroundColor: const Color(0xFF2E5D3A).withOpacity(0.1),
-        ),
+          Expanded(
+            child: ListTile(
+              onTap: onTap,
+              title: Text(food.nameZh, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(food.nameKo, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                  const SizedBox(height: 2),
+                  Text(food.descriptionZh, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12)),
+                ],
+              ),
+              trailing: Chip(
+                label: Text('${food.tagZh} / ${food.tagKo}', style: const TextStyle(fontSize: 9)),
+                backgroundColor: const Color(0xFF2E5D3A).withOpacity(0.1),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

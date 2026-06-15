@@ -7,6 +7,7 @@ class DetailScreen extends StatelessWidget {
   final String contentKo;
   final String categoryZh;
   final String categoryKo;
+  final String imageName;
 
   const DetailScreen({
     super.key,
@@ -16,6 +17,7 @@ class DetailScreen extends StatelessWidget {
     required this.contentKo,
     required this.categoryZh,
     required this.categoryKo,
+    required this.imageName,
   });
 
   @override
@@ -27,20 +29,29 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF2E5D3A), Color(0xFF4A90B8)],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'assets/images/taishun/$imageName',
+                width: double.infinity,
+                height: 220,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  width: double.infinity,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF2E5D3A), Color(0xFF4A90B8)],
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$categoryZh / $categoryKo',
+                    style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '$categoryZh / $categoryKo',
-                style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20),
