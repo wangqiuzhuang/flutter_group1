@@ -1,0 +1,232 @@
+import '../models/taishun_models.dart';
+
+class TaishunRepository {
+  static List<Attraction> getAttractions() {
+    return [
+      Attraction(
+        id: 1,
+        nameZh: '北涧桥 / 溪东桥',
+        nameKo: '베이젠차오 / 시동차오',
+        shortDescZh: '世界最美廊桥，姐妹桥',
+        shortDescKo: '세계에서 가장 아름다운 랑교, 자매교',
+        fullDescZh: '泗溪廊桥文化园内的两座编梁式木拱廊桥，相距仅百米，被桥梁专家誉为"世界最美廊桥"。桥旁千年古树遮阴，茶馆飘香，是泰顺的灵魂所在。',
+        fullDescKo: '쓰시 랑교 문화원 내에 있는 두 개의 목조 아치 랑교로, 불과 100m 거리에 위치해 있으며 교량 전문가들로부터 "세계에서 가장 아름다운 랑교"라는 찬사를 받고 있습니다. 다리 옆 천년 고목이 그늘을 드리우고 찻집에서 향긋한 차 향기가 피어나는 이곳은 타이순의 영혼이 깃든 장소입니다.',
+        categoryZh: '廊桥',
+        categoryKo: '랑교',
+      ),
+      Attraction(
+        id: 2,
+        nameZh: '乌岩岭',
+        nameKo: '우옌링',
+        shortDescZh: '浙南第一高峰，天然氧吧',
+        shortDescKo: '저장성 남부 최고봉, 천연 산소방',
+        fullDescZh: '国家级自然保护区，主峰白云尖海拔1611.3米，森林覆盖率98%。这里是"鸟中大熊猫"黄腹角雉的唯一保种基地，负氧离子爆表，是徒步和生物观察的天堂。',
+        fullDescKo: '국가급 자연보호구로, 주봉인 바이윈젠은 해발 1611.3m, 산림覆盖率 98%입니다. 이곳은 "새 중의 판다"인 황복각치의 유일한 보존 기지로, 음이온이 풍부해 트레킹과 생물 관찰의 천국입니다.',
+        categoryZh: '自然',
+        categoryKo: '자연',
+      ),
+      Attraction(
+        id: 3,
+        nameZh: '飞云湖',
+        nameKo: '페이윈후',
+        shortDescZh: '温州大水缸，碧波万顷',
+        shortDescKo: '원저우의 큰 물항아리, 끝없이 펼쳐진 푸른 물결',
+        fullDescZh: '温州最大的湖泊，水质连续十年居浙江八大水系之首。三分之二水域在泰顺境内，适合露营、观湖。云湖境悬崖咖啡厅是不可错过的打卡点。',
+        fullDescKo: '원저우 최대 호수로, 수질은 10년 연속 저장성 8대 수계 중 1위를 차지했습니다. 3분의 2가 타이순 경내에 있으며, 캠핑과 호수 전망에 적합합니다. 윈후징 절벽 카페는 놓칠 수 없는 포토스팟입니다.',
+        categoryZh: '自然',
+        categoryKo: '자연',
+      ),
+      Attraction(
+        id: 4,
+        nameZh: '仕水碇步',
+        nameKo: '스수이 딩부',
+        shortDescZh: '琴桥古韵，摄影圣地',
+        shortDescKo: '거문고 다리의 고풍스러운 운치, 사진 성지',
+        fullDescZh: '世界最长的古碇步，石齿平整，如钢琴键般横卧溪水之上，是出片率极高的独特古桥。漫步其上，仿佛穿越时空。',
+        fullDescKo: '세계에서 가장 긴 고대 딩부로, 돌의 이빨이 평평하게 정리되어 피아노 건반처럼 시냇물 위에 누워 있습니다. 사진이 매우 잘 나오는 독특한 고대 다리로, 그 위를 거닐면 마치 시간 여행을 하는 듯한 기분이 듭니다.',
+        categoryZh: '古建',
+        categoryKo: '고건축',
+      ),
+      Attraction(
+        id: 5,
+        nameZh: '库村',
+        nameKo: '쿠춘',
+        shortDescZh: '唐宋遗风，石头城堡',
+        shortDescKo: '당송 시대의 유풍, 돌로 지은 성곽 마을',
+        fullDescZh: '拥有1200多年历史的古村落，街巷、院墙均由鹅卵石砌成，被誉为"石头村"。走进库村，感受吴越文化的古朴与厚重。',
+        fullDescKo: '1200년 이상의 역사를 지닌 고대 마을로, 거리와 담장이 모두 자갈로 쌓여 "돌마을"이라 불립니다. 쿠춘에 들어서면 오월 문화의 고풍스러움과 중후함을 느낄 수 있습니다.',
+        categoryZh: '古建',
+        categoryKo: '고건축',
+      ),
+      Attraction(
+        id: 6,
+        nameZh: '氡泉',
+        nameKo: '동천 온천',
+        shortDescZh: '天下第一氡，疗养胜地',
+        shortDescKo: '천하제일 라돈 온천, 힐링 명소',
+        fullDescZh: '国内罕见的高热含氡矿泉，水温常年54-62℃，含氡量21.4埃曼。富含40多种微量元素，对皮肤和关节有极佳的医疗保健功效。',
+        fullDescKo: '국내에서 보기 드문 고열 라돈 함유 광천으로, 수온은 연중 54-62℃, 라돈 함량은 21.4에만입니다. 40여 종의 미량 원소가 풍부하여 피부와 관절에 탁월한 의료 보건 효과가 있습니다.',
+        categoryZh: '自然',
+        categoryKo: '자연',
+      ),
+      Attraction(
+        id: 7,
+        nameZh: '胡氏大院',
+        nameKo: '후씨 대저택',
+        shortDescZh: '江南合院，雕梁画栋',
+        shortDescKo: '강남 합원, 조각과 그림으로 장식된 저택',
+        fullDescZh: '江南地区少有的保存完整的大型合院民居。石雕、砖雕、木雕工艺精湛，规模宏大，展现了泰顺古时大户人家的生活图景。',
+        fullDescKo: '강남 지역에서 보기 드문 완전히 보존된 대형 합원 민가입니다. 석조, 벽돌조, 목조 공예가 정교하고 규모가 웅장하여 타이순 옛 대갓집의 생활 모습을 보여줍니다.',
+        categoryZh: '古建',
+        categoryKo: '고건축',
+      ),
+      Attraction(
+        id: 8,
+        nameZh: '交垟土楼',
+        nameKo: '자오양 토루',
+        shortDescZh: '客家遗风，方形土楼',
+        shortDescKo: '객가의 유풍, 사각형 토루',
+        fullDescZh: '泰顺唯一的客家土楼风格古民居，由福建迁徙而来的曾氏家族建造。方形两层，平面呈"口"字形，是闽南文化在浙南山区的珍贵留存。',
+        fullDescKo: '타이순 유일의 객가 토루 스타일 고대 민가로, 푸젠성에서 이주해 온 쩡씨 가문이 건축했습니다. 정사각형 2층 구조로 평면이 "口"자 형태이며, 민난 문화가 저장성 남부 산간 지역에 남긴 소중한 유산입니다.',
+        categoryZh: '古建',
+        categoryKo: '고건축',
+      ),
+    ];
+  }
+
+  static List<FoodItem> getFoods() {
+    return [
+      FoodItem(
+        id: 1,
+        nameZh: '婆饼',
+        nameKo: '포빙',
+        descriptionZh: '外脆里香，层层叠叠的米香传奇。酒宴必备，油而不腻。',
+        descriptionKo: '겉은 바삭하고 속은 고소한, 층층이 쌓인 쌀 향기의 전설. 연회석 필수 음식으로 느끼하지 않습니다.',
+        tagZh: '招牌必点',
+        tagKo: '대표 메뉴',
+      ),
+      FoodItem(
+        id: 2,
+        nameZh: '米面层',
+        nameKo: '미몐청',
+        descriptionZh: '泰顺人最爱的早餐，薄皮包裹四季豆、萝卜和肉末。',
+        descriptionKo: '타이순 사람들이 가장 사랑하는 아침 식사로, 얇은 피에 강낭콩, 무, 다진 고기를 싸서 먹습니다.',
+        tagZh: '在地风味',
+        tagKo: '현지 맛',
+      ),
+      FoodItem(
+        id: 3,
+        nameZh: '绿豆腐',
+        nameKo: '뤼더우푸',
+        descriptionZh: '用野生豆腐柴树叶制作的清凉解暑小吃，夏日必吃。',
+        descriptionKo: '야생 두부나무 잎으로 만든 시원한 별미로, 여름철 필수 간식입니다.',
+        tagZh: '夏日限定',
+        tagKo: '여름 한정',
+      ),
+      FoodItem(
+        id: 4,
+        nameZh: '泥鳅汤',
+        nameKo: '미꾸라지탕',
+        descriptionZh: '当地经典硬菜，汤浓味鲜，风味独特。',
+        descriptionKo: '현지의 대표적인 푸짐한 요리로, 진한 국물과 신선한 맛이 일품인 독특한 풍미를 자랑합니다.',
+        tagZh: '特色硬菜',
+        tagKo: '별미 요리',
+      ),
+      FoodItem(
+        id: 5,
+        nameZh: '飞云湖秘制鱼',
+        nameKo: '페이윈후 특제 생선',
+        descriptionZh: '取自飞云湖的鲜鱼，肉质细嫩，酱香浓郁。',
+        descriptionKo: '페이윈후에서 잡은 신선한 생선으로, 육질이 부드럽고 장 향이 진합니다.',
+        tagZh: '河鲜珍品',
+        tagKo: '민물 진미',
+      ),
+      FoodItem(
+        id: 6,
+        nameZh: '三杯香茶',
+        nameKo: '싼베이샹 차',
+        descriptionZh: '中国驰名商标，泰顺名片。可搭配三杯香拿铁特调。',
+        descriptionKo: '중국의 저명한 브랜드, 타이순의 명함과도 같은 차입니다. 싼베이샹 라떼로도 즐길 수 있습니다.',
+        tagZh: '茶香四溢',
+        tagKo: '차 향기 가득',
+      ),
+      FoodItem(
+        id: 7,
+        nameZh: '乌米饭',
+        nameKo: '우미판',
+        descriptionZh: '畲族特色美食，用乌稔树叶汁浸泡糯米蒸制而成。',
+        descriptionKo: '쉐족의 특색 음식으로, 오렌잎 즙에 찹쌀을 담갔다가 쪄서 만듭니다.',
+        tagZh: '民族风味',
+        tagKo: '민족 음식',
+      ),
+    ];
+  }
+
+  static List<RouteItem> getRoutes() {
+    return [
+      RouteItem(
+        id: 1,
+        titleZh: '廊桥寻梦 · 2日经典游',
+        titleKo: '랑교의 꿈을 찾아 · 2일 클래식 코스',
+        days: [
+          RouteDay(
+            dayNumber: 1,
+            descriptionZh: '出发 → 泗溪廊桥文化园',
+            descriptionKo: '출발 → 쓰시 랑교 문화원',
+            highlightsZh: ['探访北涧桥、溪东桥', '古树下品三杯香', '购买廊桥模型', '夜宿泗溪古村'],
+            highlightsKo: ['베이젠차오·시동차오 방문', '고목 아래서 싼베이샹 차 시음', '랑교 모형 구매', '쓰시 고촌에서 숙박'],
+          ),
+          RouteDay(
+            dayNumber: 2,
+            descriptionZh: '塔头底古村 → 仕水碇步 → 胡氏大院',
+            descriptionKo: '타터우디 고촌 → 스수이 딩부 → 후씨 대저택',
+            highlightsZh: ['游览清代塔头底古村', '漫步琴桥仕水碇步', '探访江南合院胡氏大院', '返程'],
+            highlightsKo: ['청나라 시대 타터우디 고촌 관광', '거문고 다리 스수이 딩부 산책', '강남 합원 후씨 대저택 방문', '귀가'],
+          ),
+        ],
+      ),
+      RouteItem(
+        id: 2,
+        titleZh: '森林探秘 · 生态2日游',
+        titleKo: '숲 속 탐험 · 생태 2일 코스',
+        days: [
+          RouteDay(
+            dayNumber: 1,
+            descriptionZh: '出发 → 云湖境 → 飞云湖',
+            descriptionKo: '출발 → 윈후징 → 페이윈후',
+            highlightsZh: ['打卡云端悬崖咖啡厅', '飞云湖畔露营观湖', '万芳草坪休闲', '夜宿白鹤山庄'],
+            highlightsKo: ['구름 위 절벽 카페 방문', '페이윈후 호숫가 캠핑', '완팡 잔디밭 휴식', '바이허 산장 숙박'],
+          ),
+          RouteDay(
+            dayNumber: 2,
+            descriptionZh: '乌岩岭国家自然保护区',
+            descriptionKo: '우옌링 국가자연보호구',
+            highlightsZh: ['挑战浙南第一高峰白云尖', '黄腹角雉主题馆', '原始森林徒步吸氧', '返程'],
+            highlightsKo: ['저장 남부 최고봉 바이윈젠 등반', '황복각치 테마관 관람', '원시림 트레킹', '귀가'],
+          ),
+        ],
+      ),
+      RouteItem(
+        id: 3,
+        titleZh: '古村奇妙 · 人文2日游',
+        titleKo: '고촌 기행 · 인문 2일 코스',
+        days: [
+          RouteDay(
+            dayNumber: 1,
+            descriptionZh: '出发 → 库村 → 徐岙底',
+            descriptionKo: '출발 → 쿠춘 → 쉬아오디',
+            highlightsZh: ['探访1200年石头城堡库村', '徐岙底红曲咖啡', '古村音乐会', '夜宿筱村'],
+            highlightsKo: ['1200년 돌성곽 쿠춘 탐방', '쉬아오디 홍취 커피', '고촌 음악회', '샤오춘 숙박'],
+          ),
+          RouteDay(
+            dayNumber: 2,
+            descriptionZh: '筱村公社 → 胡氏大院 → 氡泉',
+            descriptionKo: '샤오춘 공사 → 후씨 대저택 → 동천 온천',
+            highlightsZh: ['绣球花海拍照', '胡氏大院精美雕刻', '氡泉泡温泉放松', '返程'],
+            highlightsKo: ['수국 꽃밭 사진 촬영', '후씨 대저택 정교한 조각 감상', '동천 온천 휴식', '귀가'],
+          ),
+        ],
+      ),
+    ];
+  }
+}

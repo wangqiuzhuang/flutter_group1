@@ -1,7 +1,7 @@
 // ============================================
 // 文件: lib/main.dart
 // 用途: App 启动入口 — 城市选择主页
-// 卡片: 太原 / 北京 / 临沂 / 其他 / 其他 共5个
+// 卡片: 北京 / 太原 / 临沂 / 温州泰顺 / 哈尔滨 / 其他 共6个
 // 背景: 每个卡片为城市视频 (assets/videos/)
 // ============================================
 
@@ -11,8 +11,8 @@ import 'taiyuan/ty_taiyuan_app.dart';
 import 'taiyuan/shared/ty_colors.dart';
 import 'taiyuan/structure/ty_taiyuan_city_page.dart';
 import 'beijing/beijing_entry.dart';
-import 'linyi/linyi_page.dart'; // 导入临沂页面 / 임기 페이지 불러오기
-import 'haerbin/haerbin.dart';
+import 'linyi/linyi_page.dart';
+import 'wenzhoutaishun/taishun_entry.dart'; // 温州泰顺入口
 
 void main() => runApp(const TaiyuanApp());
 
@@ -28,7 +28,7 @@ class _TyHomePageState extends State<TyHomePage> {
     _HomeCity(name: '北京', nameKo: '베이징', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
     _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
     _HomeCity(name: '临沂', nameKo: '린이', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
-    _HomeCity(name: '温州', nameKo: '원저우', videoAsset: 'assets/videos/wenzhou.mp4', enabled: false),
+    _HomeCity(name: '温州泰顺', nameKo: '원저우시 타이순현', videoAsset: 'assets/videos/wenzhou.mp4', enabled: true),
     _HomeCity(name: '哈尔滨', nameKo: '하얼빈', videoAsset: 'assets/videos/haerbin.mp4', enabled: false),
     _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other3.mp4', enabled: false),
   ];
@@ -67,11 +67,11 @@ class _TyHomePageState extends State<TyHomePage> {
                                       ? () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) {
-                                        // 根据城市名跳转对应页面 / 도시 이름에 따라 해당 페이지로 이동
+                                        // 根据城市名跳转对应页面
                                         if (city.name == '北京') return const BeijingEntry();
-                                        if (city.name == '临沂') return const LinyiPage(); // 临沂页面 / 임기 페이지
-                                        return const TaiyuanCityPage(); // 默认太原 / 기본 타이위안
-                                        if (city.name == 'haerbin') return const haerbin();
+                                        if (city.name == '临沂') return const LinyiPage();
+                                        if (city.name == '温州泰顺') return const TaishunEntry();
+                                        return const TaiyuanCityPage(); // 默认太原
                                       },
                                     ),
                                   )
@@ -148,7 +148,7 @@ class _CityCardState extends State<_CityCard> {
           if (mounted) {
             setState(() {});
             _controller!.setLooping(true);
-            _controller!.setVolume(0); // 静音播放
+            _controller!.setVolume(0);
             _controller!.play();
           }
         }).catchError((_) {
@@ -171,7 +171,7 @@ class _CityCardState extends State<_CityCard> {
 
     return Semantics(
       button: widget.city.enabled,
-      label: widget.city.enabled ? '查看\${widget.city.name}详情' : '\${widget.city.name}暂未开放',
+      label: widget.city.enabled ? '查看${widget.city.name}详情' : '${widget.city.name}暂未开放',
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),
@@ -183,7 +183,7 @@ class _CityCardState extends State<_CityCard> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: AppColors.border2),
-              color: const Color(0xFF2C2C2C), // 默认暗色背景 (视频加载前)
+              color: const Color(0xFF2C2C2C),
               boxShadow: const [
                 BoxShadow(color: AppColors.shadowMid, blurRadius: 20, offset: Offset(0, 4)),
               ],
@@ -193,7 +193,6 @@ class _CityCardState extends State<_CityCard> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  /// 视频背景（加载完成后显示）
                   if (hasVideo)
                     Positioned.fill(
                       child: FittedBox(
@@ -206,14 +205,11 @@ class _CityCardState extends State<_CityCard> {
                       ),
                     ),
 
-                  /// 加载失败时的纯色背景
                   if (!hasVideo && !_initFailed)
                     const Center(child: CircularProgressIndicator(color: Colors.white24, strokeWidth: 2)),
 
-                  /// 暗色遮罩 — 让白色文字清晰可见
                   Container(color: Colors.black.withValues(alpha: 0.4)),
 
-                  /// 城市名 — 中文 + 韩语居中
                   Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
