@@ -72,7 +72,7 @@ class _TyHomePageState extends State<TyHomePage> {
                                         if (city.name == '北京') return const BeijingEntry();
                                         if (city.name == '临沂') return const LinyiPage();
                                         if (city.name == '温州泰顺') return const TaishunEntry();
-                                        if (city.name == '哈尔滨') return const HarbinHomePage();
+                                        if (city.name == '哈尔滨') return const HarbinPage();
                                         return const TaiyuanCityPage(); // 默认太原
                                       },
                                     ),

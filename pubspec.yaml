@@ -16,6 +16,8 @@ dependencies:
     sdk: flutter
   video_player: ^2.9.2
   http: ^1.2.0
+  shelf: ^1.4.2
+  shelf_cors_headers: ^0.1.5
 
 dev_dependencies:
   flutter_test:
