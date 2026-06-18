@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 // ══════════════════════════════════════════════
 //  双语文本数据 / 이중 언어 텍스트 데이터
@@ -42,7 +43,7 @@ class _L10n {
   // ── Spots ──
   List<Map<String, dynamic>> get spots => [
     {
-      'imageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Harbin_Central_Avenue.jpg/640px-Harbin_Central_Avenue.jpg',
+      'imageUrl': 'assets/images/central_street.jpg',
       'name': isChinese ? '中央大街'    : '중앙대가',
       'desc': isChinese
           ? '始建于1898年，全长1450米，欧式建筑林立，是亚洲最长的步行街之一，也是哈尔滨的象征。'
@@ -51,7 +52,7 @@ class _L10n {
       'icon': Icons.holiday_village,
     },
     {
-      'imageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Saint_Sophia_Cathedral%2C_Harbin.jpg/640px-Saint_Sophia_Cathedral%2C_Harbin.jpg',
+      'imageUrl': 'assets/images/sophia.jpg',
       'name': isChinese ? '圣索菲亚教堂'  : '성 소피아 성당',
       'desc': isChinese
           ? '拜占庭式建筑，建于1907年，是哈尔滨最具代表性的历史建筑，现为建筑艺术博物馆。'
@@ -60,7 +61,7 @@ class _L10n {
       'icon': Icons.church,
     },
     {
-      'imageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Harbin_Ice_and_Snow_World.jpg/640px-Harbin_Ice_and_Snow_World.jpg',
+      'imageUrl': 'assets/images/ice_world.jpg',
       'name': isChinese ? '冰雪大世界'   : '빙설대세계',
       'desc': isChinese
           ? '全球最大冰雪主题乐园，每年12月开放，冰雕作品规模震撼，夜晚灯光绚丽。'
@@ -69,7 +70,7 @@ class _L10n {
       'icon': Icons.stars,
     },
     {
-      'imageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Sun_Island_Harbin.jpg/640px-Sun_Island_Harbin.jpg',
+      'imageUrl': 'assets/images/sun_island.jpg',
       'name': isChinese ? '太阳岛风景区' : '태양도 풍경구',
       'desc': isChinese
           ? '松花江上的岛屿公园，夏季绿意盎然，冬季举办雪雕博览会，四季皆美。'
@@ -82,28 +83,34 @@ class _L10n {
   // ── Foods ──
   List<Map<String, String>> get foods => [
     {
-      'name': isChinese ? '哈尔滨红肠'   : '하얼빈 홍장',
-      'desc': isChinese ? '百年传统风味，肉质紧实，烟熏香浓' : '100년 전통의 훈제 소시지, 쫄깃하고 고소한 맛',
+      'name':  isChinese ? '哈尔滨红肠'   : '하얼빈 홍장',
+      'desc':  isChinese ? '百年传统风味，肉质紧实，烟熏香浓' : '100년 전통의 훈제 소시지, 쫄깃하고 고소한 맛',
+      'image': 'assets/images/food_hongchang.jpg',
     },
     {
-      'name': isChinese ? '锅包肉'       : '궈바오러우',
-      'desc': isChinese ? '酸甜外酥内嫩，东北名菜之首' : '새콤달콤 바삭한 동북 대표 요리',
+      'name':  isChinese ? '锅包肉'       : '궈바오러우',
+      'desc':  isChinese ? '酸甜外酥内嫩，东北名菜之首' : '새콤달콤 바삭한 동북 대표 요리',
+      'image': 'assets/images/food_guobaoru.jpg',
     },
     {
-      'name': isChinese ? '马迭尔冰棍'   : '마디얼 아이스크림',
-      'desc': isChinese ? '百年老字号，冬天吃冰棍是哈尔滨特色' : '100년 노포, 영하에서 먹는 아이스크림이 하얼빈의 명물',
+      'name':  isChinese ? '马迭尔冰棍'   : '마디얼 아이스크림',
+      'desc':  isChinese ? '百年老字号，冬天吃冰棍是哈尔滨特色' : '100년 노포, 영하에서 먹는 아이스크림이 하얼빈의 명물',
+      'image': 'assets/images/food_icebar.jpg',
     },
     {
-      'name': isChinese ? '东北大拉皮'   : '동북 당면',
-      'desc': isChinese ? '劲道爽滑，搭配芝麻酱凉拌' : '탱탱하고 쫄깃한 당면에 참깨소스를 곁들인 냉채',
+      'name':  isChinese ? '东北大拉皮'   : '동북 당면',
+      'desc':  isChinese ? '劲道爽滑，搭配芝麻酱凉拌' : '탱탱하고 쫄깃한 당면에 참깨소스를 곁들인 냉채',
+      'image': 'assets/images/food_dalapi.jpg',
     },
     {
-      'name': isChinese ? '杀猪菜'       : '사주채',
-      'desc': isChinese ? '东北传统宴席菜，酸菜血肠五花肉' : '동북 전통 잔칫상, 김치·선지순대·삼겹살 조합',
+      'name':  isChinese ? '杀猪菜'       : '사주채',
+      'desc':  isChinese ? '东北传统宴席菜，酸菜血肠五花肉' : '동북 전통 잔칫상, 김치·선지순대·삼겹살 조합',
+      'image': 'assets/images/food_shazhu.jpg',
     },
     {
-      'name': isChinese ? '地三鲜'       : '디산시엔',
-      'desc': isChinese ? '土豆茄子青椒，家常三宝' : '감자·가지·청피망 볶음, 동북 가정식의 대명사',
+      'name':  isChinese ? '地三鲜'       : '디산시엔',
+      'desc':  isChinese ? '土豆茄子青椒，家常三宝' : '감자·가지·청피망 볶음, 동북 가정식의 대명사',
+      'image': 'assets/images/food_disanxian.jpg',
     },
   ];
 
@@ -236,14 +243,8 @@ class _HarbinPageState extends State<HarbinPage>
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF042C53), Color(0xFF185FA5)],
-                    ),
-                  ),
+                background: _HeaderVideoBanner(
+                  assetPath: 'assets/videos/harbin_header.mp4',
                   child: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 56, 20, 16),
@@ -328,19 +329,8 @@ class _HarbinPageState extends State<HarbinPage>
       title: l.introTitle,
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Saint_Sophia_Cathedral%2C_Harbin.jpg/800px-Saint_Sophia_Cathedral%2C_Harbin.jpg',
-              height: 160,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) =>
-                  _ImageFallback(label: l.bannerLabel, icon: Icons.landscape),
-              loadingBuilder: (_, child, progress) =>
-                  progress == null ? child : const _ImageLoading(height: 160),
-            ),
-          ),
+          // 顶部视频横幅
+          const _VideoBanner(assetPath: 'assets/videos/harbin_banner.mp4'),
           const SizedBox(height: 12),
           Text(l.introText,
               style: const TextStyle(fontSize: 14, color: Color(0xFF555555), height: 1.7)),
@@ -378,7 +368,7 @@ class _HarbinPageState extends State<HarbinPage>
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
+                  child: Image.asset(
                     spot['imageUrl'] as String,
                     width: 72, height: 72, fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
@@ -387,8 +377,6 @@ class _HarbinPageState extends State<HarbinPage>
                       child: Icon(spot['icon'] as IconData,
                           color: const Color(0xFF185FA5), size: 28),
                     ),
-                    loadingBuilder: (_, child, progress) =>
-                        progress == null ? child : const _ImageLoading(height: 72, width: 72),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -437,30 +425,62 @@ class _HarbinPageState extends State<HarbinPage>
       child: Column(
         children: l.foods.map((food) {
           return Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8F9FA),
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFEEEEEE), width: 0.5),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.04),
+                    blurRadius: 6, offset: const Offset(0, 2)),
+              ],
             ),
             child: Row(
               children: [
-                const Icon(Icons.dinner_dining, color: Color(0xFF185FA5), size: 20),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(food['name']!,
-                          style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w600,
-                              color: Color(0xFF1A1A1A))),
-                      Text(food['desc']!,
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF888888))),
-                    ],
+                // 음식 이미지
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                  ),
+                  child: Image.asset(
+                    food['image']!,
+                    width: 90,
+                    height: 90,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Container(
+                      width: 90,
+                      height: 90,
+                      color: const Color(0xFFE6F1FB),
+                      child: const Icon(Icons.dinner_dining,
+                          color: Color(0xFF185FA5), size: 32),
+                    ),
                   ),
                 ),
+                const SizedBox(width: 12),
+                // 음식 이름 + 설명
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(food['name']!,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF1A1A1A))),
+                        const SizedBox(height: 4),
+                        Text(food['desc']!,
+                            style: const TextStyle(
+                                fontSize: 12.5,
+                                color: Color(0xFF888888),
+                                height: 1.5)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
               ],
             ),
           );
@@ -543,20 +563,220 @@ class _HarbinPageState extends State<HarbinPage>
                     fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF0C447C))),
             const SizedBox(height: 10),
             ...l.aiItems.map((item) => Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Row(
-                    children: [
-                      Icon(item['icon'] as IconData, size: 16, color: const Color(0xFF185FA5)),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(item['text'] as String,
-                            style: const TextStyle(fontSize: 13, color: Color(0xFF185FA5))),
-                      ),
-                    ],
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                children: [
+                  Icon(item['icon'] as IconData, size: 16, color: const Color(0xFF185FA5)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(item['text'] as String,
+                        style: const TextStyle(fontSize: 13, color: Color(0xFF185FA5))),
                   ),
-                )),
+                ],
+              ),
+            )),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ══════════════════════════════════════════════
+//  Header 비디오 배경 위젯
+// ══════════════════════════════════════════════
+
+class _HeaderVideoBanner extends StatefulWidget {
+  final String assetPath;
+  final Widget child; // 위에 올릴 텍스트/UI
+
+  const _HeaderVideoBanner({required this.assetPath, required this.child});
+
+  @override
+  State<_HeaderVideoBanner> createState() => _HeaderVideoBannerState();
+}
+
+class _HeaderVideoBannerState extends State<_HeaderVideoBanner> {
+  late VideoPlayerController _controller;
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    try {
+      _controller = VideoPlayerController.asset(widget.assetPath);
+      await _controller.initialize();
+      _controller.setLooping(true);
+      _controller.setVolume(0.0); // 자동재생 무음
+      _controller.play();
+      if (mounted) setState(() => _isInitialized = true);
+    } catch (_) {
+      // 실패 시 그라디언트 폴백 표시
+      if (mounted) setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // ── 배경: 비디오 또는 그라디언트 폴백 ──
+        if (_isInitialized)
+          FittedBox(
+            fit: BoxFit.cover,
+            clipBehavior: Clip.hardEdge,
+            child: SizedBox(
+              width: _controller.value.size.width,
+              height: _controller.value.size.height,
+              child: VideoPlayer(_controller),
+            ),
+          )
+        else
+        // 비디오 로딩 전/실패 시 기존 그라디언트 유지
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF042C53), Color(0xFF185FA5)],
+              ),
+            ),
+          ),
+
+        // ── 영상 위 어두운 오버레이 (텍스트 가독성) ──
+        if (_isInitialized)
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.35),
+                  Colors.black.withOpacity(0.60),
+                ],
+              ),
+            ),
+          ),
+
+        // ── 위에 올릴 텍스트/UI ──
+        widget.child,
+      ],
+    );
+  }
+}
+
+// ══════════════════════════════════════════════
+//  비디오 배너 위젯
+// ══════════════════════════════════════════════
+
+class _VideoBanner extends StatefulWidget {
+  final String assetPath;
+  const _VideoBanner({required this.assetPath});
+
+  @override
+  State<_VideoBanner> createState() => _VideoBannerState();
+}
+
+class _VideoBannerState extends State<_VideoBanner> {
+  late VideoPlayerController _controller;
+  bool _isInitialized = false;
+  bool _hasError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    try {
+      _controller = VideoPlayerController.asset(widget.assetPath);
+      await _controller.initialize();
+      _controller.setLooping(true);   // 무한 반복
+      _controller.setVolume(0.0);     // 음소거 (자동재생)
+      _controller.play();
+      if (mounted) setState(() => _isInitialized = true);
+    } catch (e) {
+      if (mounted) setState(() => _hasError = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 加载失败时显示图片占位
+    if (_hasError) {
+      return const _ImageFallback(label: '哈尔滨冬季风光', icon: Icons.landscape);
+    }
+
+    // 加载中显示转圈
+    if (!_isInitialized) {
+      return const _ImageLoading(height: 200);
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          // 视频播放器（保持宽高比）
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              clipBehavior: Clip.hardEdge,
+              child: SizedBox(
+                width: _controller.value.size.width,
+                height: _controller.value.size.height,
+                child: VideoPlayer(_controller),
+              ),
+            ),
+          ),
+          // 静音/取消静音 버튼
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _controller.setVolume(
+                    _controller.value.volume == 0 ? 1.0 : 0.0,
+                  );
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.45),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  _controller.value.volume == 0
+                      ? Icons.volume_off
+                      : Icons.volume_up,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
