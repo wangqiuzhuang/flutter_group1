@@ -6,7 +6,6 @@
 // ============================================
 
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'taiyuan/ty_taiyuan_app.dart';
 import 'taiyuan/shared/ty_colors.dart';
 import 'taiyuan/structure/ty_taiyuan_city_page.dart';
@@ -26,12 +25,12 @@ class TyHomePage extends StatefulWidget {
 
 class _TyHomePageState extends State<TyHomePage> {
   static const _cities = [
-    _HomeCity(name: '北京', nameKo: '베이징', videoAsset: 'assets/videos/beijing.mp4', enabled: true),
-    _HomeCity(name: '太原', nameKo: '타이위안', videoAsset: 'assets/videos/taiyuan.mp4', enabled: true),
-    _HomeCity(name: '临沂', nameKo: '린이', videoAsset: 'assets/videos/linyi.mp4', enabled: true),
-    _HomeCity(name: '温州泰顺', nameKo: '원저우시 타이순현', videoAsset: 'assets/videos/wenzhou.mp4', enabled: true),
-    _HomeCity(name: '哈尔滨', nameKo: '하얼빈', videoAsset: 'assets/videos/haerbin.mp4', enabled: true),
-    _HomeCity(name: '其他', nameKo: '기타', videoAsset: 'assets/videos/other3.mp4', enabled: false),
+    _HomeCity(name: '北京', nameKo: '베이징', imageAsset: 'assets/images/beijing/great_wall.png', enabled: true),
+    _HomeCity(name: '太原', nameKo: '타이위안', imageAsset: 'assets/images/taiyuan/bwy.jpg', enabled: true),
+    _HomeCity(name: '临沂', nameKo: '린이', imageAsset: 'assets/images/linyi/chaoji.jpg', enabled: true),
+    _HomeCity(name: '温州泰顺', nameKo: '원저우시 타이순현', imageAsset: 'assets/images/taishun/home_bg.jpg', enabled: true),
+    _HomeCity(name: '哈尔滨', nameKo: '하얼빈', imageAsset: 'assets/images/harbin/central_street.jpg', enabled: true),
+    _HomeCity(name: '其他', nameKo: '기타', imageAsset: '', enabled: false),
   ];
 
   @override
@@ -122,70 +121,29 @@ class _HomeHeader extends StatelessWidget {
   }
 }
 
-/// 城市卡片 — 视频背景 + 大号居中城市名
-class _CityCard extends StatefulWidget {
+/// 城市卡片 — 静态图片背景 + 大号居中城市名
+class _CityCard extends StatelessWidget {
   final _HomeCity city;
   final VoidCallback? onTap;
 
   const _CityCard({required this.city, required this.onTap});
 
   @override
-  State<_CityCard> createState() => _CityCardState();
-}
-
-class _CityCardState extends State<_CityCard> {
-  VideoPlayerController? _controller;
-  bool _initFailed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initVideo();
-  }
-
-  void _initVideo() {
-    try {
-      _controller = VideoPlayerController.asset(widget.city.videoAsset)
-        ..initialize().then((_) {
-          if (mounted) {
-            setState(() {});
-            _controller!.setLooping(true);
-            _controller!.setVolume(0);
-            _controller!.play();
-          }
-        }).catchError((_) {
-          if (mounted) setState(() => _initFailed = true);
-        });
-    } catch (_) {
-      if (mounted) setState(() => _initFailed = true);
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final hasVideo = _controller != null && _controller!.value.isInitialized;
-
     return Semantics(
-      button: widget.city.enabled,
-      label: widget.city.enabled ? '查看${widget.city.name}详情' : '${widget.city.name}暂未开放',
+      button: city.enabled,
+      label: city.enabled ? '查看${city.name}详情' : '${city.name}暂未开放',
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
-          onTap: widget.onTap,
+          onTap: onTap,
           borderRadius: BorderRadius.circular(14),
           child: Ink(
             height: 320,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: AppColors.border2),
-              color: const Color(0xFF2C2C2C),
               boxShadow: const [
                 BoxShadow(color: AppColors.shadowMid, blurRadius: 20, offset: Offset(0, 4)),
               ],
@@ -195,54 +153,26 @@ class _CityCardState extends State<_CityCard> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  if (hasVideo)
-                    Positioned.fill(
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: SizedBox(
-                          width: _controller!.value.size.width,
-                          height: _controller!.value.size.height,
-                          child: VideoPlayer(_controller!),
-                        ),
-                      ),
-                    ),
-
-                  if (!hasVideo && !_initFailed)
-                    const Center(child: CircularProgressIndicator(color: Colors.white24, strokeWidth: 2)),
-
+                  Positioned.fill(
+                    child: city.imageAsset.isNotEmpty
+                        ? Image.asset(city.imageAsset, fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Container(color: const Color(0xFF2C2C2C)))
+                        : Container(color: const Color(0xFF111111)),
+                  ),
                   Container(color: Colors.black.withValues(alpha: 0.4)),
-
                   Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          widget.city.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 34,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 4,
-                            shadows: [Shadow(blurRadius: 8, offset: Offset(0, 2), color: Color(0x66000000))],
-                          ),
-                        ),
+                        Text(city.name, textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.w800, letterSpacing: 4,
+                            shadows: [Shadow(blurRadius: 8, offset: Offset(0, 2), color: Color(0x66000000))])),
                         const SizedBox(height: 4),
-                        Text(
-                          widget.city.nameKo,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 2,
-                            shadows: [Shadow(blurRadius: 4, offset: Offset(0, 1), color: Color(0x44000000))],
-                          ),
-                        ),
-                        if (!widget.city.enabled)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 6),
-                            child: Text('即将开放', style: TextStyle(color: Colors.white54, fontSize: 11)),
-                          ),
+                        Text(city.nameKo,
+                          style: const TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 2,
+                            shadows: [Shadow(blurRadius: 4, offset: Offset(0, 1), color: Color(0x44000000))])),
+                        if (!city.enabled)
+                          const Padding(padding: EdgeInsets.only(top: 6), child: Text('即将开放', style: TextStyle(color: Colors.white54, fontSize: 11))),
                       ],
                     ),
                   ),
@@ -259,8 +189,8 @@ class _CityCardState extends State<_CityCard> {
 class _HomeCity {
   final String name;
   final String nameKo;
-  final String videoAsset;
+  final String imageAsset;
   final bool enabled;
 
-  const _HomeCity({required this.name, required this.nameKo, required this.videoAsset, this.enabled = false});
+  const _HomeCity({required this.name, required this.nameKo, required this.imageAsset, this.enabled = false});
 }
