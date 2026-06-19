@@ -10,6 +10,11 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+    // 禁止压缩 mp4 视频文件，否则 release APK 中 ExoPlayer 无法播放
+    aaptOptions {
+        noCompress += "mp4"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

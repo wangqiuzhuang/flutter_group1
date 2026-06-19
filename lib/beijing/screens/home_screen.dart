@@ -142,6 +142,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
 
+          /// 返回按钮（左上角浮动，不侵入内容）
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 8, left: 12,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: Container(
+                width: 36, height: 36,
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.35),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
+              ),
+            ),
+          ),
+
           /// 回到顶部 FAB
           if (_showFab)
             Positioned(
