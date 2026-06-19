@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAiEntryCard(dynamic colors) {
     final isKo = AppState.of(context).language == AppLanguage.ko;
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AiPlannerScreen())),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AppStateProvider(child: AiPlannerScreen()))),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

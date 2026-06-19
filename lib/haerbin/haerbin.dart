@@ -43,7 +43,7 @@ class _L10n {
   // ── Spots ──
   List<Map<String, dynamic>> get spots => [
     {
-      'imageUrl': 'assets/images/central_street.jpg',
+      'imageUrl': 'assets/images/harbin/central_street.jpg',
       'name': isChinese ? '中央大街'    : '중앙대가',
       'desc': isChinese
           ? '始建于1898年，全长1450米，欧式建筑林立，是亚洲最长的步行街之一，也是哈尔滨的象征。'
@@ -52,7 +52,7 @@ class _L10n {
       'icon': Icons.holiday_village,
     },
     {
-      'imageUrl': 'assets/images/sophia.jpg',
+      'imageUrl': 'assets/images/harbin/sophia.jpg',
       'name': isChinese ? '圣索菲亚教堂'  : '성 소피아 성당',
       'desc': isChinese
           ? '拜占庭式建筑，建于1907年，是哈尔滨最具代表性的历史建筑，现为建筑艺术博物馆。'
@@ -61,7 +61,7 @@ class _L10n {
       'icon': Icons.church,
     },
     {
-      'imageUrl': 'assets/images/ice_world.jpg',
+      'imageUrl': 'assets/images/harbin/ice_world.jpg',
       'name': isChinese ? '冰雪大世界'   : '빙설대세계',
       'desc': isChinese
           ? '全球最大冰雪主题乐园，每年12月开放，冰雕作品规模震撼，夜晚灯光绚丽。'
@@ -70,7 +70,7 @@ class _L10n {
       'icon': Icons.stars,
     },
     {
-      'imageUrl': 'assets/images/sun_island.jpg',
+      'imageUrl': 'assets/images/harbin/sun_island.jpg',
       'name': isChinese ? '太阳岛风景区' : '태양도 풍경구',
       'desc': isChinese
           ? '松花江上的岛屿公园，夏季绿意盎然，冬季举办雪雕博览会，四季皆美。'
@@ -85,32 +85,32 @@ class _L10n {
     {
       'name':  isChinese ? '哈尔滨红肠'   : '하얼빈 홍장',
       'desc':  isChinese ? '百年传统风味，肉质紧实，烟熏香浓' : '100년 전통의 훈제 소시지, 쫄깃하고 고소한 맛',
-      'image': 'assets/images/food_hongchang.jpg',
+      'image': 'assets/images/harbin/food_hongchang.jpg',
     },
     {
       'name':  isChinese ? '锅包肉'       : '궈바오러우',
       'desc':  isChinese ? '酸甜外酥内嫩，东北名菜之首' : '새콤달콤 바삭한 동북 대표 요리',
-      'image': 'assets/images/food_guobaoru.jpg',
+      'image': 'assets/images/harbin/food_guobaoru.jpg',
     },
     {
       'name':  isChinese ? '马迭尔冰棍'   : '마디얼 아이스크림',
       'desc':  isChinese ? '百年老字号，冬天吃冰棍是哈尔滨特色' : '100년 노포, 영하에서 먹는 아이스크림이 하얼빈의 명물',
-      'image': 'assets/images/food_icebar.jpg',
+      'image': 'assets/images/harbin/food_icebar.jpg',
     },
     {
       'name':  isChinese ? '东北大拉皮'   : '동북 당면',
       'desc':  isChinese ? '劲道爽滑，搭配芝麻酱凉拌' : '탱탱하고 쫄깃한 당면에 참깨소스를 곁들인 냉채',
-      'image': 'assets/images/food_dalapi.jpg',
+      'image': 'assets/images/harbin/food_dalapi.jpg',
     },
     {
       'name':  isChinese ? '杀猪菜'       : '사주채',
       'desc':  isChinese ? '东北传统宴席菜，酸菜血肠五花肉' : '동북 전통 잔칫상, 김치·선지순대·삼겹살 조합',
-      'image': 'assets/images/food_shazhu.jpg',
+      'image': 'assets/images/harbin/food_shazhu.jpg',
     },
     {
       'name':  isChinese ? '地三鲜'       : '디산시엔',
       'desc':  isChinese ? '土豆茄子青椒，家常三宝' : '감자·가지·청피망 볶음, 동북 가정식의 대명사',
-      'image': 'assets/images/food_disanxian.jpg',
+      'image': 'assets/images/harbin/food_disanxian.jpg',
     },
   ];
 
@@ -244,7 +244,7 @@ class _HarbinPageState extends State<HarbinPage>
               ],
               flexibleSpace: FlexibleSpaceBar(
                 background: _HeaderVideoBanner(
-                  assetPath: 'assets/videos/harbin_header.mp4',
+                  assetPath: 'assets/videos/haerbin.mp4',
                   child: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 56, 20, 16),
@@ -300,22 +300,19 @@ class _HarbinPageState extends State<HarbinPage>
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Column(
+                child: IndexedStack(
+                  index: _selectedTab,
                   children: [
                     _buildIntroSection(l),
-                    const SizedBox(height: 16),
                     _buildSpotsSection(l),
-                    const SizedBox(height: 16),
                     _buildFoodSection(l),
-                    const SizedBox(height: 16),
                     _buildRouteSection(l),
-                    const SizedBox(height: 16),
                     _buildAISection(l),
-                    const SizedBox(height: 32),
                   ],
                 ),
               ),
             ),
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
           ],
         ),
       ),
@@ -330,7 +327,7 @@ class _HarbinPageState extends State<HarbinPage>
       child: Column(
         children: [
           // 顶部视频横幅
-          const _VideoBanner(assetPath: 'assets/videos/harbin_banner.mp4'),
+          const _VideoBanner(assetPath: 'assets/videos/haerbin.mp4'),
           const SizedBox(height: 12),
           Text(l.introText,
               style: const TextStyle(fontSize: 14, color: Color(0xFF555555), height: 1.7)),
